@@ -1,0 +1,9 @@
+export const MAX_ITENS = 10;
+export const ANDROID_EXEC = "adb";
+export const IOS_EXEC = "xcrun";
+export const LINKS_KEY = "links_key";
+export const IS_ANDROID_KEY = "is_android_key";
+export const ANDROID = "android";
+export const IOS = "ios";
+export const MARK_SIGN = "!";
+export const platforms = [ANDROID, IOS];

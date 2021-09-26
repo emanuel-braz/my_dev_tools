@@ -1,0 +1,58 @@
+{
+	"name": "deeplink",
+	"displayName": "Deeplink (Android / iOS)",
+	"description": "Open deeplink in mobile emulators",
+	"version": "0.0.1",
+	"publisher": "emanuel-braz",
+	"engines": {
+		"vscode": "^1.29.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.androidDeeplink",
+		"onCommand:extension.iosDeeplink",
+		"onCommand:extension.deeplinkClearCache"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"title": "Deeplink: open in Android",
+				"command": "extension.androidDeeplink"
+			},
+			{
+				"title": "Deeplink: clear cache",
+				"command": "extension.deeplinkClearCache"
+			},
+			{
+				"title": "Deeplink: open in iOS",
+				"command": "extension.iosDeeplink",
+				"enablement": "isMac"
+			},
+			{
+				"title": "Deeplink: open last prompt",
+				"command": "extension.lastPromptDeeplink",
+				"enablement": "false"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28",
+		"tslint": "^5.12.1",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"hasbin": "^1.2.3"
+	}
+}
