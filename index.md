@@ -1,37 +1,29 @@
-## Welcome to GitHub Pages
+![image](https://user-images.githubusercontent.com/3827308/135861079-6f39a13a-393d-4fb6-a487-76652636cd0e.png)
+## Deep link VSCode Extension (Android / iOS)
 
-You can use the [editor on GitHub](https://github.com/emanuel-braz/deeplink/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+### Features
+- Open deep link from VSCode commands
+- Open latest deep link from quick action button
+- Deep links history
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Requirements
+- Android Debug Bridge (adb) for Android emulator or devices
 
-### Markdown
+### Known Issues
+- Cannot select specific device yet, just the OS.
+- Add "!" (exclamation mark) before or after the route, in order to do not filter it.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Roadmap
+- Add options to select specific device
+- App settings interface
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+### Quick action button `Deep link`
+it runs the latest deep link command  
+  
 
-- Bulleted
-- List
+<img width="267" alt="Screen Shot 2021-10-04 at 10 04 08" src="https://user-images.githubusercontent.com/3827308/135861830-ae09cdc1-25ed-4c4c-90d5-e3704fc155f6.png">
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+https://user-images.githubusercontent.com/3827308/135861656-8c42342c-7a5a-4445-8819-76e823e97cbe.mov
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/emanuel-braz/deeplink/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
