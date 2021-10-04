@@ -1,6 +1,9 @@
 ![image](https://user-images.githubusercontent.com/3827308/135861079-6f39a13a-393d-4fb6-a487-76652636cd0e.png)
 ## Deep link VSCode Extension (Android / iOS)
 
+### Install VSCode Marketplace
+https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink
+
 ### Features
 - Open deep link from VSCode commands
 - Open latest deep link from quick action button
