@@ -1,8 +1,8 @@
 {
 	"name": "deeplink",
-	"displayName": "Deeplink (Android / iOS)",
+	"displayName": "Deep link (Android / iOS)",
 	"description": "Open deeplink in mobile emulators",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -24,20 +24,20 @@
 	"contributes": {
 		"commands": [
 			{
-				"title": "Deeplink: open in Android",
+				"title": "Deep link: in Android",
 				"command": "extension.androidDeeplink"
 			},
 			{
-				"title": "Deeplink: clear cache",
-				"command": "extension.deeplinkClearCache"
-			},
-			{
-				"title": "Deeplink: open in iOS",
+				"title": "Deep link: in iOS",
 				"command": "extension.iosDeeplink",
 				"enablement": "isMac"
 			},
 			{
-				"title": "Deeplink: open last prompt",
+				"title": "Deep link: clear the list",
+				"command": "extension.deeplinkClearCache"
+			},
+			{
+				"title": "Deep link: run last command",
 				"command": "extension.lastPromptDeeplink",
 				"enablement": "false"
 			}
