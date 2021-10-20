@@ -43,6 +43,7 @@ export class Dialogs {
             const quickPick = window.createQuickPick();
             quickPick.placeholder = placeHolder;
             quickPick.items = options.map(label => ({ label }));
+            quickPick.ignoreFocusOut = true;
 
             quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
                 const valueSelected = selection[0].label;

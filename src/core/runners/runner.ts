@@ -4,7 +4,7 @@ const { exec } = require("child_process");
 export class Runner {
 
     static runAndroid(route: string = "") {
-        return run(`adb shell am start -d ${route}`);
+        return run(`adb shell am start -W -a android.intent.action.VIEW -d ${route}`);
     }
 
     static runIos(route: string) {
