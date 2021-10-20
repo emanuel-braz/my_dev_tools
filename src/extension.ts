@@ -35,13 +35,14 @@ async function runPlatformCommand(context: ExtensionContext, isAndroid: Boolean,
 }
 
 function runCommand(route: string, isAndroid: Boolean) {
+	const runner = new Runner();
 	if (route.length > 0){
 		if (isAndroid) {
 			console.log(`${APP_DEEPLINK_ANDROID} ${route}`);
-			Runner.runAndroid(route);
+			runner.runAndroid(route);
 		} else {
 			console.log(`${APP_DEEPLINK_IOS} ${route}`);
-			Runner.runIos(route);
+			runner.runIos(route);
 		}
 	}
 }
