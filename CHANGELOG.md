@@ -1,6 +1,10 @@
+## [0.0.6] 2021-11-12
+#### Fixed
+- open deeplink with multiple query params in android
+
 ## [0.0.5] 2021-10-20
 #### Fixed
-- deep linking only gets first query parameter
+- deep linking only gets first query parameter (iOS)
 
 ## [0.0.4]
 #### Added

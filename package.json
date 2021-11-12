@@ -2,7 +2,7 @@
 	"name": "deeplink",
 	"displayName": "Deep link (Android / iOS)",
 	"description": "Open deeplink in mobile emulators",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
