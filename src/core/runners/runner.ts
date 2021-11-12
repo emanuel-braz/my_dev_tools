@@ -27,7 +27,7 @@ export class Runner {
     }
     
     encodeAmpersandChars(command: string): string {
-        let ampersand = /\&/gi;
-        return command.replace(ampersand, "\\&");
+        let ampersand = /&/gi;
+        return command.replace(ampersand, "\\" + "&");
     }
 }
