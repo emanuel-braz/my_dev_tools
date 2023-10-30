@@ -1,6 +1,6 @@
 import { window, ExtensionContext, QuickPickItem } from 'vscode';
 import { MARK_SIGN } from '../consts/app_consts';
-import { APP_PLACEHOLDER_ROUTE } from '../consts/strings';
+import { APP_PLACEHOLDER_NOTIFICATION, APP_PLACEHOLDER_ROUTE } from '../consts/strings';
 import { LocalDataSource } from '../data/local_data_source';
 
 class Snackbar {
@@ -33,6 +33,20 @@ export class Dialogs {
             }
         } catch (error) {
             return "";
+        }
+    }
+
+    static async getNotificationFile(context: ExtensionContext, isAndroid: Boolean = true, suggestions: string[] = []): Promise<string | null> {
+        try {
+            const placeholder = APP_PLACEHOLDER_NOTIFICATION;
+            const file = await Dialogs.prompt(context, suggestions, `${isAndroid ? "(android)" : "(ios)"} ${placeholder}`);
+            if (file && (file as string).length > 0) {
+                return file as string;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            return null;
         }
     }
 

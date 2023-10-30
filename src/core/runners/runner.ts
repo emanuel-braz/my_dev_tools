@@ -11,18 +11,30 @@ export class Runner {
         return this.run(`xcrun simctl openurl booted ${route}`);
     }
 
-    run(command: string) {
+    async pushNotificationIOS(file: string): Promise<boolean> {
+        const result = await this.run(`xcrun simctl push booted ${file}`);
+        return result;
+    }
+    
+    pushNotificationAndroid(file: string) {
+        Dialogs.snackbar.error('Not implemented yet, sorry :(');
+    }
+
+    run(command: string): Promise<boolean> {
         command = this.encodeAmpersandChars(command);
-        return exec(command, (error: any, stdout: any, stderr: any) => {
-            if (stderr) {
-                Dialogs.snackbar.error(stderr);
-            } else if (error) {
-                Dialogs.snackbar.error(error);
-            }
-            
-            if (stdout) {
-                console.log(`${stdout}`);
-            }
+        return new Promise<boolean>((resolve, reject) => {
+            exec(command, (error: any, stdout: any, stderr: any) => {
+                if (stderr) {
+                    Dialogs.snackbar.error(stderr);
+                    resolve(false);
+                } else if (error) {
+                    Dialogs.snackbar.error(error);
+                    resolve(false);
+                } else {
+                    console.log(`${stdout}`);
+                    resolve(true);
+                }
+            });
         });
     }
     

@@ -1,5 +1,6 @@
 ![image](https://user-images.githubusercontent.com/3827308/135861079-6f39a13a-393d-4fb6-a487-76652636cd0e.png)
-## Deep link VSCode Extension (Android / iOS)
+#Mobile Dev Tools 🛠️
+## Deep link and Push Notification VSCode Extension (Android / iOS)
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
@@ -11,6 +12,9 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 - Open deep link from VSCode commands
 - Open latest deep link from quick action button
 - Deep links history
+- Send push notification to iOS simulator
+- Send push notification to Android emulator (WIP)
+- Send latest notification to simulator/emulator
 
 ### Requirements
 - Android Debug Bridge (adb) for Android emulator or devices

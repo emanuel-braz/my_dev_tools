@@ -1,5 +1,5 @@
 import { ExtensionContext } from 'vscode';
-import { IS_ANDROID_KEY, LINKS_KEY, MAX_ITENS } from '../consts/app_consts';
+import { IS_ANDROID_KEY, LINKS_KEY, MAX_ITENS, NOTIFICATION_KEY } from '../consts/app_consts';
 
 export class LocalDataSource {
 
@@ -24,6 +24,14 @@ export class LocalDataSource {
 
     static getLinks(context: ExtensionContext): string[] {
         return context.globalState.get(LINKS_KEY, []);
+    }
+    
+    static getLastNotificationFile(context: ExtensionContext): string | null {
+        return context.globalState.get(NOTIFICATION_KEY, null);
+    }
+
+    static updateLastNotificationFile(context: ExtensionContext, notification_file: string): void {
+        context.globalState.update(NOTIFICATION_KEY, notification_file);
     }
 
     static clear(context: ExtensionContext) {

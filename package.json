@@ -1,8 +1,8 @@
 {
 	"name": "deeplink",
-	"displayName": "Deep link (Android / iOS)",
-	"description": "Open deeplink in mobile emulators",
-	"version": "0.0.6",
+	"displayName": "Mobile Dev Tools (Android / iOS)",
+	"description": "Open deeplinks in emulators, send push notifications, and more...",
+	"version": "0.0.7",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -13,33 +13,43 @@
 		"vscode": "^1.29.0"
 	},
 	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.androidDeeplink",
-		"onCommand:extension.iosDeeplink",
-		"onCommand:extension.deeplinkClearCache"
+		"Other",
+		"Snippets",
+		"Debuggers"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"title": "Deep link: in Android",
+				"title": "[MobDevTools] Open deep link (Android 🤖)",
 				"command": "extension.androidDeeplink"
 			},
 			{
-				"title": "Deep link: in iOS",
+				"title": "[MobDevTools] Open deep link (iOS 🍎)",
 				"command": "extension.iosDeeplink",
 				"enablement": "isMac"
 			},
 			{
-				"title": "Deep link: clear the list",
+				"title": "[MobDevTools] Clear the deeplink history",
 				"command": "extension.deeplinkClearCache"
 			},
 			{
-				"title": "Deep link: run last command",
+				"title": "[MobDevTools] Open the latest used deeplink",
 				"command": "extension.lastPromptDeeplink",
 				"enablement": "false"
+			},
+			{
+				"title": "[MobDevTools] Send push notification (iOS 🍎)",
+				"command": "extension.iosPushNotification",
+				"enablement": "isMac"
+			},
+			{
+				"title": "[MobDevTools] Send push notification (Android 🤖)",
+				"command": "extension.androidPushNotification"
+			},
+			{
+				"title": "[MobDevTools] Send the latest used notification",
+				"command": "extension.pushNotificationLastUsed"
 			}
 		]
 	},

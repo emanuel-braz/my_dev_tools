@@ -1,3 +1,7 @@
+## [0.0.7] 2023-10-29
+#### Added
+- Add push notification(local) to iOS Simulator
+
 ## [0.0.6] 2021-11-12
 #### Fixed
 - open deeplink with multiple query params in android
