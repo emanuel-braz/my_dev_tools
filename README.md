@@ -29,10 +29,14 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 - Add options to select specific device
 - App settings interface
 
+---
 
 ### Quick action button `Deep link`
-it runs the latest deep link command  
-  
-<img width="267" alt="Screen Shot 2021-10-04 at 10 04 08" src="https://user-images.githubusercontent.com/3827308/135925184-1cf74cb0-19e4-4d56-a77c-5f9d5cb46d0f.png">
+- it runs the latest deep link command  
+### Quick action button `Push Notification`
+- it runs the latest push notification command
+
+![image](https://github.com/emanuel-braz/deeplink/assets/3827308/4ba5979f-f164-428f-9ac1-5a2fa7b92f2f)
+
 
 https://user-images.githubusercontent.com/3827308/135924984-9ab8856b-11ed-48c0-a719-770b26c0cf0a.mov
