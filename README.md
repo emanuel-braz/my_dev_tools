@@ -6,9 +6,8 @@
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
-  
-![Screen Shot 2021-10-04 at 11 49 06](https://user-images.githubusercontent.com/3827308/135874658-9d3f4225-c3ca-4a57-8fc0-59d55ac994c2.png)
 
+<img width="1067" alt="image" src="https://github.com/emanuel-braz/deeplink/assets/3827308/fda3fa9e-f4a7-4cef-99dd-0af37ab47643">
   
 ### Features
 - Open deep link from VSCode commands
