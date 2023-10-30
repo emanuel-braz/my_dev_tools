@@ -1,5 +1,5 @@
 {
-	"name": "deeplink",
+	"name": "mobile-dev-tools",
 	"displayName": "Mobile Dev Tools (Android / iOS)",
 	"description": "Open deeplinks in emulators, send push notifications, and more...",
 	"version": "0.0.7",
@@ -69,5 +69,8 @@
 	},
 	"dependencies": {
 		"hasbin": "^1.2.3"
-	}
+	},
+	"activationEvents": [
+		"onStartupFinished"
+	]
 }
