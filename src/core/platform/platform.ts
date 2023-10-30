@@ -1,4 +1,4 @@
-import { ExtensionContext } from 'vscode';
+import * as vscode from 'vscode';
 import { APP_EXEC_NOT_FOUND } from '../consts/strings';
 import { Dialogs } from '../dialogs/dialogs';
 const fs = require('fs');
@@ -13,13 +13,18 @@ export class Platform {
         return isAvailable;
     }
 
-    static getFiles(context: ExtensionContext, folder: string) : string[] {
+    static getFiles(folder: string) : string[] {
         try {
-            const folderPath = path.join(context.extensionPath, folder);
-            const files = fs.readdirSync(folderPath);
+            let currDir = Platform.getCurrentPath();
+            const folderPath = path.join(currDir, folder);
+            const files = fs.readdirSync(folderPath?.toString());
             return files;
         } catch(e){
             return [];
         }
+    }
+
+    static getCurrentPath() : string | undefined {
+        return vscode.workspace.workspaceFolders?.[0].uri.fsPath.toString();
     }
 }

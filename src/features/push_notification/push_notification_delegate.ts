@@ -32,13 +32,14 @@ export default class PushNotificationDelegate {
                 Dialogs.snackbar.error("No previous notification found");
             }
         } else {
+
             // get all files inside folder ./local_notifications
-            const files = Platform.getFiles(context, LOCAL_NOTIFICATION_FOLDER);
+            const files = Platform.getFiles(LOCAL_NOTIFICATION_FOLDER);
 
             // if there are no files, create a new one inside the folder ./local_notifications
             if (files.length == 0) {
 
-                const folderPath = path.join(context.extensionPath, LOCAL_NOTIFICATION_FOLDER);
+                const folderPath = `${Platform.getCurrentPath()}/${LOCAL_NOTIFICATION_FOLDER}`;
 
                 if (!fs.existsSync(folderPath)) {
                     fs.mkdirSync(folderPath);
@@ -82,7 +83,7 @@ export default class PushNotificationDelegate {
             }
 
             const runner = new Runner();
-            const folderPath = path.join(context.extensionPath, LOCAL_NOTIFICATION_FOLDER);
+            const folderPath = `${Platform.getCurrentPath()}/${LOCAL_NOTIFICATION_FOLDER}`;
             const filePath = path.join(folderPath, file);
 
             LocalDataSource.updateLastNotificationFile(context, filePath);
