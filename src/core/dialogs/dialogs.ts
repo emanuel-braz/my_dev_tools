@@ -93,4 +93,72 @@ export class Dialogs {
 
         return promise;
     }
+
+    static async promptAndReturn(context: ExtensionContext, options: Array<string>, placeHolder: string = ""): Promise<string> {
+
+        let promise = new Promise<string>((resolve, reject) => {
+
+            const quickPick = window.createQuickPick();
+            quickPick.placeholder = placeHolder;
+            quickPick.items = options.map(label => ({ label }));
+            quickPick.ignoreFocusOut = true;
+
+            quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
+                const valueSelected = selection[0].label;
+                resolve(valueSelected);
+                quickPick.dispose();
+            });
+
+            quickPick.onDidAccept(_ => {
+                let valueSelected = quickPick.value;
+                resolve(valueSelected);
+                quickPick.dispose();
+            });
+
+            quickPick.onDidHide(() => {
+                quickPick.dispose();
+            });
+
+            quickPick.show();
+        });
+
+        return promise;
+    }
+
+    static async showInformationMessage(context: ExtensionContext, message: string, options: string[], defaultValue?: string ): Promise<string> {
+        let promise = new Promise<string>((resolve, reject) => {
+            window.showInformationMessage(message, ...options).then((selection) => {
+                if (selection) {
+                    resolve(selection);
+                } else {
+                    if (defaultValue) {
+                        resolve(defaultValue);
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
+        return promise;
+    }
+
+    static async confirmDialog(context: ExtensionContext, message: string, items: string[], defaultValue?: string ): Promise<string> {
+
+        let promise = new Promise<string>((resolve, reject) => {
+            window.showQuickPick(items, { placeHolder: message }).then((selection) => {
+                if (selection) {
+                    resolve(selection);
+                } else {
+                    if (defaultValue) {
+                        resolve(defaultValue);
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
+
+        return promise;
+    }
+
 }

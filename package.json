@@ -2,7 +2,7 @@
 	"name": "deeplink",
 	"displayName": "Mobile Dev Tools (Android / iOS)",
 	"description": "Open deeplinks in emulators, send push notifications, and more...",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -50,6 +50,14 @@
 			{
 				"title": "[MobDevTools] Send the latest used notification",
 				"command": "extension.pushNotificationLastUsed"
+			},
+			{
+				"title": "[MobDevTools] Mirror device screen (Android 🤖)",
+				"command": "extension.androidMirrorScreen"
+			},
+			{
+				"title": "[MobDevTools] Start Emulator (Android 🤖)",
+				"command": "extension.startAvd"
 			}
 		]
 	},

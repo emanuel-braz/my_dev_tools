@@ -42,4 +42,22 @@ export class Runner {
         let ampersand = /&/gi;
         return command.replace(ampersand, "\\" + "&");
     }
+
+    async runCommandAndReturn(command: string): Promise<any> {
+        return new Promise<boolean>((resolve, reject) => {
+            exec(command, (error: any, stdout: any, stderr: any) => {
+                if (stderr) {
+                    Dialogs.snackbar.error(stderr);
+                    reject(stderr);
+                } else if (error) {
+                    Dialogs.snackbar.error(error);
+                    reject(error);
+                } else {
+                    console.log(`${stdout}`);
+                    resolve(stdout);
+                }
+                });
+            }
+        );
+    }
 }

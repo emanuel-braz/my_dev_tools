@@ -27,4 +27,5 @@ export class Platform {
     static getCurrentPath() : string | undefined {
         return vscode.workspace.workspaceFolders?.[0].uri.fsPath.toString();
     }
+
 }

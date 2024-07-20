@@ -5,3 +5,5 @@ export const CLEAR_CACHE_EXT = "extension.deeplinkClearCache";
 export const IOS_PUSH_NOTIFICATION_EXT = "extension.iosPushNotification";
 export const ANDROID_PUSH_NOTIFICATION_EXT = "extension.androidPushNotification";
 export const PUSH_NOTIFICATION_LAST_USED_EXT = "extension.pushNotificationLastUsed";
+export const ANDROID_MIRROR_SCREEN_EXT = "extension.androidMirrorScreen";
+export const START_AVD_EXT = "extension.startAvd";
