@@ -4,3 +4,4 @@ node_modules
 *.vsix
 local_notifications/**
 .vscode/todo.md
+.vscode/settings.json

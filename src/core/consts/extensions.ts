@@ -7,3 +7,6 @@ export const ANDROID_PUSH_NOTIFICATION_EXT = "extension.androidPushNotification"
 export const PUSH_NOTIFICATION_LAST_USED_EXT = "extension.pushNotificationLastUsed";
 export const ANDROID_MIRROR_SCREEN_EXT = "extension.androidMirrorScreen";
 export const START_AVD_EXT = "extension.startAvd";
+export const CONNECT_WIFI_EXT = "extension.connectWifi";
+export const DISCONNECT_WIFI_EXT = "extension.disconnectWifi";
+export const SHOW_DEVICES_EXT = "extension.showConnectedDevices";

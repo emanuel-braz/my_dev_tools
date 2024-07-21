@@ -94,13 +94,18 @@ export class Dialogs {
         return promise;
     }
 
-    static async promptAndReturn(context: ExtensionContext, options: Array<string>, placeHolder: string = ""): Promise<string> {
+    static async promptAndReturn(context: ExtensionContext, options: any[], placeHolder: string = ""): Promise<string> {
 
         let promise = new Promise<string>((resolve, reject) => {
 
             const quickPick = window.createQuickPick();
             quickPick.placeholder = placeHolder;
-            quickPick.items = options.map(label => ({ label }));
+            if (options.length > 0 && typeof options[0] === 'string') {
+                quickPick.items = options.map(label => ({ label }));
+            } else {
+                quickPick.items = options;
+            }
+
             quickPick.ignoreFocusOut = true;
 
             quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
@@ -155,6 +160,16 @@ export class Dialogs {
                         reject();
                     }
                 }
+            });
+        });
+
+        return promise;
+    }
+
+    static async showQuickPick(context: ExtensionContext, items: QuickPickItem[], placeHolder: string = ""): Promise<QuickPickItem | undefined> {
+        let promise = new Promise<QuickPickItem | undefined>((resolve, reject) => {
+            window.showQuickPick(items, { placeHolder }).then((selection) => {
+                resolve(selection);
             });
         });
 

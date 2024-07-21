@@ -58,6 +58,18 @@
 			{
 				"title": "[MobDevTools] Start Emulator (Android 🤖)",
 				"command": "extension.startAvd"
+			},
+			{
+				"title": "[MobDevTools] Connect Wifi (Android 🤖)",
+				"command": "extension.connectWifi"
+			},
+			{
+				"title": "[MobDevTools] Disconnect Wifi (Android 🤖)",
+				"command": "extension.disconnectWifi"
+			},
+			{
+				"title": "[MobDevTools] Show connected Devices (Android 🤖)",
+				"command": "extension.showConnectedDevices"
 			}
 		]
 	},
