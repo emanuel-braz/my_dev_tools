@@ -73,11 +73,9 @@ export default class DeviceDelegate {
             const isTurnScreenOff = await Dialogs.confirmDialog(context, "Turn screen off?", ["No", "Yes"]) === "Yes";
             const isFullScreen = await Dialogs.confirmDialog(context, "Full screen?", ["No", "Yes"]) === "Yes";
 
-            console.log(`isAlwaysOnTop: ${isAlwaysOnTop} isStayAwake: ${isStayAwake} isTurnScreenOff: ${isTurnScreenOff} isFullScreen: ${isFullScreen}`);
-
             Dialogs.snackbar.info(`Mirroring device ${device.label}`);
             
-            this.performMirrorDevice({ device: device.label, isAlwaysOnTop, isStayAwake, isTurnScreenOff, isFullScreen });
+            this.performMirrorAndroidDevice({ device: device.label, isAlwaysOnTop, isStayAwake, isTurnScreenOff, isFullScreen });
         } catch (error) {
             Dialogs.snackbar.info("Mirror device canceled");
         }
@@ -129,7 +127,6 @@ export default class DeviceDelegate {
         Dialogs.snackbar.info(`Starting simulator ${device.label}`);
 
         try {
-            console.log(`xcrun simctl boot ${device.detail}`);
             exec(`xcrun simctl boot ${device.detail}`, (error: any, stdout: any, stderr: any) => {
                 if (error) {
                     Dialogs.snackbar.error(error);
@@ -180,7 +177,6 @@ export default class DeviceDelegate {
         }
 
         exec(`adb -s ${device.label} tcpip ${onlyPortsAvailable[0]}`);
-        // console.log(`adb -s ${device.label} tcpip ${onlyPortsAvailable[0]}`);
 
         // wait 3 secs for the device to restart
         setTimeout(() => {
@@ -189,7 +185,6 @@ export default class DeviceDelegate {
                     Dialogs.snackbar.error(error);
                 } else {
                     const ip = stdout.trim();
-                    console.log(`adb connect ${ip}:${onlyPortsAvailable[0]}`);
                     exec(`adb connect ${ip}:${onlyPortsAvailable[0]}`, (error: any, stdout: any, stderr: any) => {
                         if (error) {
                             Dialogs.snackbar.error(error);
@@ -343,7 +338,7 @@ export default class DeviceDelegate {
         }
     }
 
-    private performMirrorDevice(mirrorDeviceOptions: MirrorDeviceOptions): Promise<void> {
+    private performMirrorAndroidDevice(mirrorDeviceOptions: MirrorDeviceOptions): Promise<void> {
         
        try {
         var command = "scrcpy";
@@ -366,7 +361,6 @@ export default class DeviceDelegate {
                     resolve();
                 }
             });
-            // this.runDetatched({ executable: 'scrcpy', args: command.split(" ") });
         });
        } catch (error) {
             Dialogs.snackbar.error("Error while mirroring device");

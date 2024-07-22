@@ -2,7 +2,7 @@
 
 # Mobile Dev Tools 🛠️
 
-## Deep link and Push Notification VSCode Extension (Android / iOS)
+## Deep link, Push Notification, Screen Mirroring, WIFI debugging/connection, Virtual Device Management - VSCode Extension (Android / iOS)
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
@@ -10,18 +10,25 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 <img width="1067" alt="image" src="https://github.com/emanuel-braz/deeplink/assets/3827308/fda3fa9e-f4a7-4cef-99dd-0af37ab47643">
   
 ### Features
-- Open deep link from VSCode commands
+- Open deep link from VSCode command palette
 - Open latest deep link from quick action button
 - Deep links history
 - Send push notification to iOS simulator
 - Send push notification to Android emulator (WIP)
 - Send latest notification to simulator/emulator
+- Mirror Android device screen
+- Open iOS simulator
+- Open Android emulator
+- Connect wifi Android device
+- Disconnect wifi Android device
+- Show active devices
 
 ### Requirements
 - Android Debug Bridge (adb) for Android emulator or devices
+- `scrcpy` for Android device mirroring - https://github.com/Genymobile/scrcpy
 
 ### Known Issues
-- Cannot select specific device yet, just the OS.
+- Cannot open deeplinks in specific device (it will send to default device, Android or iOS)
 - Add "!" (exclamation mark) before or after the route, in order to do not filter it.
 
 ### Roadmap

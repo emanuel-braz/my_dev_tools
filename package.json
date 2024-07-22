@@ -1,7 +1,7 @@
 {
 	"name": "deeplink",
 	"displayName": "Mobile Dev Tools (Android / iOS)",
-	"description": "Open deeplinks in emulators, send push notifications, and more...",
+	"description": "Open deeplinks in emulators, push notifications, screen mirroring, WIFI debugging...",
 	"version": "0.0.11",
 	"publisher": "emanuel-braz",
 	"repository": {
