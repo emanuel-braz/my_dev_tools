@@ -94,9 +94,9 @@ export class Dialogs {
         return promise;
     }
 
-    static async promptAndReturn(context: ExtensionContext, options: any[], placeHolder: string = ""): Promise<string> {
+    static async promptAndReturn(context: ExtensionContext, options: any[], placeHolder: string = ""): Promise<QuickPickItem | undefined> {
 
-        let promise = new Promise<string>((resolve, reject) => {
+        let promise = new Promise<QuickPickItem | undefined>((resolve, reject) => {
 
             const quickPick = window.createQuickPick();
             quickPick.placeholder = placeHolder;
@@ -109,19 +109,20 @@ export class Dialogs {
             quickPick.ignoreFocusOut = true;
 
             quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
-                const valueSelected = selection[0].label;
+                const valueSelected = selection[0];
                 resolve(valueSelected);
                 quickPick.dispose();
             });
 
             quickPick.onDidAccept(_ => {
                 let valueSelected = quickPick.value;
-                resolve(valueSelected);
+                resolve({ label: valueSelected });
                 quickPick.dispose();
             });
 
             quickPick.onDidHide(() => {
                 quickPick.dispose();
+                resolve(undefined);
             });
 
             quickPick.show();

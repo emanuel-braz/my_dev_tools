@@ -56,8 +56,13 @@
 				"command": "extension.androidMirrorScreen"
 			},
 			{
-				"title": "[MobDevTools] Start Emulator (Android 🤖)",
-				"command": "extension.startAvd"
+				"title": "[MobDevTools] Start Device (Android 🤖)",
+				"command": "extension.startAndroidDevice"
+			},
+			{
+				"title": "[MobDevTools] Start Device (iOS 🍎)",
+				"command": "extension.startIosDevice",
+				"enablement": "isMac"
 			},
 			{
 				"title": "[MobDevTools] Connect Wifi (Android 🤖)",
@@ -68,7 +73,11 @@
 				"command": "extension.disconnectWifi"
 			},
 			{
-				"title": "[MobDevTools] Show connected Devices (Android 🤖)",
+				"title": "[MobDevTools] Reconnect offline devices (Android 🤖)",
+				"command": "extension.reconnectOfflineWifi"
+			},
+			{
+				"title": "[MobDevTools] Show active devices",
 				"command": "extension.showConnectedDevices"
 			}
 		]
