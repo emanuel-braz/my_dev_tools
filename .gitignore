@@ -3,3 +3,5 @@ node_modules
 .vscode-test/
 *.vsix
 local_notifications/**
+.vscode/todo.md
+.vscode/settings.json

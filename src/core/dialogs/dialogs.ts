@@ -93,4 +93,88 @@ export class Dialogs {
 
         return promise;
     }
+
+    static async promptAndReturn(context: ExtensionContext, options: any[], placeHolder: string = ""): Promise<QuickPickItem | undefined> {
+
+        let promise = new Promise<QuickPickItem | undefined>((resolve, reject) => {
+
+            const quickPick = window.createQuickPick();
+            quickPick.placeholder = placeHolder;
+            if (options.length > 0 && typeof options[0] === 'string') {
+                quickPick.items = options.map(label => ({ label }));
+            } else {
+                quickPick.items = options;
+            }
+
+            quickPick.ignoreFocusOut = true;
+
+            quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
+                const valueSelected = selection[0];
+                resolve(valueSelected);
+                quickPick.dispose();
+            });
+
+            quickPick.onDidAccept(_ => {
+                let valueSelected = quickPick.value;
+                resolve({ label: valueSelected });
+                quickPick.dispose();
+            });
+
+            quickPick.onDidHide(() => {
+                quickPick.dispose();
+                resolve(undefined);
+            });
+
+            quickPick.show();
+        });
+
+        return promise;
+    }
+
+    static async showInformationMessage(context: ExtensionContext, message: string, options: string[], defaultValue?: string ): Promise<string> {
+        let promise = new Promise<string>((resolve, reject) => {
+            window.showInformationMessage(message, ...options).then((selection) => {
+                if (selection) {
+                    resolve(selection);
+                } else {
+                    if (defaultValue) {
+                        resolve(defaultValue);
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
+        return promise;
+    }
+
+    static async confirmDialog(context: ExtensionContext, message: string, items: string[], defaultValue?: string ): Promise<string> {
+
+        let promise = new Promise<string>((resolve, reject) => {
+            window.showQuickPick(items, { placeHolder: message }).then((selection) => {
+                if (selection) {
+                    resolve(selection);
+                } else {
+                    if (defaultValue) {
+                        resolve(defaultValue);
+                    } else {
+                        reject();
+                    }
+                }
+            });
+        });
+
+        return promise;
+    }
+
+    static async showQuickPick(context: ExtensionContext, items: QuickPickItem[], placeHolder: string = ""): Promise<QuickPickItem | undefined> {
+        let promise = new Promise<QuickPickItem | undefined>((resolve, reject) => {
+            window.showQuickPick(items, { placeHolder }).then((selection) => {
+                resolve(selection);
+            });
+        });
+
+        return promise;
+    }
+
 }

@@ -1,8 +1,8 @@
 {
 	"name": "deeplink",
 	"displayName": "Mobile Dev Tools (Android / iOS)",
-	"description": "Open deeplinks in emulators, send push notifications, and more...",
-	"version": "0.0.10",
+	"description": "Open deeplinks in emulators, push notifications, screen mirroring, WIFI debugging...",
+	"version": "0.0.11",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -50,6 +50,35 @@
 			{
 				"title": "[MobDevTools] Send the latest used notification",
 				"command": "extension.pushNotificationLastUsed"
+			},
+			{
+				"title": "[MobDevTools] Mirror device screen (Android 🤖)",
+				"command": "extension.androidMirrorScreen"
+			},
+			{
+				"title": "[MobDevTools] Start Device (Android 🤖)",
+				"command": "extension.startAndroidDevice"
+			},
+			{
+				"title": "[MobDevTools] Start Device (iOS 🍎)",
+				"command": "extension.startIosDevice",
+				"enablement": "isMac"
+			},
+			{
+				"title": "[MobDevTools] Connect Wifi (Android 🤖)",
+				"command": "extension.connectWifi"
+			},
+			{
+				"title": "[MobDevTools] Disconnect Wifi (Android 🤖)",
+				"command": "extension.disconnectWifi"
+			},
+			{
+				"title": "[MobDevTools] Reconnect offline devices (Android 🤖)",
+				"command": "extension.reconnectOfflineWifi"
+			},
+			{
+				"title": "[MobDevTools] Show active devices",
+				"command": "extension.showConnectedDevices"
 			}
 		]
 	},
