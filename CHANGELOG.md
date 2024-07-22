@@ -1,3 +1,11 @@
+## [0.0.11] 2024-07-22
+- Mirror Android device screen
+- Open iOS simulator
+- Open Android emulator
+- Connect wifi Android device
+- Disconnect wifi Android device
+- Show active devices
+
 ## [0.0.10] 2023-10-30
 - Bug fixes
 

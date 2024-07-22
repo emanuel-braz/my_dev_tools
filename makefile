@@ -8,4 +8,4 @@ build:
 	@vsce package
 
 install:
-	@code --install-extension deeplink-0.0.10.vsix
+	@code --install-extension deeplink-0.0.11.vsix
