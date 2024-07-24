@@ -12,3 +12,5 @@ export const CONNECT_WIFI_EXT = "extension.connectWifi";
 export const DISCONNECT_WIFI_EXT = "extension.disconnectWifi";
 export const RECONNECT_OFFLINE_WIFI_EXT = "extension.reconnectOfflineWifi";
 export const SHOW_CONNECTED_DEVICES_EXT = "extension.showConnectedDevices";
+export const RUN_GIST_FILE_EXT = "extension.runGistFile";
+export const RUN_GIST_FROM_USER_EXT = "extension.runGistFromUser";

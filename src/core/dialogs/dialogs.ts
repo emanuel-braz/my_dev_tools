@@ -1,4 +1,4 @@
-import { window, ExtensionContext, QuickPickItem } from 'vscode';
+import { window, ExtensionContext, QuickPickItem, InputBoxOptions } from 'vscode';
 import { MARK_SIGN } from '../consts/app_consts';
 import { APP_PLACEHOLDER_NOTIFICATION, APP_PLACEHOLDER_ROUTE } from '../consts/strings';
 import { LocalDataSource } from '../data/local_data_source';
@@ -59,7 +59,7 @@ export class Dialogs {
             quickPick.items = options.map(label => ({ label }));
             quickPick.ignoreFocusOut = true;
 
-            quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
+            quickPick.onDidChangeSelection((selection: readonly QuickPickItem[]) => {
                 const valueSelected = selection[0].label;
                 const index = options.indexOf(valueSelected);
                 LocalDataSource.updateLastLink(context, index);
@@ -108,7 +108,7 @@ export class Dialogs {
 
             quickPick.ignoreFocusOut = true;
 
-            quickPick.onDidChangeSelection((selection: QuickPickItem[]) => {
+            quickPick.onDidChangeSelection((selection: readonly QuickPickItem[]) => {
                 const valueSelected = selection[0];
                 resolve(valueSelected);
                 quickPick.dispose();
@@ -167,9 +167,19 @@ export class Dialogs {
         return promise;
     }
 
-    static async showQuickPick(context: ExtensionContext, items: QuickPickItem[], placeHolder: string = ""): Promise<QuickPickItem | undefined> {
+    static async showQuickPick(context: ExtensionContext, items: QuickPickItem[], title: string = ""): Promise<QuickPickItem | undefined> {
         let promise = new Promise<QuickPickItem | undefined>((resolve, reject) => {
-            window.showQuickPick(items, { placeHolder }).then((selection) => {
+            window.showQuickPick(items, { placeHolder: title }).then((selection) => {
+                resolve(selection);
+            });
+        });
+
+        return promise;
+    }
+
+    static async showInputBox(inputBoxOptions : InputBoxOptions): Promise<string | undefined> {
+        let promise = new Promise<string | undefined>((resolve, reject) => {
+            window.showInputBox(inputBoxOptions).then((selection) => {
                 resolve(selection);
             });
         });
