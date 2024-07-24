@@ -1,3 +1,9 @@
+## [0.0.12] 2024-07-24
+- Run scripts directly from your Gists
+- List all public gists from a user
+- Run a script from a gist url (Secret or Public Gist)
+- Keep a list of all your favorite gists on project (Secret or Public Gist)
+
 ## [0.0.11] 2024-07-22
 - Mirror Android device screen
 - Open iOS simulator

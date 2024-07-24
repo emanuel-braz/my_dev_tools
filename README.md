@@ -1,8 +1,7 @@
-![image](https://user-images.githubusercontent.com/3827308/135861079-6f39a13a-393d-4fb6-a487-76652636cd0e.png)
 
 # Mobile Dev Tools 🛠️
 
-## Deep link, Push Notification, Screen Mirroring, WIFI debugging/connection, Virtual Device Management - VSCode Extension (Android / iOS)
+## Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, etc.
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
@@ -10,18 +9,23 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 <img width="1067" alt="image" src="https://github.com/emanuel-braz/deeplink/assets/3827308/fda3fa9e-f4a7-4cef-99dd-0af37ab47643">
   
 ### Features
-- Open deep link from VSCode command palette
-- Open latest deep link from quick action button
-- Deep links history
-- Send push notification to iOS simulator
-- Send push notification to Android emulator (WIP)
-- Send latest notification to simulator/emulator
-- Mirror Android device screen
-- Open iOS simulator
-- Open Android emulator
-- Connect wifi Android device
-- Disconnect wifi Android device
-- Show active devices
+- Open deep link from VSCode command palette  
+- Open latest deep link from quick action button  
+- Deep links history  
+- Send push notification to iOS simulator  
+- Send push notification to Android emulator (WIP)  
+- Send latest notification to simulator/emulator  
+- Mirror Android device screen  
+- Open iOS simulator  
+- Open Android emulator  
+- Connect wifi Android device  
+- Disconnect wifi Android device  
+- Show active devices  
+- Run scripts directly from your Gist Files  
+  - List all gists from a user  
+  - Run a script from a gist url (Secret or Public Gist)  
+  - Keep a list of all your favorite scripts on project (Secret or Public Gist)  
+  
 
 ### Requirements
 - Android Debug Bridge (adb) for Android emulator or devices
@@ -33,8 +37,6 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 
 ### Roadmap
 - Add options to select specific device
-- App settings interface
-
 ---
 
 ### Quick action button `Deep link`
