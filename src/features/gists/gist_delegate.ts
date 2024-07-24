@@ -1,6 +1,7 @@
 import { commands, ExtensionContext, ProgressLocation, QuickPickItem, window } from "vscode";
 import axios from 'axios';
 import { Dialogs } from "../../core/dialogs/dialogs";
+import { Platform } from "../../core/platform/platform";
 
 export interface GistFile extends QuickPickItem {
     filename: string;
@@ -20,11 +21,38 @@ export interface Gist extends QuickPickItem {
     updated_at: string;
 }
 
+export type SecretGistFile = {
+    name: string;
+    url: string;
+}
+
 export class GistDelegate {
 
     static NEXT_TERM_ID = 0;
 
     async runGistFile(context: ExtensionContext) {
+
+        const secretFiles = await this.getSecretFilesFromDisk(context);
+
+        const quickPickItems = secretFiles.map((file: SecretGistFile) => {
+            return {
+                label: file.name,
+                description: file.url,
+            } as QuickPickItem;
+        });
+
+        const secretGistFile = await Dialogs.showQuickPick(context, quickPickItems, 'Select a Secret Gist');
+
+        if (!secretGistFile || !secretGistFile.description) {
+            return;
+        }
+
+        const rawFileContent = await this.fetchRawFileContent(secretGistFile.description);
+
+        this._runGistOnTerminal(context, rawFileContent);
+    }
+
+    async runGistUrl(context: ExtensionContext) {
 
         const urlRawFile = await Dialogs.showInputBox({
             prompt: 'Enter the raw URL of the file to run on terminal',
@@ -42,11 +70,10 @@ export class GistDelegate {
 
     async runGistFromUser(context: ExtensionContext) {
 
-        const userName = await Dialogs.showInputBox({        
+        const userName = await Dialogs.showInputBox({
             prompt: 'Enter the Gist username to fetch the files',
             placeHolder: 'example: emanuel-braz',
-            value: 'emanuel-braz'
-    });
+        });
 
         if (!userName) {
             return;
@@ -104,7 +131,7 @@ export class GistDelegate {
         const terminal = window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
         terminal.show();
 
-       if (fileRawData.startsWith('#!')) {
+        if (fileRawData.startsWith('#!')) {
             terminal.sendText(`bash -c '${fileRawData}'`);
         } else {
             terminal.sendText(fileRawData);
@@ -152,4 +179,31 @@ export class GistDelegate {
             }
         });
     }
+
+    private async getSecretFilesFromDisk(context: ExtensionContext): Promise<SecretGistFile[]> {
+        const GIST_FILE = 'gist.json';
+        const GIST_FOLDER = '.mdt';
+        var fileData = Platform.getFileContent(GIST_FOLDER, GIST_FILE);
+
+        if (!fileData || fileData.trim().length === 0) {
+            fileData = `[
+    {
+        "name": "My Public Gist",
+        "url": "https://gist.githubusercontent.com/emanuel-braz/9adf6e767b2439ffbc60ce7bb0f459ad/raw/4755e1a6236ff81726c8ea1f6e04bac4de1fba38/echo_1.sh"
+    },
+    {
+        "name": "My Secret Gist",
+        "url": "https://gist.githubusercontent.com/emanuel-braz/d89b7007b52efa6148a9513594ef3356/raw/1a86e67d6fea973ccab9fed5551b6406ccb97813/my_secret_gist.sh"
+    }
+]`;
+
+            Platform.writeFileContent(GIST_FOLDER, GIST_FILE, fileData);
+            Dialogs.snackbar.info(`File created: ${GIST_FOLDER}/${GIST_FILE}`);
+            Dialogs.snackbar.info(`Please, fill the file with the secret gists.`);
+        }
+
+        const fileJson = JSON.parse(fileData);
+        return fileJson;
+    }
+
 }

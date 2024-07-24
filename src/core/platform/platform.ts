@@ -29,4 +29,31 @@ export class Platform {
         return vscode.workspace.workspaceFolders?.[0].uri.fsPath.toString();
     }
 
+    static getFileContent(folder: string, file: string) : string | undefined {
+        try {
+            let currDir = Platform.getCurrentPath();
+            const folderPath = path.join(currDir, folder);
+
+            if (!fs.existsSync(folderPath)) {
+                fs.mkdirSync(folderPath, { recursive: true });
+            }
+            const filePath = path.join(folderPath, file);
+            if (!fs.existsSync(filePath)) {
+                fs.writeFileSync(filePath, '');
+            }
+
+            const content = fs.readFileSync(filePath, 'utf8');
+            return content;
+        } catch(e){
+            return undefined;
+        }
+    }
+
+    static writeFileContent(folder: string, file: string, content: string) : void {
+        let currDir = Platform.getCurrentPath();
+        const folderPath = path.join(currDir, folder);
+        const filePath = path.join(folderPath, file);
+        fs.writeFileSync(filePath, content);
+    }
+
 }
