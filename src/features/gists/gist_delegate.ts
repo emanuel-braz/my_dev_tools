@@ -88,7 +88,7 @@ export class GistDelegate {
 
         const gist: Gist | undefined = await Dialogs.showQuickPick(context, gistList.map(gist => {
             return {
-                label: gist.description,
+                label: gist.description || `${gist.files[Object.keys(gist.files)[0]].filename} - ${gist.updated_at}`,
                 id: gist.id,
                 files: gist.files,
                 public: gist.public,
