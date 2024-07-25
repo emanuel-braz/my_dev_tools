@@ -1,8 +1,13 @@
+## [0.0.13] 2024-07-25
+- Configure your favorite gist (cache in VSCode - user profile)
+- Run your favorite gist on terminal, copy or open it in the editor
+- Clear cache of favorite gists
+
 ## [0.0.12] 2024-07-24
 - Run scripts directly from your Gists
 - List all public gists from a user
 - Run a script from a gist url (Secret or Public Gist)
-- Keep a list of all your favorite gists on project (Secret or Public Gist)
+- Keep a list of all your secret gists on project (on Disk, can be versioned)
 
 ## [0.0.11] 2024-07-22
 - Mirror Android device screen
