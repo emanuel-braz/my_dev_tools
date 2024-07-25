@@ -15,3 +15,6 @@ export const SHOW_CONNECTED_DEVICES_EXT = "extension.showConnectedDevices";
 export const RUN_GIST_FILE_EXT = "extension.runGistFile";
 export const RUN_GIST_URL_EXT = "extension.runGistUrl";
 export const RUN_GIST_FROM_USER_EXT = "extension.runGistFromUser";
+export const RUN_FAVORITE_GIST_EXT = "extension.runFavoriteGist";
+export const SET_FAVORITE_GIST_EXT = "extension.setFavoriteGist";
+export const CLEAR_FAVORITE_GIST_EXT = "extension.clearFavoriteGist";

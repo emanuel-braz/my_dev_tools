@@ -1,30 +1,9 @@
-import { commands, ExtensionContext, ProgressLocation, QuickPickItem, window } from "vscode";
+import { commands, ExtensionContext, ProgressLocation, QuickPickItem, QuickPickItemButtonEvent, ThemeIcon, Uri, window, workspace } from "vscode";
 import axios from 'axios';
 import { Dialogs } from "../../core/dialogs/dialogs";
 import { Platform } from "../../core/platform/platform";
-
-export interface GistFile extends QuickPickItem {
-    filename: string;
-    type: string;
-    language: string | null;
-    raw_url: string;
-    size: number;
-}
-
-export interface Gist extends QuickPickItem {
-    id: string;
-    description: string;
-    html_url: string;
-    files: { [key: string]: GistFile };
-    public: boolean;
-    created_at: string;
-    updated_at: string;
-}
-
-export type SecretGistFile = {
-    name: string;
-    url: string;
-}
+import { ButtonCallback, Gist, GistFile, SecretGistFile } from "./gist_types";
+import { LocalDataSource } from "../../core/data/local_data_source";
 
 export class GistDelegate {
 
@@ -88,7 +67,7 @@ export class GistDelegate {
 
         const gist: Gist | undefined = await Dialogs.showQuickPick(context, gistList.map(gist => {
             return {
-                label: gist.description || `${gist.files[Object.keys(gist.files)[0]].filename} - ${gist.updated_at}`,
+                label: gist.description || `${gist.files[Object.keys(gist.files)[0]].filename} - ${gist.updated_at || gist.created_at}`,
                 id: gist.id,
                 files: gist.files,
                 public: gist.public,
@@ -104,15 +83,39 @@ export class GistDelegate {
         const filesAsQuickPickItems = Object.keys(gist.files).map(key => {
             const file = gist.files[key];
             return {
-                label: file.filename,
-                description: `${file.type} - ${file.language} - ${file.size} bytes`,
+                label: `$(console) RUN: ${file.filename}`,
+                description: `${file.type} - ${file.size} bytes`,
                 filename: file.filename,
                 type: file.type,
                 raw_url: file.raw_url,
+                buttons: [
+                    {
+                        iconPath: new ThemeIcon('files'),
+                        tooltip: 'Copy to clipboard',
+                        callback: async () => {
+                            const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+                            Platform.copyToClipboard(rawFileContent);
+                            Dialogs.snackbar.info('File content copied to clipboard!');
+                        }
+                    } as ButtonCallback,
+                    {
+                        iconPath: new ThemeIcon('link-external'),
+                        tooltip: 'Open in editor',
+                        callback: async () => {
+                            const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+                            const document = await workspace.openTextDocument({
+                                content: rawFileContent,
+                                language: 'plaintext' 
+                            });
+                    
+                            await window.showTextDocument(document);
+                        }
+                    } as ButtonCallback
+                ]
             } as GistFile;
         });
 
-        const file: GistFile | undefined = await Dialogs.showQuickPick(
+        const file: GistFile | undefined = await Dialogs.promptAndReturn(
             context,
             filesAsQuickPickItems,
             'Select a file'
@@ -204,6 +207,90 @@ export class GistDelegate {
 
         const fileJson = JSON.parse(fileData);
         return fileJson;
+    }
+
+    async runFavoriteGist(context: ExtensionContext) {
+
+        var favoriteGistUrl = LocalDataSource.getFavoriteGistUrl(context);
+
+        if (!favoriteGistUrl) {
+            favoriteGistUrl = await this.updateFavoriteGist(context);
+            if (!favoriteGistUrl) {
+                Dialogs.snackbar.error('Favorite Gist not set');
+                return;
+            }
+        }
+
+        const gistId = favoriteGistUrl.split('/').pop();
+        const api = `https://api.github.com/gists/${gistId}`;
+
+        const gist = await this.fetchData<Gist>(api);
+        
+        const filesAsQuickPickItems = Object.keys(gist.files).map(key => {
+            const file = gist.files[key];
+            return {
+                label: `$(console) RUN: ${file.filename}`,
+                description: `${file.type} - ${file.language} - ${file.size} bytes`,
+                filename: file.filename,
+                type: file.type,
+                raw_url: file.raw_url,
+                buttons: [
+                    {
+                        iconPath: new ThemeIcon('files'),
+                        tooltip: 'Copy to clipboard',
+                        callback: async () => {
+                            const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+                            Platform.copyToClipboard(rawFileContent);
+                            Dialogs.snackbar.info('File content copied to clipboard!');
+                        }
+                    } as ButtonCallback,
+                    {
+                        iconPath: new ThemeIcon('link-external'),
+                        tooltip: 'Open in editor',
+                        callback: async () => {
+                            const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+                            const document = await workspace.openTextDocument({
+                                content: rawFileContent,
+                                language: 'plaintext' 
+                            });
+                    
+                            await window.showTextDocument(document);
+                        }
+                    } as ButtonCallback
+                ]
+            } ;
+        });
+
+        const file: GistFile | undefined = await Dialogs.promptAndReturn(
+            context,
+            filesAsQuickPickItems,
+            'Select a file'
+        ) as GistFile;
+
+        if (!file) {
+            return;
+        }
+
+        const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+        this._runGistOnTerminal(context, rawFileContent);
+    }
+    
+    async updateFavoriteGist(context: ExtensionContext): Promise<string | undefined> {
+        const favoriteGistUrl = await Dialogs.showInputBox({
+            prompt: 'Enter the URL of the favorite Gist',
+            placeHolder: 'https://gist.github.com/username/gist_id',
+        });
+
+        if (!favoriteGistUrl || favoriteGistUrl.trim().length === 0 || !favoriteGistUrl.startsWith('https://gist.github.com/')) {
+            return;
+        }
+        
+        LocalDataSource.setFavoriteGistUrl(context, favoriteGistUrl);
+        return favoriteGistUrl;
+    }
+
+    clearFavoriteGist(context: ExtensionContext) {
+        LocalDataSource.setFavoriteGistUrl(context, '');
     }
 
 }
