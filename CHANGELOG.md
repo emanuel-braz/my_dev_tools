@@ -1,3 +1,6 @@
+## [0.0.14] 2024-07-25
+- Update README.md
+
 ## [0.0.13] 2024-07-25
 - Configure your favorite gist (cache in VSCode - user profile)
 - Run your favorite gist on terminal, copy or open it in the editor

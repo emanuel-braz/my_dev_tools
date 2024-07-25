@@ -25,6 +25,9 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
   - List all gists from a user  
   - Run a script from a gist url (Secret or Public Gist)  
   - Keep a list of all your favorite scripts on project (Secret or Public Gist)  
+  - Configure your favorite gist (cache in VSCode - user profile)  
+  - Run your favorite gist on terminal, copy or open it in the editor  
+  - Clear cache of favorite gists  
   
 
 ### Requirements
