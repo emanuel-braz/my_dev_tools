@@ -2,6 +2,7 @@ export const MAX_ITENS = 30;
 export const ANDROID_EXEC = "adb";
 export const IOS_EXEC = "xcrun";
 export const LINKS_KEY = "links_key";
+export const GIST_FAVORITE_URL_KEY = "gist_favorite_url_key";
 export const NOTIFICATION_KEY = "notification_key";
 export const IS_ANDROID_KEY = "is_android_key";
 export const ANDROID = "android";

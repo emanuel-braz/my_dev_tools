@@ -2,7 +2,7 @@
 	"name": "deeplink",
 	"displayName": "Mobile Dev Tools (Android / iOS)",
 	"description": "Open deeplinks in emulators, push notifications, screen mirroring, WIFI debugging...",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -81,7 +81,7 @@
 				"command": "extension.showConnectedDevices"
 			},
 			{
-				"title": "[MobDevTools] Run Secret Gist (cached)",
+				"title": "[MobDevTools] Run Secret Gist (Disk)",
 				"command": "extension.runGistFile"
 			},
 			{
@@ -91,6 +91,18 @@
 			{
 				"title": "[MobDevTools] Run Public Gist User",
 				"command": "extension.runGistFromUser"
+			},
+			{
+				"title": "[MobDevTools] Run Favorite Gist",
+				"command": "extension.runFavoriteGist"
+			},
+			{
+				"title": "[MobDevTools] Update Favorite Gist",
+				"command": "extension.setFavoriteGist"
+			},
+			{
+				"title": "[MobDevTools] Clear Favorite Gist",
+				"command": "extension.clearFavoriteGist"
 			}
 		]
 	},

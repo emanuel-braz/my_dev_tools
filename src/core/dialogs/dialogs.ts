@@ -1,7 +1,8 @@
-import { window, ExtensionContext, QuickPickItem, InputBoxOptions } from 'vscode';
+import { window, ExtensionContext, QuickPickItem, InputBoxOptions, QuickInputButton, QuickPickItemButtonEvent } from 'vscode';
 import { MARK_SIGN } from '../consts/app_consts';
 import { APP_PLACEHOLDER_NOTIFICATION, APP_PLACEHOLDER_ROUTE } from '../consts/strings';
 import { LocalDataSource } from '../data/local_data_source';
+import { ButtonCallback } from '../../features/gists/gist_types';
 
 class Snackbar {
 
@@ -118,6 +119,16 @@ export class Dialogs {
                 let valueSelected = quickPick.value;
                 resolve({ label: valueSelected });
                 quickPick.dispose();
+            });
+
+            quickPick.onDidTriggerItemButton((event: QuickPickItemButtonEvent<QuickPickItem>) => {
+                const button = event.button as ButtonCallback;
+                if (button && button.callback) {
+                    button.callback();
+                    quickPick.dispose();
+                    resolve(undefined);
+                }
+                
             });
 
             quickPick.onDidHide(() => {

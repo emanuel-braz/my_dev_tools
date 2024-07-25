@@ -56,4 +56,8 @@ export class Platform {
         fs.writeFileSync(filePath, content);
     }
 
+    static copyToClipboard(content: string) {
+        vscode.env.clipboard.writeText(content);
+    }
+
 }

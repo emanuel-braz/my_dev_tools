@@ -1,5 +1,5 @@
 import { ExtensionContext } from 'vscode';
-import { IS_ANDROID_KEY, LINKS_KEY, MAX_ITENS, NOTIFICATION_KEY } from '../consts/app_consts';
+import { GIST_FAVORITE_URL_KEY, IS_ANDROID_KEY, LINKS_KEY, MAX_ITENS, NOTIFICATION_KEY } from '../consts/app_consts';
 
 export class LocalDataSource {
 
@@ -44,5 +44,14 @@ export class LocalDataSource {
 
     static isAndroid(context: ExtensionContext): Boolean {
         return context.globalState.get(IS_ANDROID_KEY, true);
+    }
+
+    static setFavoriteGistUrl(context: ExtensionContext, gistUrl: string): void {
+        context.globalState.update(GIST_FAVORITE_URL_KEY, gistUrl);
+    }
+
+    static getFavoriteGistUrl(context: ExtensionContext): string | undefined {
+        const data = context.globalState.get(GIST_FAVORITE_URL_KEY, undefined);
+        return data;
     }
 }
