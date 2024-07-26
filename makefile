@@ -8,7 +8,7 @@ build:
 	@vsce package
 
 install:
-	@code --install-extension deeplink-0.0.12.vsix
+	@code --install-extension deeplink-0.0.15.vsix
 
 build-install:
-	@vsce package && code --install-extension deeplink-0.0.12.vsix
+	@vsce package && code --install-extension deeplink-0.0.15.vsix

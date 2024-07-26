@@ -9,7 +9,7 @@ export class GistDelegate {
 
     static NEXT_TERM_ID = 0;
 
-    async runGistFile(context: ExtensionContext) {
+    async runGistFromDisk(context: ExtensionContext) {
 
         const secretFiles = await this.getSecretFilesFromDisk(context);
 
@@ -20,31 +20,13 @@ export class GistDelegate {
             } as QuickPickItem;
         });
 
-        const secretGistFile = await Dialogs.showQuickPick(context, quickPickItems, 'Select a Secret Gist');
+        const gist = await Dialogs.showQuickPick(context, quickPickItems, 'Select a Gist');
 
-        if (!secretGistFile || !secretGistFile.description) {
+        if (!gist || !gist.description) {
             return;
         }
 
-        const rawFileContent = await this.fetchRawFileContent(secretGistFile.description);
-
-        this._runGistOnTerminal(context, rawFileContent);
-    }
-
-    async runGistUrl(context: ExtensionContext) {
-
-        const urlRawFile = await Dialogs.showInputBox({
-            prompt: 'Enter the raw URL of the file to run on terminal',
-            placeHolder: 'https://gist.githubusercontent.com/username/gist_id/raw/file_name',
-        });
-
-        if (!urlRawFile) {
-            return;
-        }
-
-        const rawFileContent = await this.fetchRawFileContent(urlRawFile);
-
-        this._runGistOnTerminal(context, rawFileContent);
+        this.runGistFromUrl(context, gist.description);
     }
 
     async runGistFromUser(context: ExtensionContext) {
@@ -151,7 +133,7 @@ export class GistDelegate {
 
             try {
                 progress.report({ increment: 50, message: "Fetching data from URL..." });
-                const response = await axios.get(url, { responseType: 'json' });
+                const response = await axios.get(url, { responseType: 'text' });
 
                 progress.report({ increment: 100, message: "Data fetched successfully!" });
                 return response.data;
@@ -191,12 +173,12 @@ export class GistDelegate {
         if (!fileData || fileData.trim().length === 0) {
             fileData = `[
     {
-        "name": "My Public Gist",
-        "url": "https://gist.githubusercontent.com/emanuel-braz/9adf6e767b2439ffbc60ce7bb0f459ad/raw/4755e1a6236ff81726c8ea1f6e04bac4de1fba38/echo_1.sh"
+        "name": "My Secret Gist",
+        "url": "https://gist.github.com/emanuel-braz/d89b7007b52efa6148a9513594ef3356"
     },
     {
         "name": "My Secret Gist",
-        "url": "https://gist.githubusercontent.com/emanuel-braz/d89b7007b52efa6148a9513594ef3356/raw/1a86e67d6fea973ccab9fed5551b6406ccb97813/my_secret_gist.sh"
+        "url": "https://gist.github.com/emanuel-braz/d89b7007b52efa6148a9513594ef3356"
     }
 ]`;
 
@@ -209,19 +191,36 @@ export class GistDelegate {
         return fileJson;
     }
 
+    async inputGistUrlAndRun(context: ExtensionContext) {
+        const url = await Dialogs.showInputBox({
+            prompt: 'Enter the URL of the Gist',
+            placeHolder: 'https://gist.github.com/username/gist_id',
+        });
+
+        if (!url || url.trim().length === 0 || !url.startsWith('https://gist.github.com/')) {
+            Dialogs.snackbar.error('Invalid Gist URL');
+            return;
+        }
+
+        this.runGistFromUrl(context, url);
+    }
+
     async runFavoriteGist(context: ExtensionContext) {
-
-        var favoriteGistUrl = LocalDataSource.getFavoriteGistUrl(context);
-
-        if (!favoriteGistUrl) {
-            favoriteGistUrl = await this.updateFavoriteGist(context);
-            if (!favoriteGistUrl) {
+        var url = LocalDataSource.getFavoriteGistUrl(context);
+        if (!url) {
+            url = await this.updateFavoriteGist(context);
+            if (!url) {
                 Dialogs.snackbar.error('Favorite Gist not set');
                 return;
             }
         }
 
-        const gistId = favoriteGistUrl.split('/').pop();
+        this.runGistFromUrl(context, url);
+    }
+
+    async runGistFromUrl(context: ExtensionContext, url: string) {
+
+        const gistId = url.split('/').pop();
         const api = `https://api.github.com/gists/${gistId}`;
 
         const gist = await this.fetchData<Gist>(api);
