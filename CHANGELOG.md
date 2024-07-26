@@ -1,3 +1,6 @@
+## [0.0.16] 2024-07-26
+- Fix error with scripts with 1024+ characters
+
 ## [0.0.15] 2024-07-25
 - Fixes request - plain text
 

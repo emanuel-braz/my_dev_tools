@@ -5,6 +5,10 @@ import { Platform } from "../../core/platform/platform";
 import { ButtonCallback, Gist, GistFile, SecretGistFile } from "./gist_types";
 import { LocalDataSource } from "../../core/data/local_data_source";
 
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
 export class GistDelegate {
 
     static NEXT_TERM_ID = 0;
@@ -113,13 +117,23 @@ export class GistDelegate {
     }
 
     private async _runGistOnTerminal(context: ExtensionContext, fileRawData: string) {
-        const terminal = window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
-        terminal.show();
 
         if (fileRawData.startsWith('#!')) {
-            terminal.sendText(`bash -c '${fileRawData}'`);
+            if (fileRawData.length > 1024) {
+                this.sendLargeTextToTerminal(fileRawData);
+            } else {
+                const terminal = window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+                terminal.show();
+                terminal.sendText(`bash -c '${fileRawData}'`);
+            }
         } else {
-            terminal.sendText(fileRawData);
+            if (fileRawData.length > 1024) {
+                this.sendLargeTextToTerminal(fileRawData);
+            } else {
+                const terminal = window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+                terminal.show();
+                terminal.sendText(fileRawData);
+            }
         }
     }
 
@@ -290,6 +304,15 @@ export class GistDelegate {
 
     clearFavoriteGist(context: ExtensionContext) {
         LocalDataSource.setFavoriteGistUrl(context, '');
+    }
+
+    sendLargeTextToTerminal(text: string) {
+        const tempFilePath = path.join(os.tmpdir(), 'gist_temp_file.sh');
+        fs.writeFileSync(tempFilePath, text, { mode: 0o755 });
+    
+        const terminal = window.createTerminal(`Temp Terminal`);
+        terminal.show(true);
+        terminal.sendText(`bash ${tempFilePath}`, true);
     }
 
 }
