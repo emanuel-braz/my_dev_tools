@@ -1,3 +1,6 @@
+## [0.0.15] 2024-07-25
+- Fixes request - plain text
+
 ## [0.0.14] 2024-07-25
 - Update README.md
 

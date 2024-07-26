@@ -8,26 +8,46 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 
 <img width="1067" alt="image" src="https://github.com/emanuel-braz/deeplink/assets/3827308/fda3fa9e-f4a7-4cef-99dd-0af37ab47643">
   
-### Features
+### Features  
+
 - Open deep link from VSCode command palette  
+
 - Open latest deep link from quick action button  
+
 - Deep links history  
+
 - Send push notification to iOS simulator  
+
 - Send push notification to Android emulator (WIP)  
+
 - Send latest notification to simulator/emulator  
+
 - Mirror Android device screen  
+
 - Open iOS simulator  
+
 - Open Android emulator  
+
 - Connect wifi Android device  
+
 - Disconnect wifi Android device  
+
 - Show active devices  
+
 - Run scripts directly from your Gist Files  
+
   - List all gists from a user  
+
   - Run a script from a gist url (Secret or Public Gist)  
+
   - Keep a list of all your favorite scripts on project (Secret or Public Gist)  
-  - Configure your favorite gist (cache in VSCode - user profile)  
+
+  - Configure your favorite gist (cache in VSCode)  
+
   - Run your favorite gist on terminal, copy or open it in the editor  
+
   - Clear cache of favorite gists  
+
   
 
 ### Requirements
