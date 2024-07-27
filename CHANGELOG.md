@@ -1,3 +1,6 @@
+## [0.0.17] 2024-07-27
+- Change the generated folder name to `.mdt` instead of `local_notifications`
+
 ## [0.0.16] 2024-07-26
 - Fix error with scripts with 1024+ characters
 

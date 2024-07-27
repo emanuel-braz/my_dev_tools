@@ -2,7 +2,7 @@
 	"name": "deeplink",
 	"displayName": "Mobile Dev Tools (Android / iOS)",
 	"description": "Open deeplinks in emulators, push notifications, screen mirroring, WIFI debugging, Gist",
-	"version": "0.0.16",
+	"version": "0.0.17",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
