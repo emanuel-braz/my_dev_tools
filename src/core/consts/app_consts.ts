@@ -9,6 +9,6 @@ export const ANDROID = "android";
 export const IOS = "ios";
 export const MARK_SIGN = "!";
 export const platforms = [ANDROID, IOS];
-export const LOCAL_NOTIFICATION_FOLDER = "local_notifications";
+export const GENERATED_FILES_FOLDER = ".mdt";
 export const LOCAL_NOTIFICATION_EXAMPLE_FILE_IOS = "ios_default_demo.g.apns";
 export const LOCAL_NOTIFICATION_EXAMPLE_FILE_ANDROID = "android_default_demo.g.json";

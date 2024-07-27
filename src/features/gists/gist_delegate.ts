@@ -4,6 +4,7 @@ import { Dialogs } from "../../core/dialogs/dialogs";
 import { Platform } from "../../core/platform/platform";
 import { ButtonCallback, Gist, GistFile, SecretGistFile } from "./gist_types";
 import { LocalDataSource } from "../../core/data/local_data_source";
+import { GENERATED_FILES_FOLDER } from "../../core/consts/app_consts";
 
 const fs = require('fs');
 const os = require('os');
@@ -181,8 +182,7 @@ export class GistDelegate {
 
     private async getSecretFilesFromDisk(context: ExtensionContext): Promise<SecretGistFile[]> {
         const GIST_FILE = 'gist.json';
-        const GIST_FOLDER = '.mdt';
-        var fileData = Platform.getFileContent(GIST_FOLDER, GIST_FILE);
+        var fileData = Platform.getFileContent(GENERATED_FILES_FOLDER, GIST_FILE);
 
         if (!fileData || fileData.trim().length === 0) {
             fileData = `[
@@ -196,8 +196,8 @@ export class GistDelegate {
     }
 ]`;
 
-            Platform.writeFileContent(GIST_FOLDER, GIST_FILE, fileData);
-            Dialogs.snackbar.info(`File created: ${GIST_FOLDER}/${GIST_FILE}`);
+            Platform.writeFileContent(GENERATED_FILES_FOLDER, GIST_FILE, fileData);
+            Dialogs.snackbar.info(`File created: ${GENERATED_FILES_FOLDER}/${GIST_FILE}`);
             Dialogs.snackbar.info(`Please, fill the file with the secret gists.`);
         }
 

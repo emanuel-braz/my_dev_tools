@@ -1,6 +1,6 @@
 import { ExtensionContext } from "vscode";
 import { LocalDataSource } from "../../core/data/local_data_source";
-import { ANDROID_EXEC, IOS_EXEC, LOCAL_NOTIFICATION_EXAMPLE_FILE_ANDROID, LOCAL_NOTIFICATION_EXAMPLE_FILE_IOS, LOCAL_NOTIFICATION_FOLDER } from "../../core/consts/app_consts";
+import { ANDROID_EXEC, IOS_EXEC, LOCAL_NOTIFICATION_EXAMPLE_FILE_ANDROID, LOCAL_NOTIFICATION_EXAMPLE_FILE_IOS, GENERATED_FILES_FOLDER } from "../../core/consts/app_consts";
 import { Platform } from "../../core/platform/platform";
 import { Runner } from "../../core/runners/runner";
 import { Dialogs } from "../../core/dialogs/dialogs";
@@ -33,13 +33,17 @@ export default class PushNotificationDelegate {
             }
         } else {
 
-            // get all files inside folder ./local_notifications
-            const files = Platform.getFiles(LOCAL_NOTIFICATION_FOLDER);
+            // get all files inside folder .mdt
+            var files = Platform.getFiles(GENERATED_FILES_FOLDER);
+
+            files = files.filter((file: string) => {
+                return file.endsWith('.apns') || file.endsWith('.fcm');
+            });
 
             // if there are no files, create a new one inside the folder ./local_notifications
             if (files.length == 0) {
 
-                const folderPath = `${Platform.getCurrentPath()}/${LOCAL_NOTIFICATION_FOLDER}`;
+                const folderPath = `${Platform.getCurrentPath()}/${GENERATED_FILES_FOLDER}`;
 
                 if (!fs.existsSync(folderPath)) {
                     fs.mkdirSync(folderPath);
@@ -59,15 +63,16 @@ export default class PushNotificationDelegate {
     "aps": {
         "alert": {
             "title": "Push notification title",
-            "body": "Push notification body!",
-            "sound": "default",
-            "_od": "<data>"
+            "body": "Push notification body",
         },
         "badge": 10,
-        "_od": "<data>"
+        "content-available" : 1,
+        "sound": "default"
     },
-    "_od": "<data>",
-    "Simulator Target Bundle": "br.com.packagename" // Use your app Bundle ID here
+    "Simulator Target Bundle": "com.example.app", // Use the bundle id of your app
+    "myString" : "foo",
+    "myList" : [ "foo",  "bar" ],
+    "myJson" : { "name": "Emanuel", "lastName": "Braz" }
 }`);
                 }
 
@@ -83,7 +88,7 @@ export default class PushNotificationDelegate {
             }
 
             const runner = new Runner();
-            const folderPath = `${Platform.getCurrentPath()}/${LOCAL_NOTIFICATION_FOLDER}`;
+            const folderPath = `${Platform.getCurrentPath()}/${GENERATED_FILES_FOLDER}`;
             const filePath = path.join(folderPath, file);
 
             LocalDataSource.updateLastNotificationFile(context, filePath);
