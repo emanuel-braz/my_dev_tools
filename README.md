@@ -66,6 +66,8 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 - it runs the latest deep link command  
 ### Quick action button `Push Notification`
 - it runs the latest push notification command
+### Quick action button `Fav. Gist`
+- it runs your favorite gist
 
 ![image](https://github.com/emanuel-braz/deeplink/assets/3827308/4ba5979f-f164-428f-9ac1-5a2fa7b92f2f)
 

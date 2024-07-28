@@ -1,3 +1,6 @@
+## [0.0.18] 2024-07-28
+- Added quick action button to run your favorite gist
+
 ## [0.0.17] 2024-07-27
 - Change the generated folder name to `.mdt` instead of `local_notifications`
 
