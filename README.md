@@ -6,7 +6,7 @@
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
 
-<img width="1067" alt="image" src="https://github.com/emanuel-braz/deeplink/assets/3827308/fda3fa9e-f4a7-4cef-99dd-0af37ab47643">
+<img width="1337" alt="image" src="https://github.com/user-attachments/assets/b89151d4-dcaa-4b50-b951-38793c693f4a">
   
 ### Features  
 
@@ -69,7 +69,7 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 ### Quick action button `Fav. Gist`
 - it runs your favorite gist
 
-![image](https://github.com/emanuel-braz/deeplink/assets/3827308/4ba5979f-f164-428f-9ac1-5a2fa7b92f2f)
+<img width="374" alt="image" src="https://github.com/user-attachments/assets/1338ae2e-de08-4e20-8712-12357673855e">
 
 
 https://user-images.githubusercontent.com/3827308/135924984-9ab8856b-11ed-48c0-a719-770b26c0cf0a.mov
