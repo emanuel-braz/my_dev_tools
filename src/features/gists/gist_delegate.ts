@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, ProgressLocation, QuickPickItem, QuickPickItemButtonEvent, ThemeIcon, Uri, window, workspace } from "vscode";
+import { commands, ExtensionContext, ProgressLocation, QuickPickItem, QuickPickItemButtonEvent, Terminal, ThemeIcon, Uri, window, workspace } from "vscode";
 import axios from 'axios';
 import { Dialogs } from "../../core/dialogs/dialogs";
 import { Platform } from "../../core/platform/platform";
@@ -77,6 +77,14 @@ export class GistDelegate {
                 raw_url: file.raw_url,
                 buttons: [
                     {
+                        iconPath: new ThemeIcon('console'),
+                        tooltip: 'Run on active terminal',
+                        callback: async () => {
+                            const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+                            this._runGistOnTerminal(context, rawFileContent, true);
+                        }
+                    } as ButtonCallback,
+                    {
                         iconPath: new ThemeIcon('files'),
                         tooltip: 'Copy to clipboard',
                         callback: async () => {
@@ -117,21 +125,21 @@ export class GistDelegate {
         this._runGistOnTerminal(context, rawFileContent);
     }
 
-    private async _runGistOnTerminal(context: ExtensionContext, fileRawData: string) {
+    private async _runGistOnTerminal(context: ExtensionContext, fileRawData: string, isCurrentTerminal: boolean = false) {
 
         if (fileRawData.startsWith('#!')) {
             if (fileRawData.length > 1024) {
-                this.sendLargeTextToTerminal(fileRawData);
+                this.sendLargeTextToTerminal(fileRawData, isCurrentTerminal);
             } else {
-                const terminal = window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+                const terminal: Terminal  = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
                 terminal.show();
                 terminal.sendText(`bash -c '${fileRawData}'`);
             }
         } else {
             if (fileRawData.length > 1024) {
-                this.sendLargeTextToTerminal(fileRawData);
+                this.sendLargeTextToTerminal(fileRawData, isCurrentTerminal);
             } else {
-                const terminal = window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+                const terminal: Terminal  = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
                 terminal.show();
                 terminal.sendText(fileRawData);
             }
@@ -249,6 +257,14 @@ export class GistDelegate {
                 raw_url: file.raw_url,
                 buttons: [
                     {
+                        iconPath: new ThemeIcon('console'),
+                        tooltip: 'Run on active terminal',
+                        callback: async () => {
+                            const rawFileContent = await this.fetchRawFileContent(file.raw_url);
+                            this._runGistOnTerminal(context, rawFileContent, true);
+                        }
+                    } as ButtonCallback,
+                    {
                         iconPath: new ThemeIcon('files'),
                         tooltip: 'Copy to clipboard',
                         callback: async () => {
@@ -306,11 +322,11 @@ export class GistDelegate {
         LocalDataSource.setFavoriteGistUrl(context, '');
     }
 
-    sendLargeTextToTerminal(text: string) {
+    sendLargeTextToTerminal(text: string, isCurrentTerminal: boolean = false) {
         const tempFilePath = path.join(os.tmpdir(), 'gist_temp_file.sh');
         fs.writeFileSync(tempFilePath, text, { mode: 0o755 });
     
-        const terminal = window.createTerminal(`Temp Terminal`);
+        const terminal: Terminal  = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
         terminal.show(true);
         terminal.sendText(`bash ${tempFilePath}`, true);
     }
