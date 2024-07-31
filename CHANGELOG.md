@@ -1,3 +1,6 @@
+## [0.0.20] 2024-07-31
+- Add title to Gist dialogs (Gist Owner and Privacy)
+
 ## [0.0.19] 2024-07-30
 - Run script in active terminal using iconbutton
 
