@@ -95,7 +95,7 @@ export class Dialogs {
         return promise;
     }
 
-    static async promptAndReturn(context: ExtensionContext, options: any[], placeHolder: string = ""): Promise<QuickPickItem | undefined> {
+    static async promptAndReturn(context: ExtensionContext, options: any[], placeHolder: string = "", buttons: QuickInputButton[] = [], title?: string): Promise<QuickPickItem | undefined> {
 
         let promise = new Promise<QuickPickItem | undefined>((resolve, reject) => {
 
@@ -108,6 +108,8 @@ export class Dialogs {
             }
 
             quickPick.ignoreFocusOut = true;
+            quickPick.buttons = buttons;
+            quickPick.title = title;
 
             quickPick.onDidChangeSelection((selection: readonly QuickPickItem[]) => {
                 const valueSelected = selection[0];
@@ -129,6 +131,14 @@ export class Dialogs {
                     resolve(undefined);
                 }
                 
+            });
+
+            quickPick.onDidTriggerButton((button: QuickInputButton) => {
+                if (button) {
+                    (button as ButtonCallback).callback();
+                    quickPick.dispose();
+                    resolve(undefined);
+                }
             });
 
             quickPick.onDidHide(() => {

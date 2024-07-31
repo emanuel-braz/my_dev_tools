@@ -27,6 +27,11 @@ export interface Gist extends QuickPickItem {
     public: boolean;
     created_at: string;
     updated_at: string;
+    owner: {
+        login: string;
+        avatar_url: string;
+        html_url: string;
+    };
 }
 
 export type SecretGistFile = {

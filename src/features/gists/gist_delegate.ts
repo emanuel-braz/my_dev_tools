@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, ProgressLocation, QuickPickItem, QuickPickItemButtonEvent, Terminal, ThemeIcon, Uri, window, workspace } from "vscode";
+import { commands, env, ExtensionContext, ProgressLocation, QuickPickItem, QuickPickItemButtonEvent, Terminal, ThemeIcon, Uri, window, workspace } from "vscode";
 import axios from 'axios';
 import { Dialogs } from "../../core/dialogs/dialogs";
 import { Platform } from "../../core/platform/platform";
@@ -59,7 +59,9 @@ export class GistDelegate {
                 files: gist.files,
                 public: gist.public,
                 created_at: gist.created_at,
-                updated_at: gist.updated_at
+                updated_at: gist.updated_at,
+                html_url: gist.html_url,
+                owner: gist.owner,
             } as Gist;
         }), 'Select a Gist') as Gist;
 
@@ -77,7 +79,7 @@ export class GistDelegate {
                 raw_url: file.raw_url,
                 buttons: [
                     {
-                        iconPath: new ThemeIcon('console'),
+                        iconPath: new ThemeIcon('run-below'),
                         tooltip: 'Run on active terminal',
                         callback: async () => {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
@@ -113,7 +115,17 @@ export class GistDelegate {
         const file: GistFile | undefined = await Dialogs.promptAndReturn(
             context,
             filesAsQuickPickItems,
-            'Select a file'
+            'Select a file',
+            [
+                {
+                    iconPath: new ThemeIcon('globe'),
+                    tooltip: 'Open in browser',
+                    callback: async () => {
+                        env.openExternal(Uri.parse(gist.html_url));
+                    }
+                } as ButtonCallback,
+            ],
+            `${gist.public ? '🔓' : '🔒'} ${gist.owner.login} ${gist.public ? '(public)' : '(secret)'}`,
         ) as GistFile;
 
         if (!file) {
@@ -257,7 +269,7 @@ export class GistDelegate {
                 raw_url: file.raw_url,
                 buttons: [
                     {
-                        iconPath: new ThemeIcon('console'),
+                        iconPath: new ThemeIcon('run-below'),
                         tooltip: 'Run on active terminal',
                         callback: async () => {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
@@ -293,7 +305,17 @@ export class GistDelegate {
         const file: GistFile | undefined = await Dialogs.promptAndReturn(
             context,
             filesAsQuickPickItems,
-            'Select a file'
+            'Select a file',
+            [
+                {
+                    iconPath: new ThemeIcon('globe'),
+                    tooltip: 'Open in browser',
+                    callback: async () => {
+                        env.openExternal(Uri.parse(gist.html_url));
+                    }
+                } as ButtonCallback,
+            ],
+            `${gist.public ? '🔓' : '🔒'} ${gist.owner.login} ${gist.public ? '(public)' : '(secret)'}`,
         ) as GistFile;
 
         if (!file) {
