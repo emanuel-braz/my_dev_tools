@@ -1,3 +1,6 @@
+## [0.0.21] 2024-07-31
+- it opens Gist on current terminal as default
+
 ## [0.0.20] 2024-07-31
 - Add title to Gist dialogs (Gist Owner and Privacy)
 

@@ -72,18 +72,18 @@ export class GistDelegate {
         const filesAsQuickPickItems = Object.keys(gist.files).map(key => {
             const file = gist.files[key];
             return {
-                label: `$(console) RUN: ${file.filename}`,
+                label: `$(run-below) RUN: ${file.filename}`,
                 description: `${file.type} - ${file.size} bytes`,
                 filename: file.filename,
                 type: file.type,
                 raw_url: file.raw_url,
                 buttons: [
                     {
-                        iconPath: new ThemeIcon('run-below'),
-                        tooltip: 'Run on active terminal',
+                        iconPath: new ThemeIcon('console'),
+                        tooltip: 'Run in a new terminal',
                         callback: async () => {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
-                            this._runGistOnTerminal(context, rawFileContent, true);
+                            this._runGistOnTerminal(context, rawFileContent, false);
                         }
                     } as ButtonCallback,
                     {
@@ -134,7 +134,7 @@ export class GistDelegate {
 
         const rawFileContent = await this.fetchRawFileContent(file.raw_url);
 
-        this._runGistOnTerminal(context, rawFileContent);
+        this._runGistOnTerminal(context, rawFileContent, true);
     }
 
     private async _runGistOnTerminal(context: ExtensionContext, fileRawData: string, isCurrentTerminal: boolean = false) {
@@ -262,18 +262,18 @@ export class GistDelegate {
         const filesAsQuickPickItems = Object.keys(gist.files).map(key => {
             const file = gist.files[key];
             return {
-                label: `$(console) RUN: ${file.filename}`,
+                label: `$(run-below) RUN: ${file.filename}`,
                 description: `${file.type} - ${file.language} - ${file.size} bytes`,
                 filename: file.filename,
                 type: file.type,
                 raw_url: file.raw_url,
                 buttons: [
                     {
-                        iconPath: new ThemeIcon('run-below'),
-                        tooltip: 'Run on active terminal',
+                        iconPath: new ThemeIcon('console'),
+                        tooltip: 'Run in a new terminal',
                         callback: async () => {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
-                            this._runGistOnTerminal(context, rawFileContent, true);
+                            this._runGistOnTerminal(context, rawFileContent, false);
                         }
                     } as ButtonCallback,
                     {
@@ -323,7 +323,7 @@ export class GistDelegate {
         }
 
         const rawFileContent = await this.fetchRawFileContent(file.raw_url);
-        this._runGistOnTerminal(context, rawFileContent);
+        this._runGistOnTerminal(context, rawFileContent, true);
     }
     
     async updateFavoriteGist(context: ExtensionContext): Promise<string | undefined> {
