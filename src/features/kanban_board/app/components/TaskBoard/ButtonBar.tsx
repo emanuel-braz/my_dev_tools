@@ -28,7 +28,6 @@ const Container = styled.div`
     margin-left: 10px;
   }
 `;
-// const newData = parseMarkdown(defaultDataString);
 
 export function OpenFileIcon(props: any) {
   return (
@@ -111,7 +110,7 @@ export default ({
             onChange={sel => {
               if (sel.value === 'ADD') {
                 vscodeHelper.showMessage(
-                  'In your workspace "settings.json" file, add this: "coddx.taskBoard.fileList": "TODO.md, folder/TODO-name.md" (comma separated, use your file paths)'
+                  'In your workspace "settings.json" file, add this: "mdt.taskBoard.fileList": "TODO.board, folder/name.md" (comma separated, use your file paths)'
                 );
                 return;
               }
@@ -124,9 +123,9 @@ export default ({
         </span>
         <a
           style={{ position: 'absolute', right: 15, top: 15 }}
-          href="https://nnote.cc/s/k0o93/todomd-kanban-board-documentation"
+          href="https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink"
         >
-          Help | Doc
+          Home Page
         </a>
       </div>
       <Container>
@@ -150,7 +149,6 @@ export default ({
           <button
             onClick={() => {
               const id = `newtask_${Math.random()}`;
-              // const newData = parseMarkdown(defaultDataString);
               const newData = { ...data };
 
               let hasCheckbox = true;
@@ -173,20 +171,9 @@ export default ({
               window['isCreatingTask'] = true; // global flag to be caught in Task.tsx
             }}
           >
-            ＋ Task
+            ＋ Add Task
           </button>
         </div>
-        {/* <button
-        onClick={() => {
-          refresh(newData);
-        }}
-      >
-        Refresh
-      </button> */}
-        {/* <button onClick={() => {
-        const str = getMarkdown(data);
-        onSave(str);
-      }}>Save to TODO.md</button> */}
       </Container>
     </div>
   );

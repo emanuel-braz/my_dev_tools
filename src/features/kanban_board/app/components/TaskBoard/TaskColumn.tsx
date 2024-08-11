@@ -51,8 +51,6 @@ export default memo(
     <Draggable draggableId={column.id} index={columnIndex}>
       {(provided, snapshot) => (
         <Container
-          // {...provided.draggableProps}
-          // {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
           ref={provided.innerRef}
         >

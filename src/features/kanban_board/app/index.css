@@ -52,3 +52,60 @@ input {
 .__reactSelect .__select__option--is-selected {
   background-color: var(--vscode-tab-inactiveBackground);
 }
+
+.styled-button {
+  background-color: #007acc; /* VSCode blue */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.styled-button:hover {
+  background-color: #005a9e; /* Darker blue for hover effect */
+}
+
+.styled-button:active {
+  background-color: #004480; /* Even darker blue for active state */
+}
+
+.styled-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.5); /* Focus ring for accessibility */
+}
+
+/* Button VSCode blue */
+button {
+  background-color: #007acc;
+  border: none;
+  color: white;
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #005a9e; /* Darker blue for hover effect */
+}
+
+button:active {
+  background-color: #004480; /* Even darker blue for active state */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.5); /* Focus ring for accessibility */
+}

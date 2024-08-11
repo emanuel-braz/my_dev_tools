@@ -7,7 +7,6 @@ const fs = require('fs');
 const path = require('path');
 
 export default class KanbanBoardDelegate {
-
     openKanbanBoard(context: ExtensionContext, uri: Uri): TaskBoardLoader {
         const kanbanBoard = new TaskBoardLoader(context.extensionPath, uri);
         return kanbanBoard;

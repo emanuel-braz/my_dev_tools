@@ -1,11 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
 import './index.css';
 import { IConfig } from './model';
-// import Config from "./config";
-
-import MainView from './components/CodeGen/MainView';
 import TaskBoard from './components/TaskBoard/TaskBoard';
 
 declare global {
@@ -28,7 +24,7 @@ if (window.initialData.name === 'TaskBoard') {
 } else {
   ReactDOM.render(
     //@ts-ignore 
-    <MainView vscode={vscode} initialData={window.initialData} />,
+    <TaskBoard vscode={vscode} initialData={window.initialData} />,
     //@ts-ignore 
     document.getElementById('root')
   );

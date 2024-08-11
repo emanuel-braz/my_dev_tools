@@ -5,7 +5,7 @@ export const defaultDataString = `# Project
 
 Project Description
 
-<em>[TODO.md spec & Kanban Board](https://bit.ly/3fCwKfM)</em>
+<em>[Mobile Dev Tools](https://github.com/emanuel-braz/vscode_mobile_dev_tools)</em>
 
 ### Todo
 
@@ -18,7 +18,7 @@ Project Description
 
 // Project Description
 
-// <em>[TODO.md spec & Kanban Board](https://bit.ly/3fCwKfM)</em>
+// <em>[Mobile Dev Tools](https://github.com/emanuel-braz/vscode_mobile_dev_tools)</em>
 
 // ### Todo
 
@@ -77,7 +77,7 @@ export function getMarkdown(data) {
   return md;
 }
 
-// parse TODO.md content (markdown), return object { tasks: {}, ... } - see "output":
+// parse TODO.board content (markdown), return object { tasks: {}, ... } - see "output":
 export function parseMarkdown(md: string) {
   const output = {
     projectName: '',

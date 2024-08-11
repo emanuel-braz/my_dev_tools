@@ -3,30 +3,38 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { IConfig, ICommand, CommandAction } from './app/model';
-import { deepFind, VER } from './app/Utils';
+import { deepFind } from './app/Utils';
+import { TASKBOARD_DEFAULT_FILE, TASKBOARD_FILE_LIST } from '../../core/consts/app_consts';
 
 let __panel: vscode.WebviewPanel | null = null;
 let selectedFile = '';
 
 export default class ViewLoader {
-  private readonly _panel: vscode.WebviewPanel | undefined;
-  private readonly _extensionPath: string = '';
+  private  _panel: vscode.WebviewPanel | undefined;
+  private  _extensionPath: string = '';
   private _disposables: vscode.Disposable[] = [];
 
   constructor(extensionPath: string, uri: vscode.Uri) {
-    // load "coddx.taskBoard.fileList" from config (settings):
+    this.init(extensionPath, uri);
+  }
+
+  async init(extensionPath: string, uri: vscode.Uri) {
+    
     const configuration = vscode.workspace.getConfiguration();
-    const fileList: string = configuration.get('coddx.taskBoard.fileList') || 'TODO.md';
+    const filesOnWorkspace = await this.findBoardFilesInWorkspace();
+    const filesConfigured: string | undefined = configuration.get(TASKBOARD_FILE_LIST);
+    const defaultFile = TASKBOARD_DEFAULT_FILE;
+
+    let fileList: string = filesConfigured || (filesOnWorkspace.length > 0 ? filesOnWorkspace.join(',') : defaultFile);
     const filesArr = fileList.split(',').map(str => str.trim());
+    
     selectedFile = filesArr[0];
 
     this._extensionPath = extensionPath;
     const column = vscode.window.activeTextEditor
-      ? vscode.ViewColumn.Two // vscode.window.activeTextEditor.viewColumn  vscode.ViewColumn.Two
+      ? vscode.ViewColumn.Two
       : undefined;
 
-    // let config = this.getFileContent();
-    // if (config) {
     this._panel = vscode.window.createWebviewPanel('configView', 'Task Board', column || vscode.ViewColumn.Two, {
       enableScripts: true,
       localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'configViewer'))]
@@ -34,7 +42,7 @@ export default class ViewLoader {
 
     // get base path (from the user's workspace path):
     const rootPath = deepFind(vscode, 'workspace.workspaceFolders[0].uri.fsPath', '') + '/';
-    // const templateFilePath = rootPath + '/TODO.md';
+    // const templateFilePath = rootPath + '/TODO.board';
     let basePath = ''; // relative
 
     if (uri && uri.fsPath) {
@@ -42,8 +50,7 @@ export default class ViewLoader {
       basePath = uri.fsPath.replace(rootPath, ''); // get relative path
     }
 
-    // const fileUri = vscode.Uri.file(templateFilePath);
-    const todoStr = ''; // this.getFileContent(fileUri);
+    const todoStr = '';
 
     this._panel.webview.html = this.getWebviewContent({
       basePath,
@@ -52,6 +59,7 @@ export default class ViewLoader {
       selectedFile,
       rootPath
     });
+
     __panel = this._panel;
 
     this._panel.webview.onDidReceiveMessage(
@@ -62,14 +70,14 @@ export default class ViewLoader {
             return;
           case CommandAction.OpenFile:
             const rootPath2 = deepFind(vscode, 'workspace.workspaceFolders[0].uri.fsPath', '') + '/';
-            const filePath2 = rootPath2 + (selectedFile || 'TODO.md');
+            const filePath2 = rootPath2 + (selectedFile || TASKBOARD_DEFAULT_FILE);
             vscode.window.showTextDocument(vscode.Uri.file(filePath2));
             return;
           case CommandAction.Save:
             this.saveFileContent(command.content);
             return;
           case CommandAction.Load:
-            selectedFile = command.content.description || 'TODO.md';
+            selectedFile = command.content.description || TASKBOARD_DEFAULT_FILE;
             const rootPath3 = deepFind(vscode, 'workspace.workspaceFolders[0].uri.fsPath', '') + '/';
             const filePath3 = rootPath3 + selectedFile;
             const fileUri = vscode.Uri.file(filePath3);
@@ -81,28 +89,12 @@ export default class ViewLoader {
               selectedFile,
               rootPath
             });
-            // __panel.webview.postMessage({ command: 'load', content }); // Doesn't work ???
-            return;
-          // case CommandAction.GetListFiles:
-          // load config (settings)
-          // vscode.window.showInformationMessage(`👍 Config:`, JSON.stringify(filesArr));
-
-          // WORKS!
-          // const workspace = vscode.workspace.workspaceFolders[0];
-          // if (workspace) {
-          //   vscode.workspace
-          //     .findFiles(new vscode.RelativePattern(workspace, '**/*/TODO.md'), '**/node_modules/**')
-          //     .then(results => {
-          //       console.log('results: ', results);
-          //     });
-          // }
-          // return;
+          return;
         }
       },
       undefined,
       this._disposables
     );
-    // }
   }
 
   private getWebviewContent({ basePath, templateString, fileList, selectedFile, rootPath }): string {
@@ -110,9 +102,7 @@ export default class ViewLoader {
     const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, 'configViewer', 'configViewer.js'));
     const reactAppUri = reactAppPathOnDisk.with({ scheme: 'vscode-resource' });
 
-    // const configJson = JSON.stringify(config);
     const fullPath = deepFind(vscode, 'workspace.workspaceFolders[0].uri.fsPath', '') + `/${selectedFile}`;
-    // rootPathBase64 = toBase64(rootPathBase64);
 
     return `<!DOCTYPE html>
     <html lang="en">
@@ -140,12 +130,8 @@ export default class ViewLoader {
   }
 
   private getFileContent(fileUri: vscode.Uri) {
-    //: IConfig | undefined {
     if (fs.existsSync(fileUri.fsPath)) {
       let content = fs.readFileSync(fileUri.fsPath, 'utf8');
-      // let config: IConfig = JSON.parse(content);
-
-      // return config;
       return content;
     }
     return undefined;
@@ -154,11 +140,62 @@ export default class ViewLoader {
   private saveFileContent(config: IConfig) {
     const content = config.description;
     const rootPath = deepFind(vscode, 'workspace.workspaceFolders[0].uri.fsPath', '') + '/';
-    const filePath = rootPath + (selectedFile || 'TODO.md');
+    const filePath = rootPath + (selectedFile || TASKBOARD_DEFAULT_FILE);
 
     const uri = vscode.Uri.file(filePath);
     fs.writeFileSync(uri.fsPath, content);
+  }
 
-    // vscode.window.showInformationMessage(`👍 TODO.md saved!`);
+
+  async findBoardFilesInWorkspace(): Promise<string[]> {
+    try {
+      const workspaceFolders = vscode.workspace.workspaceFolders;
+      if (!workspaceFolders) {
+        return [];
+      }
+
+      let matchingFiles: string[] = [];
+
+      for (const folder of workspaceFolders) {
+        const folderUri = folder.uri;
+        const files = await this.findBoardFiles(folderUri);
+        matchingFiles = matchingFiles.concat(files);
+      }
+      return matchingFiles;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  findBoardFiles(dir: vscode.Uri): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      fs.readdir(dir.fsPath, { withFileTypes: true }, (err, files) => {
+        if (err) {
+          return reject(`Error reading directory: ${dir.fsPath}`);
+        }
+
+        let matchingFiles: string[] = [];
+        let pending = files.length;
+
+        if (!pending) return resolve([]);
+
+        files.forEach((file) => {
+          const fullPath = path.join(dir.fsPath, file.name);
+
+          if (file.isDirectory()) {
+            this.findBoardFiles(vscode.Uri.file(fullPath)).then((res) => {
+              matchingFiles = matchingFiles.concat(res);
+              if (!--pending) resolve(matchingFiles);
+            });
+          } else {
+            if (file.isFile() && file.name.endsWith('.board')) {
+              const relativePath = path.relative(vscode.workspace.rootPath || '', fullPath);
+              matchingFiles.push(relativePath);
+            }
+            if (!--pending) resolve(matchingFiles);
+          }
+        });
+      });
+    });
   }
 }

@@ -9,7 +9,6 @@ import { TaskInterface } from './Task';
 import TaskColumn, { ColumnInterface } from './TaskColumn';
 import ButtonBar from './ButtonBar';
 
-// import '@atlaskit/css-reset';
 import '../../index.css';
 import './TaskBoard.css';
 const { useState } = React;
@@ -19,9 +18,9 @@ const Columns = styled.div`
 `;
 
 //@ts-ignore 
-const selectedFile = (window && window['initialData'] ? window['initialData']['selectedFile'] : '') || 'TODO.md';
+const selectedFile = (window && window['initialData'] ? window['initialData']['selectedFile'] : '') || 'TODO.board';
 //@ts-ignore 
-const fileArray = (window && window['initialData'] ? window['initialData']['fileList'] : 'TODO.md')
+const fileArray = (window && window['initialData'] ? window['initialData']['fileList'] : 'TODO.board')
   .split(',')
   .map(str => str.trim());
   //@ts-ignore 
@@ -43,15 +42,6 @@ export default function TaskBoard({ vscode, initialData }) {
     vscodeHelper.saveList(getMarkdown(newState));
   };
 
-  // const [msg, setMsg] = useState('');
-  // window.addEventListener('message', event => {
-  //   setMsg(JSON.stringify(event));
-  //   // const message = event.data; // The JSON data our extension sent
-  //   // switch (message.command) {
-  //   //     case 'load':
-  //   //       break;
-  //   // }
-  // });
   return (
     <div>
       <ButtonBar
