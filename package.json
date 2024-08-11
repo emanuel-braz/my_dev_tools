@@ -10,7 +10,7 @@
 	},
 	"icon": "images/deeplink-icon.png",
 	"engines": {
-		"vscode": "^1.91.0"
+		"vscode": "^1.29.0"
 	},
 	"categories": [
 		"Other",
@@ -21,101 +21,131 @@
 	"contributes": {
 		"commands": [
 			{
-				"title": "[MobDevTools] Open deep link (Android 🤖)",
+				"category": "MDT",
+				"title": "Open deep link (Android 🤖)",
 				"command": "extension.androidDeeplink"
 			},
 			{
-				"title": "[MobDevTools] Open deep link (iOS 🍎)",
+				"category": "MDT",
+				"title": "Open deep link (iOS 🍎)",
 				"command": "extension.iosDeeplink",
 				"enablement": "isMac"
 			},
 			{
-				"title": "[MobDevTools] Clear the deeplink history",
+				"category": "MDT",
+				"title": "Clear the deeplink history",
 				"command": "extension.deeplinkClearCache"
 			},
 			{
-				"title": "[MobDevTools] Open the latest used deeplink",
+				"category": "MDT",
+				"title": "Open the latest used deeplink",
 				"command": "extension.lastPromptDeeplink",
 				"enablement": "false"
 			},
 			{
-				"title": "[MobDevTools] Send push notification (iOS 🍎)",
+				"category": "MDT",
+				"title": "Send push notification (iOS 🍎)",
 				"command": "extension.iosPushNotification",
 				"enablement": "isMac"
 			},
 			{
-				"title": "[MobDevTools] Send push notification (Android 🤖)",
+				"category": "MDT",
+				"title": "Send push notification (Android 🤖)",
 				"command": "extension.androidPushNotification"
 			},
 			{
-				"title": "[MobDevTools] Send the latest used notification",
+				"category": "MDT",
+				"title": "Send the latest used notification",
 				"command": "extension.pushNotificationLastUsed"
 			},
 			{
-				"title": "[MobDevTools] Mirror device screen (Android 🤖)",
+				"category": "MDT",
+				"title": "Mirror device screen (Android 🤖)",
 				"command": "extension.androidMirrorScreen"
 			},
 			{
-				"title": "[MobDevTools] Start Device (Android 🤖)",
+				"category": "MDT",
+				"title": "Start Device (Android 🤖)",
 				"command": "extension.startAndroidDevice"
 			},
 			{
-				"title": "[MobDevTools] Start Device (iOS 🍎)",
+				"category": "MDT",
+				"title": "Start Device (iOS 🍎)",
 				"command": "extension.startIosDevice",
 				"enablement": "isMac"
 			},
 			{
-				"title": "[MobDevTools] Connect Wifi (Android 🤖)",
+				"category": "MDT",
+				"title": "Connect Wifi (Android 🤖)",
 				"command": "extension.connectWifi"
 			},
 			{
-				"title": "[MobDevTools] Disconnect Wifi (Android 🤖)",
+				"category": "MDT",
+				"title": "Disconnect Wifi (Android 🤖)",
 				"command": "extension.disconnectWifi"
 			},
 			{
-				"title": "[MobDevTools] Reconnect offline devices (Android 🤖)",
+				"category": "MDT",
+				"title": "Reconnect offline devices (Android 🤖)",
 				"command": "extension.reconnectOfflineWifi"
 			},
 			{
-				"title": "[MobDevTools] Show active devices",
+				"category": "MDT",
+				"title": "Show active devices",
 				"command": "extension.showConnectedDevices"
 			},
 			{
-				"title": "[MobDevTools] Run Project Gist (gist.json)",
+				"category": "MDT",
+				"title": "Run Project Gist (gist.json)",
 				"command": "extension.runGistFromDisk"
 			},
 			{
-				"title": "[MobDevTools] Run Gist Url",
+				"category": "MDT",
+				"title": "Run Gist Url",
 				"command": "extension.runGistUrl"
 			},
 			{
-				"title": "[MobDevTools] Run Public Gist User",
+				"category": "MDT",
+				"title": "Run Public Gist User",
 				"command": "extension.runGistFromUser"
 			},
 			{
-				"title": "[MobDevTools] Run Favorite Gist",
+				"category": "MDT",
+				"title": "Run Favorite Gist",
 				"command": "extension.runFavoriteGist"
 			},
 			{
-				"title": "[MobDevTools] Update Favorite Gist",
+				"category": "MDT",
+				"title": "Update Favorite Gist",
 				"command": "extension.setFavoriteGist"
 			},
 			{
-				"title": "[MobDevTools] Clear Favorite Gist",
+				"category": "MDT",
+				"title": "Clear Favorite Gist",
 				"command": "extension.clearFavoriteGist"
+			},
+			{
+				"category": "MDT",
+				"title": "Open Task Board ✅",
+				"command": "extension.openTaskBoard"
 			}
 		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"compile": "npm-run-all compile:*",
+		"watch": "npm-run-all -p watch:*",
+		"compile:extension": "rm -rf out && tsc --jsx react -p ./",
+		"compile:views": "webpack --mode development",
+		"watch:extension": "tsc --jsx react -watch -p ./",
+		"watch:views": "webpack --watch --mode development",
+		"test": "npm run compile && vscode-test",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
-		"test": "vscode-test"
+		"test2": "vscode-test"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.91.0",
+		"@types/vscode": "^1.19.0",
 		"@types/mocha": "^10.0.7",
 		"@types/node": "20.x",
 		"@typescript-eslint/eslint-plugin": "^7.14.1",
@@ -123,11 +153,34 @@
 		"eslint": "^8.57.0",
 		"typescript": "^5.4.5",
 		"@vscode/test-cli": "^0.0.9",
-		"@vscode/test-electron": "^2.4.0"
+		"@vscode/test-electron": "^2.4.0",
+
+
+		"@types/marked": "^2.0.2",
+		"@types/react": "^16.9.0",
+		"@types/react-dom": "^16.9.0",
+		"css-loader": "^3.0.0",
+		"npm-run-all": "^4.1.5",
+		"style-loader": "^0.23.1",
+		"ts-loader": "^6.0.4",
+		"tslint": "^5.12.1",
+		"webpack": "^4.35.2",
+		"webpack-cli": "^3.3.5"
 	},
 	"dependencies": {
 		"axios": "^1.7.2",
-		"hasbin": "^1.2.3"
+		"hasbin": "^1.2.3",
+
+		"marked": "^2.0.4",
+		"nunjucks": "^3.2.0",
+		"prismjs": "^1.19.0",
+		"react": "^16.13.0",
+		"react-autosize-textarea": "^7.0.0",
+		"react-beautiful-dnd": "^13.0.0",
+		"react-dom": "^16.13.0",
+		"react-select": "^3.1.0",
+		"react-simple-code-editor": "^0.11.0",
+		"styled-components": "^5.0.1"
 	},
 	"activationEvents": [
 		"onStartupFinished"

@@ -18,3 +18,4 @@ export const RUN_GIST_FROM_USER_EXT = "extension.runGistFromUser";
 export const RUN_FAVORITE_GIST_EXT = "extension.runFavoriteGist";
 export const SET_FAVORITE_GIST_EXT = "extension.setFavoriteGist";
 export const CLEAR_FAVORITE_GIST_EXT = "extension.clearFavoriteGist";
+export const OPEN_KANBAN_BOARD = "extension.openTaskBoard";
