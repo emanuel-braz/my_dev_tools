@@ -19,6 +19,17 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+        "type": "object",
+        "title": "Task Board Settings",
+        "properties": {
+            "mdt.taskBoard.fileList": {
+                "type": "string",
+                "description": "Comma-separated list of files to be displayed on the task board.",
+                "default": "TODO.board"
+				}
+			}
+		},
 		"commands": [
 			{
 				"category": "MDT",
