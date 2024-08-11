@@ -1,6 +1,9 @@
 publish:
 	@vsce publish
 
+build-publish:
+	@npm run compile && vsce package && vsce publish --packagePath deeplink-0.0.22.vsix
+
 setup:
 	@sudo npm install -g @vscode/vsce
 
