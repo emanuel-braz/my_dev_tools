@@ -48,6 +48,12 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 
   - Clear cache of favorite gists  
 
+- Task board (Kanban board, like Trello)
+    - Load boards from all "*.board" files in the workspace
+    - Create a new board in the workspace as default "TODO.board"
+    - Configure a list of boards on user settings, separated by comma
+      - ex.: `"mdt.taskBoard.fileList": "todo.board,squadX.md,personal/personal_board.board"`
+
   
 
 ### Requirements

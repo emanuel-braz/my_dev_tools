@@ -1,3 +1,9 @@
+## [0.0.22] 2024-08-11
+- Add Task board
+    - Load boards from .board files in the workspace
+    - Create a new board in the workspace
+    - Configure the boards on user settings
+
 ## [0.0.21] 2024-07-31
 - it opens Gist on current terminal as default
 
