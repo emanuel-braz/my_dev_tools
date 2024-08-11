@@ -1,7 +1,7 @@
 
 # Mobile Dev Tools 🛠️
 
-## Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, etc.
+## Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, etc.
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
