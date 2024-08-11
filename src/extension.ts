@@ -9,6 +9,7 @@ import PushNotificationDelegate from './features/push_notification/push_notifica
 import DeviceDelegate from './features/device/device_delegate';
 import { GistDelegate } from './features/gists/gist_delegate';
 import KanbanBoardDelegate  from './features/kanban_board/kanban_board_delegate';
+import CommentDelegate from './features/notes/notes_delegate';
 
 export function deactivate() { }
 
@@ -19,6 +20,7 @@ export function activate(context: ExtensionContext) {
 	const deviceDelegate = new DeviceDelegate();
 	const gistDelegate = new GistDelegate();
 	const kanbanBoardDelegate = new KanbanBoardDelegate();
+	const commentDelegate = new CommentDelegate();
 
 	// Deeplink
 	createDeeplinkStatusBarItem().show();
@@ -60,5 +62,8 @@ export function activate(context: ExtensionContext) {
 	
 	// Kanban Board
 	context.subscriptions.push(commands.registerCommand(OPEN_KANBAN_BOARD, async (uri: Uri) => kanbanBoardDelegate.openKanbanBoard(context, uri)));
+
+	// Comments
+	commentDelegate.activate(context);
 
 }

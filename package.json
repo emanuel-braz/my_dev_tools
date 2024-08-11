@@ -15,7 +15,23 @@
 	"categories": [
 		"Other",
 		"Snippets",
-		"Debuggers"
+		"Debuggers",
+		"Extension Packs",
+    	"Programming Languages"
+	],
+	"keywords": [
+		"todo",
+		"todolist",
+		"kanban",
+		"task",
+		"project",
+		"management",
+		"generate",
+		"generator",
+		"template",
+		"webdev",
+		"snippet",
+		"file"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -139,8 +155,157 @@
 				"category": "MDT",
 				"title": "Open Task Board ✅",
 				"command": "extension.openTaskBoard"
+			},
+			{
+				"category": "MDT",
+				"command": "mdt.dispose",
+				"title": "Remove All Comments"
+			},
+			{
+				"command": "mdt.createNote",
+				"title": "Create Note",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mdt.replyNote",
+				"title": "Reply",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mdt.editNote",
+				"title": "Edit",
+				"icon": {
+					"dark": "resources/edit_inverse.svg",
+					"light": "resources/edit.svg"
+				}
+			},
+			{
+				"command": "mdt.deleteNote",
+				"title": "Delete",
+				"icon": {
+					"dark": "resources/close_inverse.svg",
+					"light": "resources/close.svg"
+				}
+			},
+			{
+				"command": "mdt.deleteNoteComment",
+				"title": "Delete",
+				"icon": {
+					"dark": "resources/close_inverse.svg",
+					"light": "resources/close.svg"
+				}
+			},
+			{
+				"command": "mdt.saveNote",
+				"title": "Save"
+			},
+			{
+				"command": "mdt.cancelsaveNote",
+				"title": "Cancel"
+			},
+			{
+				"command": "mdt.startDraft",
+				"title": "Start Draft",
+				"enablement": "!commentIsEmpty"
+			},
+			{
+				"command": "mdt.finishDraft",
+				"title": "Finish Draft"
 			}
-		]
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "mdt.createNote",
+					"when": "false"
+				},
+				{
+					"command": "mdt.replyNote",
+					"when": "false"
+				},
+				{
+					"command": "mdt.editNote",
+					"when": "false"
+				},
+				{
+					"command": "mdt.deleteNote",
+					"when": "false"
+				},
+				{
+					"command": "mdt.deleteNoteComment",
+					"when": "false"
+				},
+				{
+					"command": "mdt.saveNote",
+					"when": "false"
+				},
+				{
+					"command": "mdt.cancelsaveNote",
+					"when": "false"
+				},
+				{
+					"command": "mdt.startDraft",
+					"when": "false"
+				},
+				{
+					"command": "mdt.finishDraft",
+					"when": "false"
+				}
+			],
+			"comments/commentThread/title": [
+				{
+					"command": "mdt.deleteNote",
+					"group": "navigation",
+					"when": "commentController == comment-mdt && !commentThreadIsEmpty"
+				}
+			],
+			"comments/commentThread/context": [
+				{
+					"command": "mdt.createNote",
+					"group": "inline",
+					"when": "commentController == comment-mdt && commentThreadIsEmpty"
+				},
+				{
+					"command": "mdt.replyNote",
+					"group": "inline",
+					"when": "commentController == comment-mdt && !commentThreadIsEmpty"
+				},
+				{
+					"command": "mdt.startDraft",
+					"group": "inline",
+					"when": "commentController == comment-mdt && commentThreadIsEmpty"
+				},
+				{
+					"command": "mdt.finishDraft",
+					"group": "inline",
+					"when": "commentController == comment-mdt && commentThread == draft"
+				}
+			],
+			"comments/comment/title": [
+				{
+					"command": "mdt.editNote",
+					"group": "group@1",
+					"when": "commentController == comment-mdt"
+				},
+				{
+					"command": "mdt.deleteNoteComment",
+					"group": "group@2",
+					"when": "commentController == comment-mdt && comment == canDelete"
+				}
+			],
+			"comments/comment/context": [
+				{
+					"command": "mdt.cancelsaveNote",
+					"group": "inline@1",
+					"when": "commentController == comment-mdt"
+				},
+				{
+					"command": "mdt.saveNote",
+					"group": "inline@2",
+					"when": "commentController == comment-mdt"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
