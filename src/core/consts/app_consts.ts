@@ -12,3 +12,5 @@ export const platforms = [ANDROID, IOS];
 export const GENERATED_FILES_FOLDER = ".mdt";
 export const LOCAL_NOTIFICATION_EXAMPLE_FILE_IOS = "ios_default_demo.g.apns";
 export const LOCAL_NOTIFICATION_EXAMPLE_FILE_ANDROID = "android_default_demo.g.json";
+export const TASKBOARD_FILE_LIST = "mdt.taskBoard.fileList";
+export const TASKBOARD_DEFAULT_FILE = "TODO.board";

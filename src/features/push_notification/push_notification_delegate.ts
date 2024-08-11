@@ -5,6 +5,7 @@ import { Platform } from "../../core/platform/platform";
 import { Runner } from "../../core/runners/runner";
 import { Dialogs } from "../../core/dialogs/dialogs";
 
+// @ts-ignore
 const fs = require('fs');
 const path = require('path');
 

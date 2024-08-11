@@ -1,13 +1,14 @@
 import { Dialogs } from './core/dialogs/dialogs';
-import { commands, ExtensionContext } from 'vscode';
+import { commands, ExtensionContext, Uri, ViewColumn } from 'vscode';
 import { createNotificationStatusBarItem, createDeeplinkStatusBarItem, createFavGistStatusBarItem } from './core/views/views';
 import { LocalDataSource } from './core/data/local_data_source';
 import { APP_LOCAL_CACHE_CLEARED } from './core/consts/strings';
-import { ANDROID_DEEPLINK_EXT, IOS_DEEPLINK_EXT, LAST_PROMPT_EXT, CLEAR_CACHE_EXT, IOS_PUSH_NOTIFICATION_EXT, ANDROID_PUSH_NOTIFICATION_EXT, PUSH_NOTIFICATION_LAST_USED_EXT, ANDROID_MIRROR_SCREEN_EXT, START_ANDROID_DEVICE_EXT, CONNECT_WIFI_EXT, DISCONNECT_WIFI_EXT, SHOW_CONNECTED_DEVICES_EXT, START_IOS_DEVICE_EXT, RECONNECT_OFFLINE_WIFI_EXT, RUN_GIST_FROM_DISK_EXT, RUN_GIST_FROM_USER_EXT, RUN_GIST_URL_EXT, RUN_FAVORITE_GIST_EXT, SET_FAVORITE_GIST_EXT, CLEAR_FAVORITE_GIST_EXT } from './core/consts/extensions';
+import { ANDROID_DEEPLINK_EXT, IOS_DEEPLINK_EXT, LAST_PROMPT_EXT, CLEAR_CACHE_EXT, IOS_PUSH_NOTIFICATION_EXT, ANDROID_PUSH_NOTIFICATION_EXT, PUSH_NOTIFICATION_LAST_USED_EXT, ANDROID_MIRROR_SCREEN_EXT, START_ANDROID_DEVICE_EXT, CONNECT_WIFI_EXT, DISCONNECT_WIFI_EXT, SHOW_CONNECTED_DEVICES_EXT, START_IOS_DEVICE_EXT, RECONNECT_OFFLINE_WIFI_EXT, RUN_GIST_FROM_DISK_EXT, RUN_GIST_FROM_USER_EXT, RUN_GIST_URL_EXT, RUN_FAVORITE_GIST_EXT, SET_FAVORITE_GIST_EXT, CLEAR_FAVORITE_GIST_EXT, OPEN_KANBAN_BOARD } from './core/consts/extensions';
 import DeeplinkDelegate from './features/deep_link/deeplink_delegate';
 import PushNotificationDelegate from './features/push_notification/push_notification_delegate';
 import DeviceDelegate from './features/device/device_delegate';
 import { GistDelegate } from './features/gists/gist_delegate';
+import KanbanBoardDelegate  from './features/kanban_board/kanban_board_delegate';
 
 export function deactivate() { }
 
@@ -17,6 +18,7 @@ export function activate(context: ExtensionContext) {
 	const pushNotificationDelegate = new PushNotificationDelegate();
 	const deviceDelegate = new DeviceDelegate();
 	const gistDelegate = new GistDelegate();
+	const kanbanBoardDelegate = new KanbanBoardDelegate();
 
 	// Deeplink
 	createDeeplinkStatusBarItem().show();
@@ -55,4 +57,8 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerCommand(RUN_FAVORITE_GIST_EXT, async () => gistDelegate.runFavoriteGist(context)));
 	context.subscriptions.push(commands.registerCommand(SET_FAVORITE_GIST_EXT, async () => gistDelegate.updateFavoriteGist(context)));
 	context.subscriptions.push(commands.registerCommand(CLEAR_FAVORITE_GIST_EXT, async () => gistDelegate.clearFavoriteGist(context)));
+	
+	// Kanban Board
+	context.subscriptions.push(commands.registerCommand(OPEN_KANBAN_BOARD, async (uri: Uri) => kanbanBoardDelegate.openKanbanBoard(context, uri)));
+
 }

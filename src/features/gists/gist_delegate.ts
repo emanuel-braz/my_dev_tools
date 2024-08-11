@@ -1,4 +1,4 @@
-import { commands, env, ExtensionContext, ProgressLocation, QuickPickItem, QuickPickItemButtonEvent, Terminal, ThemeIcon, Uri, window, workspace } from "vscode";
+import { env, ExtensionContext, ProgressLocation, QuickPickItem, Terminal, ThemeIcon, Uri, window, workspace } from "vscode";
 import axios from 'axios';
 import { Dialogs } from "../../core/dialogs/dialogs";
 import { Platform } from "../../core/platform/platform";
@@ -9,6 +9,7 @@ import { GENERATED_FILES_FOLDER } from "../../core/consts/app_consts";
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+
 
 export class GistDelegate {
 
@@ -79,6 +80,7 @@ export class GistDelegate {
                 raw_url: file.raw_url,
                 buttons: [
                     {
+                        // @ts-ignore:
                         iconPath: new ThemeIcon('console'),
                         tooltip: 'Run in a new terminal',
                         callback: async () => {
@@ -87,6 +89,7 @@ export class GistDelegate {
                         }
                     } as ButtonCallback,
                     {
+                        // @ts-ignore:
                         iconPath: new ThemeIcon('files'),
                         tooltip: 'Copy to clipboard',
                         callback: async () => {
@@ -96,6 +99,7 @@ export class GistDelegate {
                         }
                     } as ButtonCallback,
                     {
+                        // @ts-ignore:
                         iconPath: new ThemeIcon('link-external'),
                         tooltip: 'Open in editor',
                         callback: async () => {
@@ -118,6 +122,7 @@ export class GistDelegate {
             'Select a file',
             [
                 {
+                    // @ts-ignore:
                     iconPath: new ThemeIcon('globe'),
                     tooltip: 'Open in browser',
                     callback: async () => {
@@ -269,6 +274,7 @@ export class GistDelegate {
                 raw_url: file.raw_url,
                 buttons: [
                     {
+                        // @ts-ignore:
                         iconPath: new ThemeIcon('console'),
                         tooltip: 'Run in a new terminal',
                         callback: async () => {
@@ -277,6 +283,7 @@ export class GistDelegate {
                         }
                     } as ButtonCallback,
                     {
+                        // @ts-ignore:
                         iconPath: new ThemeIcon('files'),
                         tooltip: 'Copy to clipboard',
                         callback: async () => {
@@ -286,6 +293,7 @@ export class GistDelegate {
                         }
                     } as ButtonCallback,
                     {
+                        // @ts-ignore:
                         iconPath: new ThemeIcon('link-external'),
                         tooltip: 'Open in editor',
                         callback: async () => {
@@ -308,6 +316,7 @@ export class GistDelegate {
             'Select a file',
             [
                 {
+                    // @ts-ignore:
                     iconPath: new ThemeIcon('globe'),
                     tooltip: 'Open in browser',
                     callback: async () => {

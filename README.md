@@ -1,7 +1,7 @@
 
 # Mobile Dev Tools 🛠️
 
-## Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, etc.
+## Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, etc.
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
@@ -47,6 +47,12 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
   - Run your favorite gist on terminal, copy or open it in the editor  
 
   - Clear cache of favorite gists  
+
+- Task board (Kanban board, like Trello)
+    - Load boards from all "*.board" files in the workspace
+    - Create a new board in the workspace as default "TODO.board"
+    - Configure a list of boards on user settings, separated by comma
+      - ex.: `"mdt.taskBoard.fileList": "todo.board,squadX.md,personal/personal_board.board"`
 
   
 
