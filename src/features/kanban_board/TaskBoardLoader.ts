@@ -10,8 +10,8 @@ let __panel: vscode.WebviewPanel | null = null;
 let selectedFile = '';
 
 export default class ViewLoader {
-  private  _panel: vscode.WebviewPanel | undefined;
-  private  _extensionPath: string = '';
+  private _panel: vscode.WebviewPanel | undefined;
+  private _extensionPath: string = '';
   private _disposables: vscode.Disposable[] = [];
 
   constructor(extensionPath: string, uri: vscode.Uri) {
@@ -19,16 +19,30 @@ export default class ViewLoader {
   }
 
   async init(extensionPath: string, uri: vscode.Uri) {
-    
+
     const configuration = vscode.workspace.getConfiguration();
-    const filesOnWorkspace = await this.findBoardFilesInWorkspace();
+    const filesOnWorkspace = await this.findBoardFilesInWorkspace(extensionPath, uri);
     const filesConfigured: string | undefined = configuration.get(TASKBOARD_FILE_LIST);
     const defaultFile = TASKBOARD_DEFAULT_FILE;
+    let fileList: string[] = [];
 
-    let fileList: string = filesConfigured || (filesOnWorkspace.length > 0 ? filesOnWorkspace.join(',') : defaultFile);
-    const filesArr = fileList.split(',').map(str => str.trim());
-    
-    selectedFile = filesArr[0];
+    if (filesOnWorkspace.length > 0) {
+      fileList = filesOnWorkspace;
+    }
+
+    if (filesConfigured) {
+      const newFiles = filesConfigured.split(',').map(str => str.trim());
+      fileList = fileList.concat(newFiles);
+    }
+
+    if (fileList.length === 0) {
+      fileList.push(defaultFile);
+    }
+
+    // distinct
+    fileList = fileList.filter((value, index, self) => self.indexOf(value) === index);
+
+    selectedFile = fileList[0];
 
     this._extensionPath = extensionPath;
     const column = vscode.window.activeTextEditor
@@ -89,7 +103,7 @@ export default class ViewLoader {
               selectedFile,
               rootPath
             });
-          return;
+            return;
         }
       },
       undefined,
@@ -147,31 +161,23 @@ export default class ViewLoader {
   }
 
 
-  async findBoardFilesInWorkspace(): Promise<string[]> {
+  async findBoardFilesInWorkspace(extensionPath: string, uri: vscode.Uri): Promise<string[]> {
     try {
-      const workspaceFolders = vscode.workspace.workspaceFolders;
-      if (!workspaceFolders) {
-        return [];
-      }
-
       let matchingFiles: string[] = [];
+      const files = await this.findBoardFiles(extensionPath, extensionPath);
+      matchingFiles = matchingFiles.concat(files);
 
-      for (const folder of workspaceFolders) {
-        const folderUri = folder.uri;
-        const files = await this.findBoardFiles(folderUri);
-        matchingFiles = matchingFiles.concat(files);
-      }
       return matchingFiles;
     } catch (error) {
       return [];
     }
   }
 
-  findBoardFiles(dir: vscode.Uri): Promise<string[]> {
+  findBoardFiles(dir: string, extensionPath: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      fs.readdir(dir.fsPath, { withFileTypes: true }, (err, files) => {
+      fs.readdir(dir, { withFileTypes: true }, (err, files) => {
         if (err) {
-          return reject(`Error reading directory: ${dir.fsPath}`);
+          return reject(`Error reading directory: ${dir}`);
         }
 
         let matchingFiles: string[] = [];
@@ -180,16 +186,17 @@ export default class ViewLoader {
         if (!pending) return resolve([]);
 
         files.forEach((file) => {
-          const fullPath = path.join(dir.fsPath, file.name);
+          const fullPath = path.join(dir, file.name);
 
           if (file.isDirectory()) {
-            this.findBoardFiles(vscode.Uri.file(fullPath)).then((res) => {
+            this.findBoardFiles(fullPath, extensionPath).then((res) => {
               matchingFiles = matchingFiles.concat(res);
               if (!--pending) resolve(matchingFiles);
             });
           } else {
             if (file.isFile() && file.name.endsWith('.board')) {
-              const relativePath = path.relative(vscode.workspace.rootPath || '', fullPath);
+
+              const relativePath = path.relative(extensionPath || '', fullPath);
               matchingFiles.push(relativePath);
             }
             if (!--pending) resolve(matchingFiles);
