@@ -144,8 +144,31 @@
 				"category": "MDT",
 				"title": "Play Messenger Sound 🎵",
 				"command": "extension.showSoundPicker"
-			}
-		]
+			},
+			{
+				"category": "MDT",
+				"command": "extension.startTimer",
+				"title": "Start Timer ⏱️"
+			  },
+			  {
+				"category": "MDT",
+				"command": "extension.stopTimer",
+				"title": "Stop Timer ⏱️"
+			  },
+			  {
+				"category": "MDT",
+				"command": "extension.cancelTimer",
+				"title": "Cancel Timer ⏱️"
+			  }
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "extension.cancelTimer",
+					"when": "false"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
