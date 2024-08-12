@@ -1,4 +1,4 @@
-import { StatusBarItem, window, StatusBarAlignment } from 'vscode';
+import { StatusBarItem, window, StatusBarAlignment, ThemeColor } from 'vscode';
 import * as path from 'path';
 
 export default class Timer {
@@ -7,13 +7,16 @@ export default class Timer {
 
     constructor() {
         if (!this._statusBarItem) {
-            this._statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
+            this._statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left, 100);
+            this._statusBarItem.command = 'extension.cancelTimer';
             this._statusBarItem.text = '00:00';
         }
     }
 
     public start(time: number, alarmMessage?: string) {
         this._statusBarItem.text = `${time}:00`;
+        this._statusBarItem.tooltip = alarmMessage.length > 0 ? alarmMessage : 'No message';
+        this._statusBarItem.backgroundColor = new ThemeColor('statusBarItem.warningBackground');
         this._statusBarItem.show();
 
         let deadline = new Date(new Date().getTime() + time * 60000);
@@ -24,6 +27,13 @@ export default class Timer {
             this._statusBarItem.text = `${this._zeroBase(t.minutes)}:${this._zeroBase(
                 t.seconds
             )}`;
+            this._statusBarItem.tooltip = alarmMessage.length > 0 ? alarmMessage : 'No message';
+
+            if (t.minutes <= 0 && t.seconds <= 60) {
+                this._statusBarItem.backgroundColor = new ThemeColor('statusBarItem.errorBackground');
+            } else {
+                this._statusBarItem.backgroundColor = new ThemeColor('statusBarItem.warningBackground');
+            }
 
             if (t.total <= 0) {
                 clearInterval(this._timer);

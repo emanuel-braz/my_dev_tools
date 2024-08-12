@@ -154,8 +154,21 @@
 				"category": "MDT",
 				"command": "extension.stopTimer",
 				"title": "Stop Timer ⏱️"
+			  },
+			  {
+				"category": "MDT",
+				"command": "extension.cancelTimer",
+				"title": "Cancel Timer ⏱️"
 			  }
-		]
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "extension.cancelTimer",
+					"when": "false"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

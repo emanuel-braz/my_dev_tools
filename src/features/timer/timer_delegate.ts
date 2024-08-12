@@ -35,8 +35,17 @@ export class TimerDelegate implements Feature {
             this.timer.stop();
         });
 
+        let cancelTimer = commands.registerCommand('extension.cancelTimer', () => {
+            window.showInformationMessage("Would you like to cancel the timer?", "Yes", "No").then((selection) => {
+                if (selection === "Yes") {
+                    this.timer.stop();
+                }
+            });
+        });
+
         context.subscriptions.push(startTimer);
         context.subscriptions.push(stopTimer);
+        context.subscriptions.push(cancelTimer);
     }
 
     validateTimerInput(value: string) {
