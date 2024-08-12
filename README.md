@@ -1,5 +1,10 @@
+<div style="display: flex; width: 100%; align-items: center; white-space: nowrap;">
+    <span style="margin-right: 10px;"></span>
+    <span style="flex-grow: 1; font-size: 40px;">My Dev Tools 🛠️</span>
+    <a href="https://www.buymeacoffee.com/emanuelbraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 217px !important;" ></a>
+</div>
 
-# My Dev Tools 🛠️
+
 
 ## Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Run Gists on Terminal, Kanban Board, Timer, Games, Sounds, etc.
 
@@ -87,6 +92,5 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
 - it runs your favorite gist
 
 <img width="374" alt="image" src="https://github.com/user-attachments/assets/1338ae2e-de08-4e20-8712-12357673855e">
-
 
 https://user-images.githubusercontent.com/3827308/135924984-9ab8856b-11ed-48c0-a719-770b26c0cf0a.mov
