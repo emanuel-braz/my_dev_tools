@@ -8,8 +8,9 @@ import DeeplinkDelegate from './features/deep_link/deeplink_delegate';
 import PushNotificationDelegate from './features/push_notification/push_notification_delegate';
 import DeviceDelegate from './features/device/device_delegate';
 import { GistDelegate } from './features/gists/gist_delegate';
-import KanbanBoardDelegate  from './features/kanban_board/kanban_board_delegate';
+import KanbanBoardDelegate from './features/kanban_board/kanban_board_delegate';
 import { MessengerSoundDelegate } from './features/messenger_sound/messenger_sound_delegate';
+import { TimerDelegate } from './features/timer/timer_delegate';
 
 export function deactivate() { }
 
@@ -21,6 +22,7 @@ export function activate(context: ExtensionContext) {
 	const gistDelegate = new GistDelegate();
 	const kanbanBoardDelegate = new KanbanBoardDelegate();
 	const messengerSoundDelegate = new MessengerSoundDelegate();
+	const timerDelegate = new TimerDelegate();
 
 	// Deeplink
 	createDeeplinkStatusBarItem().show();
@@ -59,10 +61,13 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerCommand(RUN_FAVORITE_GIST_EXT, async () => gistDelegate.runFavoriteGist(context)));
 	context.subscriptions.push(commands.registerCommand(SET_FAVORITE_GIST_EXT, async () => gistDelegate.updateFavoriteGist(context)));
 	context.subscriptions.push(commands.registerCommand(CLEAR_FAVORITE_GIST_EXT, async () => gistDelegate.clearFavoriteGist(context)));
-	
+
 	// Kanban Board
 	context.subscriptions.push(commands.registerCommand(OPEN_KANBAN_BOARD, async (uri: Uri) => kanbanBoardDelegate.openKanbanBoard(context, uri)));
 
 	// Sounds
 	messengerSoundDelegate.activate(context);
+
+	// Timer
+	timerDelegate.activate(context);
 }

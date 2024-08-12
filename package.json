@@ -144,7 +144,17 @@
 				"category": "MDT",
 				"title": "Play Messenger Sound 🎵",
 				"command": "extension.showSoundPicker"
-			}
+			},
+			{
+				"category": "MDT",
+				"command": "extension.startTimer",
+				"title": "Start Timer ⏱️"
+			  },
+			  {
+				"category": "MDT",
+				"command": "extension.stopTimer",
+				"title": "Stop Timer ⏱️"
+			  }
 		]
 	},
 	"scripts": {
