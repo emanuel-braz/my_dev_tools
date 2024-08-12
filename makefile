@@ -16,5 +16,5 @@ install:
 build-install:
 	@npm run compile && vsce package && code --install-extension deeplink-0.0.23.vsix
 
-compile-install:
-	@npm run compile && vsce package && code --install-extension deeplink-0.0.23.vsix
+compile:
+	@npm run compile && vsce package
