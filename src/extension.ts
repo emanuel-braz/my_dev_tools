@@ -12,6 +12,7 @@ import KanbanBoardDelegate from './features/kanban_board/kanban_board_delegate';
 import { MessengerSoundDelegate } from './features/messenger_sound/messenger_sound_delegate';
 import { TimerDelegate } from './features/timer/timer_delegate';
 import { ChromeDinoGaameDelegate } from './features/games/dino/dino_delegate';
+import { TicTacToeDelegate } from './features/games/tictactoe/tictactoe_delegate';
 
 const deeplinkDelegate = new DeeplinkDelegate();
 const pushNotificationDelegate = new PushNotificationDelegate();
@@ -20,7 +21,9 @@ const gistDelegate = new GistDelegate();
 const kanbanBoardDelegate = new KanbanBoardDelegate();
 const messengerSoundDelegate = new MessengerSoundDelegate();
 const timerDelegate = new TimerDelegate();
+
 const gameDinoDelegate = new ChromeDinoGaameDelegate();
+const tictactoeDelegate = new TicTacToeDelegate();
 
 export function activate(context: ExtensionContext) {
 
@@ -73,6 +76,7 @@ export function activate(context: ExtensionContext) {
 
 	// Games
 	gameDinoDelegate.activate(context);
+	tictactoeDelegate.activate(context);
 }
 
 

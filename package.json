@@ -163,7 +163,12 @@
 			  {
 				"category": "MDT",
 				"command":  "extension.startGameDino",
-				"title": "Play T-Rex Runner Game 🦖"
+				"title": "Play T-Rex Runner 🦖"
+			  },
+			  {
+				"category": "MDT",
+				"command":  "extension.startTictactoe",
+				"title": "Play Tic Tac Toe 🎮"
 			  }
 		],
 		"menus": {
