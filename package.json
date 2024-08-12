@@ -47,8 +47,8 @@
         "properties": {
             "mdt.taskBoard.fileList": {
                 "type": "string",
-                "description": "Comma-separated list of files to be displayed on the task board.",
-                "default": "TODO.board"
+                "description": "Comma-separated list of files to be displayed on the task board."
+
 				}
 			}
 		},
