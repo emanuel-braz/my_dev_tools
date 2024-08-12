@@ -139,6 +139,11 @@
 				"category": "MDT",
 				"title": "Open Task Board ✅",
 				"command": "extension.openTaskBoard"
+			},
+			{
+				"category": "MDT",
+				"title": "Play Messenger Sound 🎵",
+				"command": "extension.showSoundPicker"
 			}
 		]
 	},
@@ -189,7 +194,9 @@
 		"react-dom": "^16.13.0",
 		"react-select": "^3.1.0",
 		"react-simple-code-editor": "^0.11.0",
-		"styled-components": "^5.0.1"
+		"styled-components": "^5.0.1",
+
+		"play-sound": "^1.1.6"
 	},
 	"activationEvents": [
 		"onStartupFinished"
