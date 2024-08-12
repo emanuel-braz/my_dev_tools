@@ -5,7 +5,7 @@ export const defaultDataString = `# Project
 
 Project Description
 
-<em>[Mobile Dev Tools](https://github.com/emanuel-braz/vscode_mobile_dev_tools)</em>
+<em>[My Dev Tools](https://github.com/emanuel-braz/my_dev_tools)</em>
 
 ### Todo
 
@@ -18,7 +18,7 @@ Project Description
 
 // Project Description
 
-// <em>[Mobile Dev Tools](https://github.com/emanuel-braz/vscode_mobile_dev_tools)</em>
+// <em>[My Dev Tools](https://github.com/emanuel-braz/my_dev_tools)</em>
 
 // ### Todo
 

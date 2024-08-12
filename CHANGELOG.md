@@ -1,3 +1,12 @@
+## [0.0.23] 2024-08-12
+- Add Timer ⏱️
+- Add Games 👾
+    - Play Tic Tac Toe
+    - Play T-Rex Runner
+- Add Messenger Call fake sounds (It may save you from a boring meeting)
+- Change the name of the extension to `My Dev Tools`
+
+
 ## [0.0.22] 2024-08-11
 - Add Task board
     - Load boards from .board files in the workspace

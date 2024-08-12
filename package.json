@@ -1,21 +1,43 @@
 {
 	"name": "deeplink",
-	"displayName": "Mobile Dev Tools (Android / iOS)",
-	"description": "Open deeplinks in emulators, push notifications, screen mirroring, WIFI debugging, Gist",
-	"version": "0.0.22",
+	"displayName": "My Dev Tools",
+	"description": "Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, Timer, Games, Sounds, etc.",
+	"version": "0.0.23",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/emanuel-braz/deeplink"
+		"url": "https://github.com/emanuel-braz/my_dev_tools"
 	},
-	"icon": "images/deeplink-icon.png",
+	"icon": "images/icon.png",
 	"engines": {
 		"vscode": "^1.29.0"
 	},
 	"categories": [
 		"Other",
 		"Snippets",
-		"Debuggers"
+		"Debuggers",
+		"Formatters",
+		"Keymaps",
+		"Linters",
+		"Themes",
+		"Extension Packs",
+		"Programming Languages"
+	],
+	"keywords": [
+		"todo",
+		"todolist",
+		"kanban",
+		"task",
+		"project",
+		"management",
+		"generate",
+		"generator",
+		"template",
+		"webdev",
+		"snippet",
+		"file",
+		"agile",
+		"game"
 	],
 	"main": "./out/extension.js",
 	"contributes": {

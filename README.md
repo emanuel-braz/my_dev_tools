@@ -1,7 +1,7 @@
 
-# Mobile Dev Tools 🛠️
+# My Dev Tools 🛠️
 
-## Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, etc.
+## Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Run Gists on Terminal, Kanban Board, Timer, Games, Sounds, etc.
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
@@ -54,7 +54,18 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
     - Configure a list of boards on user settings, separated by comma
       - ex.: `"mdt.taskBoard.fileList": "todo.board,squadX.md,personal/personal_board.board"`
 
-  
+- Timer ⏱️
+  - Start a timer
+  - Stop a timer
+  - Click on the timer to stop it
+  - Show the timer on the status bar
+
+
+- Games 👾
+    - Play Tic Tac Toe 🀄️
+    - Play T-Rex Runner 🦖
+
+- Add Messenger Call fake sounds 🔊 (It may save you from a boring meeting)
 
 ### Requirements
 - Android Debug Bridge (adb) for Android emulator or devices
