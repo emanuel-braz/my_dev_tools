@@ -1,13 +1,13 @@
 # My Dev Tools 🛠️
 
 ## Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Run Gists on Terminal, Kanban Board, Timer, Games, Sounds, etc.
-<br />
-<a href="https://www.buymeacoffee.com/emanuelbraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 217px !important;" ></a>
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
 
-<img width="1337" alt="image" src="https://github.com/user-attachments/assets/b89151d4-dcaa-4b50-b951-38793c693f4a">
+![mdtk](https://github.com/user-attachments/assets/d127cc0d-2385-4c88-9d41-71c511d16ccb)
+
+<a href="https://www.buymeacoffee.com/emanuelbraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 217px !important;" ></a>
   
 ### Features  
 
