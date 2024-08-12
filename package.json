@@ -159,6 +159,11 @@
 				"category": "MDT",
 				"command": "extension.cancelTimer",
 				"title": "Cancel Timer ⏱️"
+			  },
+			  {
+				"category": "MDT",
+				"command":  "extension.startGameDino",
+				"title": "Play T-Rex Runner Game 🦖"
 			  }
 		],
 		"menus": {
