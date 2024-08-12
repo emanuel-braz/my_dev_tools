@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+    <style>
+        #backboard {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: #000000;
+        }
+
+        #vl1 {
+            position: absolute;
+            width: 500px;
+            height: 0px;
+            margin-top: 250px;
+            margin-left: -83.33px;
+            border: 1px solid #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        #vl2 {
+            position: absolute;
+            width: 500px;
+            height: 0px;
+            margin-top: 250px;
+            margin-left: 83.33px;
+            border: 1px solid #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        #hl1 {
+            position: absolute;
+            width: 500px;
+            height: 0px;
+            margin-top: 166px;
+            border: 1px solid #FFFFFF;
+        }
+
+        #hl2 {
+            position: absolute;
+            width: 500px;
+            height: 0px;
+            margin-top: 334px;
+            border: 1px solid #FFFFFF;
+        }
+
+        .zone {
+            position: absolute;
+            width: 84px;
+            height: 84px;
+
+            /* Uncomment the line below to view the clickable zone to accept a move */
+            /* border: 1px solid #882929; */
+        }
+
+        .p0 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 42px;
+            margin-left: 42px;
+        }
+        
+        .p0::before {
+            content: '1';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p1 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 42px;
+            margin-left: 208px;
+        }
+        .p1::before {
+            content: '2';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p2 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 42px;
+            margin-left: 377px;
+        }
+        .p2::before {
+            content: '3';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p3 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 210px;
+            margin-left: 42px;
+        }
+        .p3::before {
+            content: '4';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p4 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 210px;
+            margin-left: 208px;
+        }
+        .p4::before {
+            content: '5';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p5 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 210px;
+            margin-left: 377px;
+        }
+        .p5::before {
+            content: '6';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p6 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 375px;
+            margin-left: 42px;
+        }
+        .p6::before {
+            content: '7';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p7 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 375px;
+            margin-left: 208px;
+        }
+        .p7::before {
+            content: '8';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .p8 {
+            position: absolute;
+            width: 84.85px;
+            height: 84.85px;
+            margin-top: 375px;
+            margin-left: 377px;
+        }
+        .p8::before {
+            content: '9';
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 50px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .x,
+        .o {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="backboard">
+
+        <div id="hl1"></div>
+        <div id="hl2"></div>
+
+        <div id="vl1"></div>
+        <div id="vl2"></div>
+
+        <svg id="x0" class="p0 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x1" class="p1 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x2" class="p2 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x3" class="p3 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x4" class="p4 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x5" class="p5 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x6" class="p6 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x7" class="p7 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+        <svg id="x8" class="p8 x" width="87" height="86" viewBox="0 0 87 86" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <line x1="1.35355" y1="0.646447" x2="86.2064" y2="85.4993" stroke="white" />
+            <line x1="0.646447" y1="85.4993" x2="85.4993" y2="0.646448" stroke="white" />
+        </svg>
+
+        <svg id="o0" class="p0 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o1" class="p1 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o2" class="p2 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o3" class="p3 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o4" class="p4 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o5" class="p5 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o6" class="p6 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o7" class="p7 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+        <svg id="o8" class="p8 o" width="110" height="110" viewBox="0 0 110 110" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="55" r="54.5" stroke="white" />
+        </svg>
+
+        <div id="z0" class="p0 zone"></div>
+        <div id="z1" class="p1 zone"></div>
+        <div id="z2" class="p2 zone"></div>
+        <div id="z3" class="p3 zone"></div>
+        <div id="z4" class="p4 zone"></div>
+        <div id="z5" class="p5 zone"></div>
+        <div id="z6" class="p6 zone"></div>
+        <div id="z7" class="p7 zone"></div>
+        <div id="z8" class="p8 zone"></div>
+
+    </div>
+    <script>
+        const vscode = acquireVsCodeApi();
+        var gameArr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var moves = 0;
+        var blocked = 0;
+        var currentPlayer = 1; // 1 for X, 2 for O
+
+        function restart() {
+            blocked = 0;
+            gameArr = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+            moves = 0;
+            currentPlayer = 1; // Reset to player X
+            for (var i = 0; i < 9; i++) {
+                document.getElementById(`x${i}`).style.visibility = "hidden";
+                document.getElementById(`o${i}`).style.visibility = "hidden";
+            }
+            vscode.postMessage({
+                command: 'info',
+                text: `Your move, Player X`
+            });
+        }
+
+        function reset(winner) {
+            console.log(`${winner} wins`);
+            var winPerson = (winner != 0) ? `Player ${(winner == 1) ? "X" : "O"} wins!` : "It's a draw!";
+            blocked = 1;
+            vscode.postMessage({
+                command: 'play-again',
+                text: `${winPerson} Play again?`
+            });
+        }
+
+        function checkWin() {
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]             // Diagonals
+            ];
+
+            for (let combination of winningCombinations) {
+                const [a, b, c] = combination;
+                if (gameArr[a] && gameArr[a] === gameArr[b] && gameArr[a] === gameArr[c]) {
+                    reset(gameArr[a]);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function userMove(event) {
+            var id = event.target.id;
+            var box = id[1];
+            if (blocked || gameArr[parseInt(box)] != 0) {
+                return;
+            }
+
+            // Set the current player's move
+            gameArr[box] = currentPlayer;
+            document.getElementById(`${currentPlayer == 1 ? 'x' : 'o'}${box}`).style.visibility = "visible";
+            moves++;
+
+            if (checkWin()) {
+                return;
+            }
+
+            if (moves == 9) {
+                reset(0); // Draw
+                return;
+            }
+
+            // Switch to the other player
+            currentPlayer = currentPlayer == 1 ? 2 : 1;
+        }
+
+        // Add event listeners to the boxes
+        for (var i = 0; i < 9; i++) {
+            document.getElementById(`z${i}`).addEventListener("click", userMove);
+        }
+
+        window.addEventListener('message', event => {
+            const message = event.data; // The JSON data our extension sent
+            switch (message.command) {
+                case 'restart':
+                    restart();
+                    break;
+            }
+        });
+
+    </script>
+</body>
+
+</html>
