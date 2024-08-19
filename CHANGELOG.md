@@ -1,3 +1,6 @@
+## [0.0.24] 2024-08-18
+- Add side panel to show favorite gist files
+
 ## [0.0.23] 2024-08-12
 - Add Timer ⏱️
 - Add Games 👾
