@@ -191,6 +191,11 @@
 				"category": "MDT",
 				"command":  "extension.startTictactoe",
 				"title": "Play Tic Tac Toe 🎮"
+			  },
+			  {
+				"category": "MDT",
+				"command":  "extension.refreshMainPanel",
+				"title": "Refresh"
 			  }
 		],
 		"menus": {
@@ -198,6 +203,35 @@
 				{
 					"command": "extension.cancelTimer",
 					"when": "false"
+				},
+				{
+					"command": "extension.refreshMainPanel",
+					"when": "false"
+				}
+			],
+			"view/title": [
+            {
+                "command": "extension.refreshMainPanel",
+                "when": "view == mainSidePanel",
+                "group": "navigation"
+            }
+        ]
+		},
+		"views": {
+			"sidePanel": [
+				{
+					"id": "mainSidePanel",
+					"name": "View",
+					"type": "webview"
+				}
+			]
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "sidePanel",
+					"title": "My Dev Tools",
+					"icon": "$(tools)"
 				}
 			]
 		}
@@ -243,10 +277,10 @@
 		"hasbin": "^1.2.3",
 
 		"marked": "^2.0.4",
-		"react": "^16.13.0",
+		"react": "^18.0.0",
 		"react-autosize-textarea": "^7.0.0",
 		"react-beautiful-dnd": "^13.0.0",
-		"react-dom": "^16.13.0",
+		"react-dom": "^18.0.0",
 		"react-select": "^3.1.0",
 		"react-simple-code-editor": "^0.11.0",
 		"styled-components": "^5.0.1",
@@ -255,5 +289,7 @@
 	},
 	"activationEvents": [
 		"onStartupFinished"
-	]
+	],
+	"private": true,
+	"workspaces": ["src/*"]
 }

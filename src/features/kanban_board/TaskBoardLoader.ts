@@ -49,9 +49,9 @@ export default class ViewLoader {
       ? vscode.ViewColumn.Two
       : undefined;
 
-    this._panel = vscode.window.createWebviewPanel('configView', 'Task Board', column || vscode.ViewColumn.Two, {
+    this._panel = vscode.window.createWebviewPanel('task_board', 'Task Board', column || vscode.ViewColumn.Two, {
       enableScripts: true,
-      localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'configViewer'))]
+      localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'resources/task_board'))]
     });
 
     // get base path (from the user's workspace path):
@@ -113,7 +113,7 @@ export default class ViewLoader {
 
   private getWebviewContent({ basePath, templateString, fileList, selectedFile, rootPath }): string {
     // Local path to main script run in the webview
-    const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, 'configViewer', 'configViewer.js'));
+    const reactAppPathOnDisk = vscode.Uri.file(path.join(this._extensionPath, 'resources/task_board', 'index.js'));
     const reactAppUri = reactAppPathOnDisk.with({ scheme: 'vscode-resource' });
 
     const fullPath = deepFind(vscode, 'workspace.workspaceFolders[0].uri.fsPath', '') + `/${selectedFile}`;

@@ -1,4 +1,4 @@
-import { ExtensionContext, QuickPickItem, Uri } from "vscode";
+import { ExtensionContext, Uri } from "vscode";
 import TaskBoardLoader from "./TaskBoardLoader";
 
 const { exec, spawn } = require("child_process");

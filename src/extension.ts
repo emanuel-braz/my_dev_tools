@@ -13,6 +13,8 @@ import { MessengerSoundDelegate } from './features/messenger_sound/messenger_sou
 import { TimerDelegate } from './features/timer/timer_delegate';
 import { ChromeDinoGaameDelegate } from './features/games/dino/dino_delegate';
 import { TicTacToeDelegate } from './features/games/tictactoe/tictactoe_delegate';
+import { GistPanelDelegate } from './features/panels/extension/panels/gist_panel_delegate';
+import SidePaneDelegate from './features/side_panel/side_panel_delegate';
 
 const deeplinkDelegate = new DeeplinkDelegate();
 const pushNotificationDelegate = new PushNotificationDelegate();
@@ -24,6 +26,9 @@ const timerDelegate = new TimerDelegate();
 
 const gameDinoDelegate = new ChromeDinoGaameDelegate();
 const tictactoeDelegate = new TicTacToeDelegate();
+
+const gistPanelDelegate = new GistPanelDelegate();
+const sidePanelDelegate = new SidePaneDelegate();
 
 export function activate(context: ExtensionContext) {
 
@@ -77,7 +82,24 @@ export function activate(context: ExtensionContext) {
 	// Games
 	gameDinoDelegate.activate(context);
 	tictactoeDelegate.activate(context);
+
+	// Panels
+	sidePanelDelegate.activate(context);
+	gistPanelDelegate.activate(context);
 }
 
 
-export function deactivate() { }
+export function deactivate() {
+	timerDelegate.deactivate();
+	messengerSoundDelegate.deactivate();
+	// kanbanBoardDelegate.deactivate();
+	// gistDelegate.deactivate();
+	// deviceDelegate.deactivate();
+	// pushNotificationDelegate.deactivate();
+	// deeplinkDelegate.deactivate();
+	gameDinoDelegate.deactivate();
+	tictactoeDelegate.deactivate();
+
+	sidePanelDelegate.deactivate();
+	gistPanelDelegate.deactivate();
+}

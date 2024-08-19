@@ -1,4 +1,4 @@
-import { Feature } from './../../core/feature/feature';
+import { Feature } from '../../infra/feature/feature';
 
 import { window, commands, ExtensionContext } from 'vscode';
 import Timer from './timer';

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { Feature } from '../../core/feature/feature';
+import { Feature } from '../../infra/feature/feature';
 
 export class MessengerSoundDelegate implements Feature {
     private player: any;
@@ -14,16 +14,16 @@ export class MessengerSoundDelegate implements Feature {
         let disposable = vscode.commands.registerCommand('extension.showSoundPicker', () => {
             this.showSoundPicker();
         });
-    
+
         context.subscriptions.push(disposable);
     }
-    
+
     async showSoundPicker() {
         const sounds = [
             { label: "MS Teams Call", description: "Play", filePath: path.join(__dirname, '../../../resources/sounds', 'ms_teams.mp3') },
             { label: "Slack Message", description: "Play", filePath: path.join(__dirname, '../../../resources/sounds', 'slack_message.mp3') }
         ];
-    
+
         const quickPick = vscode.window.createQuickPick();
         quickPick.title = 'Select a sound';
         quickPick.ignoreFocusOut = true;
@@ -34,7 +34,7 @@ export class MessengerSoundDelegate implements Feature {
                 { iconPath: new vscode.ThemeIcon('debug-stop'), tooltip: 'Stop' }
             ]
         }));
-    
+
         quickPick.onDidTriggerItemButton(async e => {
             const sound = sounds.find(s => s.label === e.item.label);
             if (sound) {
@@ -56,7 +56,7 @@ export class MessengerSoundDelegate implements Feature {
                 }
             }
         });
-    
+
         quickPick.onDidHide(() => {
             this.stopSound();
             quickPick.dispose();
@@ -64,28 +64,28 @@ export class MessengerSoundDelegate implements Feature {
 
         quickPick.show();
     }
-    
-    
-    
+
+
+
     playSound(filePath: string) {
         if (this.currentProcess) {
             this.stopSound();
         }
-    
+
         this.currentProcess = this.player.play(filePath, (err: any) => {
             if (err) console.error(err);
         });
     }
-    
+
     stopSound() {
         if (this.currentProcess) {
             this.currentProcess.kill();
             this.currentProcess = null;
         }
     }
-    
+
     deactivate() {
         //
     }
-    
+
 }
