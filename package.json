@@ -194,13 +194,8 @@
 			  },
 			  {
 				"category": "MDT",
-				"command":  "extension.mainPanel",
-				"title": "Open Panel"
-			  },
-			  {
-				"category": "MDT",
-				"command":  "extension.updateGistPanel",
-				"title": "Update Panel"
+				"command":  "extension.refreshMainPanel",
+				"title": "Refresh"
 			  }
 		],
 		"menus": {
@@ -208,6 +203,35 @@
 				{
 					"command": "extension.cancelTimer",
 					"when": "false"
+				},
+				{
+					"command": "extension.refreshMainPanel",
+					"when": "false"
+				}
+			],
+			"view/title": [
+            {
+                "command": "extension.refreshMainPanel",
+                "when": "view == mainSidePanel",
+                "group": "navigation"
+            }
+        ]
+		},
+		"views": {
+			"sidePanel": [
+				{
+					"id": "mainSidePanel",
+					"name": "View",
+					"type": "webview"
+				}
+			]
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "sidePanel",
+					"title": "My Dev Tools",
+					"icon": "$(tools)"
 				}
 			]
 		}

@@ -1,6 +1,6 @@
 import path = require("path");
 import * as vscode from "vscode";
-import { Feature } from "../../../core/feature/feature";
+import { Feature } from "../../../infra/feature/feature";
 
 export class ChromeDinoGaameDelegate implements Feature {
 

@@ -1,5 +1,5 @@
 import React = require("react");
-import { Command, Action, AppHelper } from "./app_helper";
+import { Command, Action, AppHelper } from "../../../../core/helpers/app_helper";
 
 export default function GistView() {
 

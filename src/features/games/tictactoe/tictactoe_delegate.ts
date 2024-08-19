@@ -1,4 +1,4 @@
-import { Feature } from './../../../core/feature/feature';
+import { Feature } from '../../../infra/feature/feature';
 import * as fs from 'fs'
 import * as path from 'path'
 import * as vscode from 'vscode';

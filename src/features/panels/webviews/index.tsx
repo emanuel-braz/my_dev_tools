@@ -1,8 +1,8 @@
 import React = require("react");
 import './index.css';
 import ReactDOM from "react-dom/client";
-import { AppHelper as AppHelper } from "./app_helper";
-import routes from "./routes";
+import { AppHelper as AppHelper } from "../../../core/helpers/app_helper";
+import routes from "../../../core/routing/router";
 
 declare global {
   interface Window {

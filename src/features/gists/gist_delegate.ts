@@ -85,7 +85,7 @@ export class GistDelegate {
                         tooltip: 'Run in a new terminal',
                         callback: async () => {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
-                            this._runGistOnTerminal(context, rawFileContent, false);
+                            this.runGistOnTerminal(context, rawFileContent, false);
                         }
                     } as ButtonCallback,
                     {
@@ -106,9 +106,9 @@ export class GistDelegate {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
                             const document = await workspace.openTextDocument({
                                 content: rawFileContent,
-                                language: 'plaintext' 
+                                language: 'plaintext'
                             });
-                    
+
                             await window.showTextDocument(document);
                         }
                     } as ButtonCallback
@@ -139,16 +139,16 @@ export class GistDelegate {
 
         const rawFileContent = await this.fetchRawFileContent(file.raw_url);
 
-        this._runGistOnTerminal(context, rawFileContent, true);
+        this.runGistOnTerminal(context, rawFileContent, true);
     }
 
-    private async _runGistOnTerminal(context: ExtensionContext, fileRawData: string, isCurrentTerminal: boolean = false) {
+    async runGistOnTerminal(context: ExtensionContext, fileRawData: string, isCurrentTerminal: boolean = false) {
 
         if (fileRawData.startsWith('#!')) {
             if (fileRawData.length > 1024) {
                 this.sendLargeTextToTerminal(fileRawData, isCurrentTerminal);
             } else {
-                const terminal: Terminal  = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+                const terminal: Terminal = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
                 terminal.show();
                 terminal.sendText(`bash -c '${fileRawData}'`);
             }
@@ -156,7 +156,7 @@ export class GistDelegate {
             if (fileRawData.length > 1024) {
                 this.sendLargeTextToTerminal(fileRawData, isCurrentTerminal);
             } else {
-                const terminal: Terminal  = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+                const terminal: Terminal = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
                 terminal.show();
                 terminal.sendText(fileRawData);
             }
@@ -244,6 +244,8 @@ export class GistDelegate {
         this.runGistFromUrl(context, url);
     }
 
+
+
     async runFavoriteGist(context: ExtensionContext) {
         var url = LocalDataSource.getFavoriteGistUrl(context);
         if (!url) {
@@ -263,7 +265,7 @@ export class GistDelegate {
         const api = `https://api.github.com/gists/${gistId}`;
 
         const gist = await this.fetchData<Gist>(api);
-        
+
         const filesAsQuickPickItems = Object.keys(gist.files).map(key => {
             const file = gist.files[key];
             return {
@@ -279,7 +281,7 @@ export class GistDelegate {
                         tooltip: 'Run in a new terminal',
                         callback: async () => {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
-                            this._runGistOnTerminal(context, rawFileContent, false);
+                            this.runGistOnTerminal(context, rawFileContent, false);
                         }
                     } as ButtonCallback,
                     {
@@ -300,14 +302,14 @@ export class GistDelegate {
                             const rawFileContent = await this.fetchRawFileContent(file.raw_url);
                             const document = await workspace.openTextDocument({
                                 content: rawFileContent,
-                                language: 'plaintext' 
+                                language: 'plaintext'
                             });
-                    
+
                             await window.showTextDocument(document);
                         }
                     } as ButtonCallback
                 ]
-            } ;
+            };
         });
 
         const file: GistFile | undefined = await Dialogs.promptAndReturn(
@@ -332,9 +334,9 @@ export class GistDelegate {
         }
 
         const rawFileContent = await this.fetchRawFileContent(file.raw_url);
-        this._runGistOnTerminal(context, rawFileContent, true);
+        this.runGistOnTerminal(context, rawFileContent, true);
     }
-    
+
     async updateFavoriteGist(context: ExtensionContext): Promise<string | undefined> {
         const favoriteGistUrl = await Dialogs.showInputBox({
             prompt: 'Enter the URL of the favorite Gist',
@@ -344,7 +346,7 @@ export class GistDelegate {
         if (!favoriteGistUrl || favoriteGistUrl.trim().length === 0 || !favoriteGistUrl.startsWith('https://gist.github.com/')) {
             return;
         }
-        
+
         LocalDataSource.setFavoriteGistUrl(context, favoriteGistUrl);
         return favoriteGistUrl;
     }
@@ -356,10 +358,22 @@ export class GistDelegate {
     sendLargeTextToTerminal(text: string, isCurrentTerminal: boolean = false) {
         const tempFilePath = path.join(os.tmpdir(), 'gist_temp_file.sh');
         fs.writeFileSync(tempFilePath, text, { mode: 0o755 });
-    
-        const terminal: Terminal  = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
+
+        const terminal: Terminal = isCurrentTerminal ? (window.activeTerminal || window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`)) : window.createTerminal(`[MDT] #${GistDelegate.NEXT_TERM_ID++}`);
         terminal.show(true);
         terminal.sendText(`bash ${tempFilePath}`, true);
+    }
+
+    async getFavoriteGist(context: ExtensionContext): Promise<Gist | undefined> {
+        var url = LocalDataSource.getFavoriteGistUrl(context);
+        if (!url) {
+            Dialogs.snackbar.error('Favorite Gist not set. Please update the favorite gist URL in the command palette.');
+        } else {
+            const gistId = url.split('/').pop();
+            const api = `https://api.github.com/gists/${gistId}`;
+            const gist = await this.fetchData<Gist>(api);
+            return gist;
+        }
     }
 
 }

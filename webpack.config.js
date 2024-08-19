@@ -39,10 +39,10 @@ const taskBoard = {
 
 const mainPanel = {
   entry: {
-    index: "./src/features/main_panel/webview/index.tsx"
+    index: "./src/features/panels/webviews/index.tsx"
   },
   output: {
-    path: path.resolve(__dirname, "resources/main_panel"),
+    path: path.resolve(__dirname, "resources/panels"),
     filename: "[name].js"
   },
   devtool: "eval-source-map",

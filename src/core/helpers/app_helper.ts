@@ -1,16 +1,19 @@
 
 export enum Action {
     showMessage = 'showMessage',
+    refreshMainPanel = 'refreshMainPanel',
+    runGist = 'runGist',
+    fechingFavoriteGist = 'fechingFavoriteGist',
 }
 
 export interface Command {
     action: string;
-    payload?: Record<string, any>;
+    payload?: any;
 }
 
 export class AppHelper {
     private static _instance: AppHelper;
-    
+
     constructor(private vscode: any, public route: string, public payload: any) {
         AppHelper._instance = this;
     }
