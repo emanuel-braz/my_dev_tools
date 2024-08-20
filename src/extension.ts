@@ -15,6 +15,7 @@ import { ChromeDinoGaameDelegate } from './features/games/dino/dino_delegate';
 import { TicTacToeDelegate } from './features/games/tictactoe/tictactoe_delegate';
 import { GistPanelDelegate } from './features/panels/extension/panels/gist_panel_delegate';
 import SidePaneDelegate from './features/side_panel/side_panel_delegate';
+import NotesDelegate from './features/notes/extension/notes_delegate';
 
 const deeplinkDelegate = new DeeplinkDelegate();
 const pushNotificationDelegate = new PushNotificationDelegate();
@@ -27,8 +28,10 @@ const timerDelegate = new TimerDelegate();
 const gameDinoDelegate = new ChromeDinoGaameDelegate();
 const tictactoeDelegate = new TicTacToeDelegate();
 
+// Webviews
 const gistPanelDelegate = new GistPanelDelegate();
 const sidePanelDelegate = new SidePaneDelegate();
+const notesDelegate = new NotesDelegate();
 
 export function activate(context: ExtensionContext) {
 
@@ -83,9 +86,10 @@ export function activate(context: ExtensionContext) {
 	gameDinoDelegate.activate(context);
 	tictactoeDelegate.activate(context);
 
-	// Panels
+	// Webview Panels
 	sidePanelDelegate.activate(context);
 	gistPanelDelegate.activate(context);
+	notesDelegate.activate(context);
 }
 
 
@@ -102,4 +106,5 @@ export function deactivate() {
 
 	sidePanelDelegate.deactivate();
 	gistPanelDelegate.deactivate();
+	notesDelegate.deactivate();
 }
