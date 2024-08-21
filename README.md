@@ -66,7 +66,9 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
     - Play Tic Tac Toe 🀄️
     - Play T-Rex Runner 🦖
 
-- Add Messenger Call fake sounds 🔊 (It may save you from a boring meeting)
+- Messenger Call fake sounds 🔊 (It may save you from a boring meeting)
+
+- My Notes Board: A simple board to keep your notes
 
 ### Requirements
 - Android Debug Bridge (adb) for Android emulator or devices

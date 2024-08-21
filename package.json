@@ -1,8 +1,8 @@
 {
 	"name": "deeplink",
 	"displayName": "My Dev Tools Kit",
-	"description": "Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, Timer, Games, Sounds, etc.",
-	"version": "0.0.24",
+	"description": "Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, Notes, Timer, Games, Sounds, etc.",
+	"version": "0.0.25",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -200,7 +200,7 @@
 			  {
 				"category": "MDT",
 				"command":  "extension.openNotes",
-				"title": "Open My Notes"
+				"title": "Open My Notes Board 📝"
 			  }
 		],
 		"menus": {
