@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState, ReactNode, FC } from 'react';
 
-// Define Note type
 export interface Note {
   id: string;
   text: string;
@@ -8,38 +7,45 @@ export interface Note {
   // content: string;
 }
 
-// Define the context value type
 export interface NoteContextType {
   notes: Note[];
+  filteredNotes: Note[];
+  inputNote: string;
   addNote: (note: Note) => void;
   removeNote: (id: string) => void;
-  inputNote: string;
   setInputNote: (note: string) => void;
   editNote: (note: Note) => void;
+  onFilter: (filterText: string) => void;
+  filterText: string;
 }
 
-
-// Create the context with undefined as default
-export const NoteContext = createContext<NoteContextType | undefined>(undefined);
-
-// Define the provider props type
 interface NoteProviderProps {
   children: ReactNode;
 }
 
-// Create the provider component
+export const NoteContext = createContext<NoteContextType | undefined>(undefined);
+
 export const NoteProvider: FC<NoteProviderProps> = ({ children }) => {
+  
   const [notes, setNotes] = useState<Note[]>(
     JSON.parse(localStorage.getItem('notes') || '[]')
   );
+  
+  const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
+  const [filterText, setFilterText] = React.useState('');
+
   const [inputNote, setInputNote] = useState<string>('');
 
   function addNote(note: Note) {
+    if (!note.text) return;
+    
     setNotes(prev => [note, ...prev]);
+    onFilter('');
   }
 
   function removeNote(id: string) {
     setNotes(notes.filter(note => note.id !== id));
+    setFilteredNotes(filteredNotes.filter(note => note.id !== id));
   }
 
   function editNote(note: Note) {
@@ -51,9 +57,23 @@ export const NoteProvider: FC<NoteProviderProps> = ({ children }) => {
     }
   }
 
+  function onFilter(filterText: string) {
+    const filteredNotes = notes.filter(note => note.text.includes(filterText));
+    setFilteredNotes(filteredNotes);
+    setFilterText(filterText);
+  }
+
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
+    const isEditing = notes.some(note => note.isEditing);
+    if (!isEditing) {
+      onFilter(filterText);
+    }
   }, [notes]);
+
+  useEffect(() => {
+    onFilter(filterText);
+  }, []);
 
   return (
     <NoteContext.Provider
@@ -64,6 +84,9 @@ export const NoteProvider: FC<NoteProviderProps> = ({ children }) => {
         inputNote,
         setInputNote,
         editNote,
+        onFilter,
+        filterText,
+        filteredNotes,
       }}
     >
       {children}

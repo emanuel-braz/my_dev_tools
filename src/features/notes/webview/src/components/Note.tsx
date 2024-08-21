@@ -1,21 +1,19 @@
 
-// import styles from '../styles/components/Note.module.css';
 import { useContext } from 'react';
 import { NoteContext } from '../contexts/NoteContext';
 import { NoteContextType } from "../contexts/NoteContext";
 import React from 'react';
 
 export function Note() {
-  // Use context with the correct type
-  const { notes, removeNote, editNote } = useContext(NoteContext) as NoteContextType;
+  const { notes, removeNote, editNote, filteredNotes } = useContext(NoteContext) as NoteContextType;
 
-  // Define the function to generate list items
   function getListItems() {
-    return notes.map(note => (
+    return filteredNotes.map(note => (
       <li key={note.id} style={styles.li}>
         {note.isEditing ? (
           <>
             <textarea
+              style={{ border: note.text ? '' : '2px solid red', }}
               rows={10}
               value={note.text}
               onChange={e => {
@@ -26,6 +24,7 @@ export function Note() {
             <button type='button'
               style={styles.iconButton}
               onClick={() => {
+                if (!note.text) return; // Prevent empty notes
                 note.isEditing = false;
                 editNote(note);
               }}
@@ -71,7 +70,6 @@ export function Note() {
     ));
   }
 
-  // Define the function to return the notes
   function getNotes() {
     if (notes.length > 0) {
       return <ul style={styles.ul}>{getListItems()}</ul>;
@@ -79,7 +77,6 @@ export function Note() {
     return null;
   }
 
-  // Render the component
   return <>{getNotes()}</>;
 }
 
