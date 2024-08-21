@@ -1,8 +1,8 @@
 {
 	"name": "deeplink",
 	"displayName": "My Dev Tools Kit",
-	"description": "Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, Timer, Games, Sounds, etc.",
-	"version": "0.0.24",
+	"description": "Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Gist, Kanban Board, Notes, Timer, Games, Sounds, etc.",
+	"version": "0.0.25",
 	"publisher": "emanuel-braz",
 	"repository": {
 		"type": "git",
@@ -196,6 +196,11 @@
 				"category": "MDT",
 				"command":  "extension.refreshMainPanel",
 				"title": "Refresh"
+			  },
+			  {
+				"category": "MDT",
+				"command":  "extension.openNotes",
+				"title": "Open My Notes Board 📝"
 			  }
 		],
 		"menus": {
@@ -247,7 +252,8 @@
 		"test": "npm run compile && vscode-test",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
-		"test2": "vscode-test"
+		"test2": "vscode-test",
+		"start:notes-app": "cd src/features/notes/webview && npm start"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.19.0",
@@ -278,6 +284,7 @@
 
 		"marked": "^2.0.4",
 		"react": "^18.0.0",
+		"react-scripts": "^5.0.1",
 		"react-autosize-textarea": "^7.0.0",
 		"react-beautiful-dnd": "^13.0.0",
 		"react-dom": "^18.0.0",
@@ -285,7 +292,8 @@
 		"react-simple-code-editor": "^0.11.0",
 		"styled-components": "^5.0.1",
 
-		"play-sound": "^1.1.6"
+		"play-sound": "^1.1.6",
+		"nanoid": "^3.1.20"
 	},
 	"activationEvents": [
 		"onStartupFinished"

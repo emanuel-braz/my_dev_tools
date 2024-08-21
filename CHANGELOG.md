@@ -1,3 +1,6 @@
+## [0.0.25] 2024-08-20
+- Added My Notes Board feature - A simple note board to keep your notes across different projects
+
 ## [0.0.24] 2024-08-18
 - Add side panel to show favorite gist files
 
