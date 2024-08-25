@@ -5,6 +5,10 @@
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
 
+Demo App: https://github.com/emanuel-braz/mobile_dev_tools_demo
+
+Tutorial: https://www.youtube.com/watch?v=HePUYSVf4e0
+
 ![mdtk](https://github.com/user-attachments/assets/d127cc0d-2385-4c88-9d41-71c511d16ccb)
 
 <a href="https://www.buymeacoffee.com/emanuelbraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 217px !important;" ></a>
