@@ -61,6 +61,9 @@ Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio
   - Click on the timer to stop it
   - Show the timer on the status bar
 
+- Menu to exports all files from folder (Right click on the folder)
+    - dart
+    - typescript
 
 - Games 👾
     - Play Tic Tac Toe 🀄️

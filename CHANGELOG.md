@@ -1,3 +1,8 @@
+## [0.0.26] 2024-09-01
+- Add menu to exports all files from folder
+    - dart
+    - typescript
+
 ## [0.0.25] 2024-08-20
 - Added My Notes Board feature - A simple note board to keep your notes across different projects
 
