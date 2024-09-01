@@ -16,6 +16,7 @@ import { TicTacToeDelegate } from './features/games/tictactoe/tictactoe_delegate
 import { GistPanelDelegate } from './features/panels/extension/panels/gist_panel_delegate';
 import SidePaneDelegate from './features/side_panel/side_panel_delegate';
 import NotesDelegate from './features/notes/extension/notes_delegate';
+import CreateIndexFileDelegate from './features/create_index_file/create_index_file_delegate';
 
 const deeplinkDelegate = new DeeplinkDelegate();
 const pushNotificationDelegate = new PushNotificationDelegate();
@@ -32,6 +33,9 @@ const tictactoeDelegate = new TicTacToeDelegate();
 const gistPanelDelegate = new GistPanelDelegate();
 const sidePanelDelegate = new SidePaneDelegate();
 const notesDelegate = new NotesDelegate();
+
+// Files
+const createIndexFileDelegate = new CreateIndexFileDelegate();
 
 export function activate(context: ExtensionContext) {
 
@@ -90,6 +94,9 @@ export function activate(context: ExtensionContext) {
 	sidePanelDelegate.activate(context);
 	gistPanelDelegate.activate(context);
 	notesDelegate.activate(context);
+
+	// Files
+	createIndexFileDelegate.activate(context);
 }
 
 
@@ -107,4 +114,6 @@ export function deactivate() {
 	sidePanelDelegate.deactivate();
 	gistPanelDelegate.deactivate();
 	notesDelegate.deactivate();
+
+	createIndexFileDelegate.deactivate();
 }

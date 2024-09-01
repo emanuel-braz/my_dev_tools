@@ -201,6 +201,10 @@
 				"category": "MDT",
 				"command":  "extension.openNotes",
 				"title": "Open My Notes Board 📝"
+			  },
+			  {
+				"command": "extension.createIndexFile",
+				"title": "[MDT] Create Index File"
 			  }
 		],
 		"menus": {
@@ -215,12 +219,18 @@
 				}
 			],
 			"view/title": [
-            {
-                "command": "extension.refreshMainPanel",
-                "when": "view == mainSidePanel",
-                "group": "navigation"
-            }
-        ]
+				{
+					"command": "extension.refreshMainPanel",
+					"when": "view == mainSidePanel",
+					"group": "navigation"
+				}
+        	],
+			"explorer/context": [
+				{
+					"command": "extension.createIndexFile",
+					"group": "2_click"
+				}
+			]
 		},
 		"views": {
 			"sidePanel": [
