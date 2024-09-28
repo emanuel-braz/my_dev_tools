@@ -1,3 +1,6 @@
+## [0.0.27] 2024-09-27
+- Improve barrel file generator
+
 ## [0.0.26] 2024-09-01
 - Add menu to exports all files from folder
     - dart

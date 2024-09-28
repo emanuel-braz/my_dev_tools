@@ -65,9 +65,10 @@ Tutorial: https://www.youtube.com/watch?v=HePUYSVf4e0
   - Click on the timer to stop it
   - Show the timer on the status bar
 
-- Menu to exports all files from folder (Right click on the folder)
+- Right click on the folder to generate barrel file
     - dart
     - typescript
+    - unsupported languages configured on user settings
 
 - Games 👾
     - Play Tic Tac Toe 🀄️
