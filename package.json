@@ -41,17 +41,114 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"configuration": {
-        "type": "object",
-        "title": "Task Board Settings",
-        "properties": {
-            "mdt.taskBoard.fileList": {
-                "type": "string",
-                "description": "Comma-separated list of files to be displayed on the task board."
-
+		"configuration": [
+			{
+				"type": "object",
+				"title": "Task Board Settings",
+				"properties": {
+					"mdt.taskBoard.fileList": {
+						"type": "string",
+						"description": "Comma-separated list of files to be displayed on the task board."
+					}
+				}
+			},
+			{
+				"title": "Barrel File Generator",
+				"properties": {
+					"mdt.barrelFileGenerator.defaultBarrelName": {
+						"title": "Default barrel file name",
+						"type": [
+							"string",
+							"null"
+						],
+						"default": null,
+						"markdownDescription": "The default name for the barrel file is `<folder-name>.dart`. You can override this name by setting a custom name. If there's any whitespace in the name it will be replaced by a '-' and the name **will be transformed to lowercase**."
+					},
+					"mdt.barrelFileGenerator.promptName": {
+						"title": "Open input on file generation",
+						"type": "boolean",
+						"default": false,
+						"description": "Get promted asking for the name of the barrel file that will be created"
+					},
+					"mdt.barrelFileGenerator.excludeFileList": {
+						"title": "Additional patterns to exclude files",
+						"type": "array",
+						"default": [],
+						"description": "Add the file patterns that you want to exclude (as glob patterns). Excluded files will not be added to the barrel file."
+					},
+					"mdt.barrelFileGenerator.excludeDirList": {
+						"title": "Additional patterns to exclude directories",
+						"type": "array",
+						"default": [],
+						"description": "Add the directory patterns that you want to exclude (as glob patterns). A barrel file will not be generated for these directories."
+					},
+					"mdt.barrelFileGenerator.prependFolderName": {
+						"title": "Prepend name of the folder to the generated file",
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "Prepend the name of the folder to the generated files, e.g.: `<folder-name>_<barrel-file>.dart`."
+					},
+					"mdt.barrelFileGenerator.appendFolderName": {
+						"title": "Append name of the folder to the generated file",
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "Append the name of the folder to the generated files, e.g.: `<barrel-file>_<folder-name>.dart`."
+					},
+					"mdt.barrelFileGenerator.skipEmpty": {
+						"title": "Skip empty folders",
+						"type": "boolean",
+						"default": true,
+						"description": "Skip generating barrel files for folders that are empty (or do not contain any valid file)"
+					},
+					"mdt.barrelFileGenerator.allowNotSupportedLanguages": {
+						"title": "Allow not supported languages",
+						"type": "boolean",
+						"default": false,
+						"description": "Allowing the generation of barrel file for languages that are not supported can lead to unexpected results."
+					}
+				}
+			},
+			{
+				"title": "Dart Barrel File",
+				"properties": {
+					"mdt.barrelFileGenerator.excludeGenerated": {
+						"title": "Exclude generated (.g.dart) files",
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Exclude `.g.dart` files"
+					},
+					"mdt.barrelFileGenerator.excludeFreezed": {
+						"title": "Exclude freezed (.freezed.dart) files",
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Exclude `.freezed.dart` files"
+					},
+					"mdt.barrelFileGenerator.prependPackageToLibExport": {
+						"title": "Append package name to lib exports",
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "It will prepend `package:<package-name>/...` as a prefix of the export exclusively for the root file under `lib/`. It detects the name of the package by analysing the path of the project."
+					}
+				}
+			},
+			{
+				"title": "Typescript Barrel Files",
+				"properties": {
+					"mdt.barrelFileGenerator.includeTsxFiles": {
+						"title": "Include `.tsx` files",
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Include `TypeScript JSX (.tsx)` files"
+					},
+					"mdt.barrelFileGenerator.excludeTypescriptDeclaration": {
+						"title": "Exclude TypeScript Declaration (.d.ts) files",
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Exclude `.d.ts` files"
+					}
 				}
 			}
-		},
+		],
 		"commands": [
 			{
 				"category": "MDT",
@@ -171,41 +268,52 @@
 				"category": "MDT",
 				"command": "extension.startTimer",
 				"title": "Start Timer ⏱️"
-			  },
-			  {
+			},
+			{
 				"category": "MDT",
 				"command": "extension.stopTimer",
 				"title": "Stop Timer ⏱️"
-			  },
-			  {
+			},
+			{
 				"category": "MDT",
 				"command": "extension.cancelTimer",
 				"title": "Cancel Timer ⏱️"
-			  },
-			  {
+			},
+			{
 				"category": "MDT",
-				"command":  "extension.startGameDino",
+				"command": "extension.startGameDino",
 				"title": "Play T-Rex Runner 🦖"
-			  },
-			  {
+			},
+			{
 				"category": "MDT",
-				"command":  "extension.startTictactoe",
+				"command": "extension.startTictactoe",
 				"title": "Play Tic Tac Toe 🎮"
-			  },
-			  {
+			},
+			{
 				"category": "MDT",
-				"command":  "extension.refreshMainPanel",
+				"command": "extension.refreshMainPanel",
 				"title": "Refresh"
-			  },
-			  {
+			},
+			{
 				"category": "MDT",
-				"command":  "extension.openNotes",
+				"command": "extension.openNotes",
 				"title": "Open My Notes Board 📝"
-			  },
-			  {
-				"command": "extension.createIndexFile",
-				"title": "[MDT] Create Index File"
-			  }
+			},
+			{
+				"category": "MDT",
+				"command": "extension.generateCurrent",
+				"title": "MDT: Generate a single barrel file for the selected folder only"
+			},
+			{
+				"category": "MDT",
+				"command": "extension.generateCurrentWithSubfolders",
+				"title": "MDT: Generate a single barrel file for all files in subfolders"
+			},
+			{
+				"category": "MDT",
+				"command": "extension.generateCurrentAndNested",
+				"title": "MDT: Generate barrel files for each subfolder (nested)"
+			}
 		],
 		"menus": {
 			"commandPalette": [
@@ -216,6 +324,18 @@
 				{
 					"command": "extension.refreshMainPanel",
 					"when": "false"
+				},
+				{	
+					"command": "extension.generateCurrent",
+					"when": "false"
+				},
+				{
+					"command": "extension.generateCurrentWithSubfolders",
+					"when": "false"
+				},
+				{
+					"command": "extension.generateCurrentAndNested",
+					"when": "false"
 				}
 			],
 			"view/title": [
@@ -224,11 +344,22 @@
 					"when": "view == mainSidePanel",
 					"group": "navigation"
 				}
-        	],
+			],
 			"explorer/context": [
 				{
-					"command": "extension.createIndexFile",
-					"group": "2_click"
+					"command": "extension.generateCurrent",
+					"group": "2_click",
+					"when": "explorerResourceIsFolder"
+				},
+				{
+					"command": "extension.generateCurrentWithSubfolders",
+					"group": "2_click",
+					"when": "explorerResourceIsFolder"
+				},
+				{
+					"command": "extension.generateCurrentAndNested",
+					"group": "2_click",
+					"when": "explorerResourceIsFolder"
 				}
 			]
 		},
@@ -275,8 +406,6 @@
 		"typescript": "^5.4.5",
 		"@vscode/test-cli": "^0.0.9",
 		"@vscode/test-electron": "^2.4.0",
-
-
 		"@types/marked": "^2.0.2",
 		"@types/react": "^16.9.0",
 		"@types/react-dom": "^16.9.0",
@@ -291,7 +420,6 @@
 	"dependencies": {
 		"axios": "^1.7.2",
 		"hasbin": "^1.2.3",
-
 		"marked": "^2.0.4",
 		"react": "^18.0.0",
 		"react-scripts": "^5.0.1",
@@ -301,7 +429,6 @@
 		"react-select": "^3.1.0",
 		"react-simple-code-editor": "^0.11.0",
 		"styled-components": "^5.0.1",
-
 		"play-sound": "^1.1.6",
 		"nanoid": "^3.1.20"
 	},
@@ -309,5 +436,7 @@
 		"onStartupFinished"
 	],
 	"private": true,
-	"workspaces": ["src/*"]
+	"workspaces": [
+		"src/*"
+	]
 }
