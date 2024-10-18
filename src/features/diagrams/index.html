@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagram</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .mermaid {
+      transition: transform 0.2s ease;
+      transform-origin: top left;
+      width: 100%;
+      cursor: grab;
+
+      background-color: #727070;
+      overflow: hidden; /* Prevent scrolling */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mermaid:active {
+      cursor: grabbing;
+    }
+
+  </style>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+
+    let scale = 1;
+    let isPanning = false;
+    let startX, startY, translateX = 0, translateY = 0;
+    let isZooming = false;
+
+    document.addEventListener("DOMContentLoaded", function() {
+      
+        document.getElementById('zoomInBtn').addEventListener('click', zoomIn);
+        document.getElementById('zoomOutBtn').addEventListener('click', zoomOut);
+      
+    
+        const mermaidElement = document.querySelector('.mermaid');
+
+      if (mermaidElement) {
+        mermaidElement.addEventListener('wheel', function(event) {
+          event.preventDefault(); // Disable page scroll
+          if (!isZooming) {
+            isZooming = true;
+            if (event.deltaY < 0) {
+              zoomIn();
+            } else {
+              zoomOut();
+            }
+            setTimeout(() => { isZooming = false; }, 100);
+          }
+        });
+
+        // Panning with mouse drag
+        mermaidElement.addEventListener('mousedown', function(event) {
+          isPanning = true;
+          startX = event.clientX - translateX;
+          startY = event.clientY - translateY;
+          mermaidElement.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', function(event) {
+          if (isPanning) {
+            translateX = event.clientX - startX;
+            translateY = event.clientY - startY;
+            updateTransform();
+          }
+        });
+
+        document.addEventListener('mouseup', function() {
+          isPanning = false;
+          mermaidElement.style.cursor = 'grab';
+        });
+      }
+    });
+
+    function zoomIn() {
+      scale += 0.1;
+      updateTransform();
+    }
+
+    function zoomOut() {
+      if (scale > 0.2) {
+        scale -= 0.1;
+        updateTransform();
+      }
+    }
+
+    function updateTransform() {
+      const mermaidElement = document.querySelector('.mermaid');
+      if (mermaidElement) {
+        // Apply both scaling and translation (panning)
+        mermaidElement.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+        mermaidElement.style.width = (100 / scale) + '%'; // Adjust width based on scale
+      }
+    }
+  </script>
+</head>
+<body>
+
+    <!-- Ad buttons to zoom -->
+    <button id="zoomInBtn" onclick="zoomIn()">Zoom In</button>
+    <button id="zoomOutBtn" onclick="zoomOut()">Zoom Out</button>
+ 
+  <div class="mermaid">
+    ${diagram}
+  </div>
+</body>
+</html>

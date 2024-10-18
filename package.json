@@ -313,6 +313,11 @@
 				"category": "MDT",
 				"command": "extension.generateCurrentAndNested",
 				"title": "MDT: Generate barrel files for each subfolder (nested)"
+			},
+			{
+				"category": "MDT",
+				"command": "extension.showDiagram",
+				"title": "Show Diagram"
 			}
 		],
 		"menus": {

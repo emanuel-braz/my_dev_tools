@@ -17,6 +17,7 @@ import { GistPanelDelegate } from './features/panels/extension/panels/gist_panel
 import SidePaneDelegate from './features/side_panel/side_panel_delegate';
 import NotesDelegate from './features/notes/extension/notes_delegate';
 import BarrelFilesDelegate from './features/barrel_file/barrel_files';
+import { DiagramsDelegate } from './features/diagrams/diagrams_delegate';
 
 const deeplinkDelegate = new DeeplinkDelegate();
 const pushNotificationDelegate = new PushNotificationDelegate();
@@ -36,6 +37,9 @@ const notesDelegate = new NotesDelegate();
 
 // Files
 const barrelFilesDelegate = new BarrelFilesDelegate();
+
+// Diagrams
+const diagramsDelegate = new DiagramsDelegate();
 
 export function activate(context: ExtensionContext) {
 
@@ -97,6 +101,9 @@ export function activate(context: ExtensionContext) {
 
 	// Files
 	barrelFilesDelegate.activate(context);
+
+	// Diagrams
+	diagramsDelegate.activate(context);
 }
 
 
@@ -116,4 +123,6 @@ export function deactivate() {
 	notesDelegate.deactivate();
 
 	barrelFilesDelegate.deactivate();
+
+	diagramsDelegate.deactivate();
 }
