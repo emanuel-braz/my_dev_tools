@@ -17,6 +17,7 @@ import { GistPanelDelegate } from './features/panels/extension/panels/gist_panel
 import SidePaneDelegate from './features/side_panel/side_panel_delegate';
 import NotesDelegate from './features/notes/extension/notes_delegate';
 import BarrelFilesDelegate from './features/barrel_file/barrel_files';
+import { DiagramsDelegate } from './features/diagrams/diagrams_delegate';
 
 const deeplinkDelegate = new DeeplinkDelegate();
 const pushNotificationDelegate = new PushNotificationDelegate();
@@ -37,48 +38,51 @@ const notesDelegate = new NotesDelegate();
 // Files
 const barrelFilesDelegate = new BarrelFilesDelegate();
 
+// Diagrams
+const diagramsDelegate = new DiagramsDelegate();
+
 export function activate(context: ExtensionContext) {
 
 	// Deeplink
 	createDeeplinkStatusBarItem().show();
-	context.subscriptions.push(commands.registerCommand(ANDROID_DEEPLINK_EXT, async () => deeplinkDelegate.runPlatformCommand(context, true)));
-	context.subscriptions.push(commands.registerCommand(IOS_DEEPLINK_EXT, async () => deeplinkDelegate.runPlatformCommand(context, false)));
-	context.subscriptions.push(commands.registerCommand(LAST_PROMPT_EXT, async () => deeplinkDelegate.runPlatformCommand(context, LocalDataSource.isAndroid(context), true)));
-	context.subscriptions.push(commands.registerCommand(CLEAR_CACHE_EXT, async () => {
+	context.subscriptions.push(commands.registerCommand(ANDROID_DEEPLINK_EXT, () => deeplinkDelegate.runPlatformCommand(context, true)));
+	context.subscriptions.push(commands.registerCommand(IOS_DEEPLINK_EXT, () => deeplinkDelegate.runPlatformCommand(context, false)));
+	context.subscriptions.push(commands.registerCommand(LAST_PROMPT_EXT, () => deeplinkDelegate.runPlatformCommand(context, LocalDataSource.isAndroid(context), true)));
+	context.subscriptions.push(commands.registerCommand(CLEAR_CACHE_EXT, () => {
 		LocalDataSource.clear(context);
 		Dialogs.snackbar.info(APP_LOCAL_CACHE_CLEARED);
 	}));
 
 	// Push Notification
 	createNotificationStatusBarItem().show();
-	context.subscriptions.push(commands.registerCommand(IOS_PUSH_NOTIFICATION_EXT, async () => pushNotificationDelegate.pushNotification(context, false)));
-	context.subscriptions.push(commands.registerCommand(ANDROID_PUSH_NOTIFICATION_EXT, async () => pushNotificationDelegate.pushNotification(context, true)));
-	context.subscriptions.push(commands.registerCommand(PUSH_NOTIFICATION_LAST_USED_EXT, async () => pushNotificationDelegate.pushNotification(context, LocalDataSource.isAndroid(context), true)));
+	context.subscriptions.push(commands.registerCommand(IOS_PUSH_NOTIFICATION_EXT, () => pushNotificationDelegate.pushNotification(context, false)));
+	context.subscriptions.push(commands.registerCommand(ANDROID_PUSH_NOTIFICATION_EXT, () => pushNotificationDelegate.pushNotification(context, true)));
+	context.subscriptions.push(commands.registerCommand(PUSH_NOTIFICATION_LAST_USED_EXT, () => pushNotificationDelegate.pushNotification(context, LocalDataSource.isAndroid(context), true)));
 
 	// Mirror Device Screen
-	context.subscriptions.push(commands.registerCommand(ANDROID_MIRROR_SCREEN_EXT, async () => deviceDelegate.mirrorAndroidDevice(context)));
+	context.subscriptions.push(commands.registerCommand(ANDROID_MIRROR_SCREEN_EXT, () => deviceDelegate.mirrorAndroidDevice(context)));
 
 	// Start Device
-	context.subscriptions.push(commands.registerCommand(START_ANDROID_DEVICE_EXT, async () => deviceDelegate.startAndroidDevice(context)));
-	context.subscriptions.push(commands.registerCommand(START_IOS_DEVICE_EXT, async () => deviceDelegate.startIosDevice(context)));
-	context.subscriptions.push(commands.registerCommand(SHOW_CONNECTED_DEVICES_EXT, async () => deviceDelegate.showConnectedDevices(context)));
+	context.subscriptions.push(commands.registerCommand(START_ANDROID_DEVICE_EXT, () => deviceDelegate.startAndroidDevice(context)));
+	context.subscriptions.push(commands.registerCommand(START_IOS_DEVICE_EXT, () => deviceDelegate.startIosDevice(context)));
+	context.subscriptions.push(commands.registerCommand(SHOW_CONNECTED_DEVICES_EXT, () => deviceDelegate.showConnectedDevices(context)));
 
 	// Connect Wifi
-	context.subscriptions.push(commands.registerCommand(CONNECT_WIFI_EXT, async () => deviceDelegate.connectAndroidWifi(context)));
-	context.subscriptions.push(commands.registerCommand(DISCONNECT_WIFI_EXT, async () => deviceDelegate.disconnectAndroidWifi(context)));
-	context.subscriptions.push(commands.registerCommand(RECONNECT_OFFLINE_WIFI_EXT, async () => deviceDelegate.reconnectAndroidOfflineWifi(context)));
+	context.subscriptions.push(commands.registerCommand(CONNECT_WIFI_EXT, () => deviceDelegate.connectAndroidWifi(context)));
+	context.subscriptions.push(commands.registerCommand(DISCONNECT_WIFI_EXT, () => deviceDelegate.disconnectAndroidWifi(context)));
+	context.subscriptions.push(commands.registerCommand(RECONNECT_OFFLINE_WIFI_EXT, () => deviceDelegate.reconnectAndroidOfflineWifi(context)));
 
 	// Gits
 	createFavGistStatusBarItem().show();
-	context.subscriptions.push(commands.registerCommand(RUN_GIST_FROM_DISK_EXT, async () => gistDelegate.runGistFromDisk(context)));
-	context.subscriptions.push(commands.registerCommand(RUN_GIST_URL_EXT, async () => gistDelegate.inputGistUrlAndRun(context)));
-	context.subscriptions.push(commands.registerCommand(RUN_GIST_FROM_USER_EXT, async () => gistDelegate.runGistFromUser(context)));
-	context.subscriptions.push(commands.registerCommand(RUN_FAVORITE_GIST_EXT, async () => gistDelegate.runFavoriteGist(context)));
-	context.subscriptions.push(commands.registerCommand(SET_FAVORITE_GIST_EXT, async () => gistDelegate.updateFavoriteGist(context)));
-	context.subscriptions.push(commands.registerCommand(CLEAR_FAVORITE_GIST_EXT, async () => gistDelegate.clearFavoriteGist(context)));
+	context.subscriptions.push(commands.registerCommand(RUN_GIST_FROM_DISK_EXT, () => gistDelegate.runGistFromDisk(context)));
+	context.subscriptions.push(commands.registerCommand(RUN_GIST_URL_EXT, () => gistDelegate.inputGistUrlAndRun(context)));
+	context.subscriptions.push(commands.registerCommand(RUN_GIST_FROM_USER_EXT, () => gistDelegate.runGistFromUser(context)));
+	context.subscriptions.push(commands.registerCommand(RUN_FAVORITE_GIST_EXT, () => gistDelegate.runFavoriteGist(context)));
+	context.subscriptions.push(commands.registerCommand(SET_FAVORITE_GIST_EXT, () => gistDelegate.updateFavoriteGist(context)));
+	context.subscriptions.push(commands.registerCommand(CLEAR_FAVORITE_GIST_EXT, () => gistDelegate.clearFavoriteGist(context)));
 
 	// Kanban Board
-	context.subscriptions.push(commands.registerCommand(OPEN_KANBAN_BOARD, async (uri: Uri) => kanbanBoardDelegate.openKanbanBoard(context, uri)));
+	context.subscriptions.push(commands.registerCommand(OPEN_KANBAN_BOARD, (uri: Uri) => kanbanBoardDelegate.openKanbanBoard(context, uri)));
 
 	// Sounds
 	messengerSoundDelegate.activate(context);
@@ -97,6 +101,9 @@ export function activate(context: ExtensionContext) {
 
 	// Files
 	barrelFilesDelegate.activate(context);
+
+	// Diagrams
+	diagramsDelegate.activate(context);
 }
 
 
@@ -116,4 +123,6 @@ export function deactivate() {
 	notesDelegate.deactivate();
 
 	barrelFilesDelegate.deactivate();
+
+	diagramsDelegate.deactivate();
 }

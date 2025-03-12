@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagram</title>
+  <style>
+    #modalContent h1, #modalContent h2, #modalContent h3 {
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+      font-weight: bold;
+    }
+  
+    #modalContent h1 {
+      font-size: 2em;
+    }
+  
+    #modalContent h2 {
+      font-size: 1.5em;
+    }
+  
+    #modalContent h3 {
+      font-size: 1.2em;
+    }
+  
+    #modalContent p {
+      margin: 0.5em 0;
+    }
+  
+    #modalContent ul, #modalContent ol {
+      margin: 0.5em 0;
+      padding-left: 1.5em;
+    }
+  
+    #modalContent code {
+      background-color: #2d2d2d;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+  
+    #modalContent pre {
+      background-color: #2d2d2d;
+      padding: 1em;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  
+    #modalContent pre code {
+      background-color: transparent;
+      padding: 0;
+    }
+
+    /* Analysis styling */
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #1e1e1e; /* Match VS Code's dark theme */
+      color: #d4d4d4; /* Default text color */
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .mermaid {
+      transition: transform 0.2s ease;
+      transform-origin: top left;
+      width: 100%;
+      cursor: grab;
+      background-color: transparent; /* Transparent background for diagram */
+      overflow: hidden; /* Prevent scrolling */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .mermaid:active {
+      cursor: grabbing;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #252526; /* VS Code panel background */
+      padding: 20px;
+      border-radius: 4px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: #d4d4d4;
+      font-size: 24px;
+    }
+
+    .close:hover {
+      color: #fff;
+    }
+
+    /* Toolbar Styles */
+    .toolbar {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 100;
+      display: flex;
+      gap: 8px;
+    }
+
+    .toolbar button {
+      background-color: #3c3c3c; /* VS Code button background */
+      border: 1px solid #666;
+      color: #d4d4d4;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .toolbar button:hover {
+      background-color: #4a4a4a; /* Slightly lighter on hover */
+    }
+
+    /* Code Display Styles */
+    pre {
+      background-color: #1e1e1e;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+
+    function openModal() {
+      const mermaidElement = document.querySelector('.mermaid');
+      const mermaidCode = mermaidElement.getAttribute('data-mermaid-code');
+      const modal = document.getElementById('modal');
+      const modalContent = document.getElementById('modalContent');
+      modalContent.innerHTML = `<pre>${mermaidCode}</pre>`;
+      modal.style.display = 'flex';
+    }
+
+    function openModalAnalysis() {
+      const analysisElement = document.getElementById('analysis');
+      const analysisContent = analysisElement.textContent;
+      const renderedAnalysis = marked.parse(analysisContent);
+      const modal = document.getElementById('modal');
+      const modalContent = document.getElementById('modalContent');
+      modalContent.innerHTML = renderedAnalysis;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById('modal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+
+    let isPanning = false;
+    let startX, startY, translateX = 0, translateY = 0;
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const mermaidElement = document.querySelector('.mermaid');
+
+      if (mermaidElement) {
+        mermaidElement.addEventListener('mousedown', function (event) {
+          isPanning = true;
+          startX = event.clientX - translateX;
+          startY = event.clientY - translateY;
+          mermaidElement.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', function (event) {
+          if (isPanning) {
+            translateX = event.clientX - startX;
+            translateY = event.clientY - startY;
+            mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
+          }
+        });
+
+        document.addEventListener('mouseup', function () {
+          isPanning = false;
+          mermaidElement.style.cursor = 'grab';
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="openModal()">Show Mermaid Code</button>
+    <button onclick="openModalAnalysis()">Show Textual Analysis</button>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div class="mermaid" data-mermaid-code="${diagram}">
+    ${diagram}
+  </div>
+
+  <div id="analysis" style="display: none;">${analysis}</div>
+</body>
+</html>

@@ -5,3 +5,4 @@ node_modules
 local_notifications/**
 .vscode/todo.md
 .vscode/settings.json
+.DS_Store
