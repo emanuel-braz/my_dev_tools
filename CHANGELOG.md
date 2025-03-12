@@ -1,3 +1,4 @@
+## [0.0.30] 2025-03-12
 ## [0.0.29] 2025-03-12
 - Add "Explain code in diagram" feature
 - Improve Timer feature

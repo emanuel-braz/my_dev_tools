@@ -189,14 +189,139 @@
   </script>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true });
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',         // Indigo as primary color
+        primaryTextColor: '#ffffff',     // White text on primary
+        primaryBorderColor: '#818cf8',   // Lighter indigo for borders
+        lineColor: '#9ca3af',            // Gray for lines
+        secondaryColor: '#4f46e5',       // Darker indigo as secondary
+        tertiaryColor: '#1e1e1e',        // Match background color for fills
+        
+        // Node colors
+        nodeBorder: '#6366f1',           // Indigo border for nodes
+        mainBkg: '#2d2d2d',              // Slightly lighter than bg for nodes
+        nodeBkg: '#2d2d2d',
+        
+        // Text colors
+        textColor: '#d4d4d4',            // Light gray for text (same as body)
+        
+        // Contrast colors for different node types
+        classText: '#ffffff',
+        fillType0: '#6366f1',            // Indigo
+        fillType1: '#8b5cf6',            // Purple
+        fillType2: '#ec4899',            // Pink
+        fillType3: '#f43f5e',            // Rose
+        fillType4: '#f97316',            // Orange
+        fillType5: '#10b981',            // Emerald
+        fillType6: '#06b6d4',            // Cyan
+        fillType7: '#3b82f6',            // Blue
+        
+        // Contrast text colors
+        noteTextColor: '#1e1e1e',
+        
+        // Relationship colors
+        edgeLabelBackground: '#2d2d2d',
+        
+        // Font sizes
+        fontSize: '16px',
+        fontFamily: 'Arial, sans-serif',
+      }
+    });
 
+    let scale = 1;
     let isPanning = false;
     let startX, startY, translateX = 0, translateY = 0;
 
     document.addEventListener("DOMContentLoaded", function () {
       const mermaidElement = document.querySelector('.mermaid');
-
+      const container = document.createElement('div');
+      container.className = 'diagram-container';
+      container.style.width = '100%';
+      container.style.height = '100vh';
+      container.style.overflow = 'hidden';
+      container.style.position = 'relative';
+      container.style.zIndex = '1';
+      
+      // Wrap the mermaid element in our container
+      mermaidElement.parentNode.insertBefore(container, mermaidElement);
+      container.appendChild(mermaidElement);
+      
+      // Style the mermaid element for better zooming/panning
+      mermaidElement.style.position = 'absolute';
+      mermaidElement.style.transformOrigin = '0 0';
+      mermaidElement.style.zIndex = '2';
+      mermaidElement.style.minWidth = '100%';
+      mermaidElement.style.minHeight = '100%';
+      
+      // Add controls for zoom
+      const zoomControls = document.createElement('div');
+      zoomControls.className = 'zoom-controls';
+      zoomControls.style.position = 'fixed';
+      zoomControls.style.left = '10px';
+      zoomControls.style.top = '10px';
+      zoomControls.style.zIndex = '100';
+      zoomControls.style.display = 'flex';
+      zoomControls.style.gap = '8px';
+      
+      const zoomInBtn = document.createElement('button');
+      zoomInBtn.textContent = '+ Zoom In';
+      zoomInBtn.style.backgroundColor = '#3c3c3c';
+      zoomInBtn.style.border = '1px solid #666';
+      zoomInBtn.style.color = '#d4d4d4';
+      zoomInBtn.style.padding = '8px 12px';
+      zoomInBtn.style.borderRadius = '4px';
+      zoomInBtn.style.cursor = 'pointer';
+      
+      const zoomOutBtn = document.createElement('button');
+      zoomOutBtn.textContent = '- Zoom Out';
+      zoomOutBtn.style.backgroundColor = '#3c3c3c';
+      zoomOutBtn.style.border = '1px solid #666';
+      zoomOutBtn.style.color = '#d4d4d4';
+      zoomOutBtn.style.padding = '8px 12px';
+      zoomOutBtn.style.borderRadius = '4px';
+      zoomOutBtn.style.cursor = 'pointer';
+      
+      const resetBtn = document.createElement('button');
+      resetBtn.textContent = 'Reset View';
+      resetBtn.style.backgroundColor = '#3c3c3c';
+      resetBtn.style.border = '1px solid #666';
+      resetBtn.style.color = '#d4d4d4';
+      resetBtn.style.padding = '8px 12px';
+      resetBtn.style.borderRadius = '4px';
+      resetBtn.style.cursor = 'pointer';
+      
+      zoomControls.appendChild(zoomInBtn);
+      zoomControls.appendChild(zoomOutBtn);
+      zoomControls.appendChild(resetBtn);
+      document.body.appendChild(zoomControls);
+      
+      // Zoom functionality
+      zoomInBtn.addEventListener('click', function() {
+        scale += 0.1;
+        updateTransform();
+      });
+      
+      zoomOutBtn.addEventListener('click', function() {
+        scale = Math.max(0.1, scale - 0.1);
+        updateTransform();
+      });
+      
+      resetBtn.addEventListener('click', function() {
+        scale = 1;
+        translateX = 0;
+        translateY = 0;
+        updateTransform();
+      });
+      
+      // Apply transform
+      function updateTransform() {
+        mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      }
+      
+      // Pan (drag) functionality for entire diagram
       if (mermaidElement) {
         mermaidElement.addEventListener('mousedown', function (event) {
           isPanning = true;
@@ -209,7 +334,7 @@
           if (isPanning) {
             translateX = event.clientX - startX;
             translateY = event.clientY - startY;
-            mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px)`;
+            updateTransform();
           }
         });
 
@@ -217,7 +342,35 @@
           isPanning = false;
           mermaidElement.style.cursor = 'grab';
         });
+        
+        // Add wheel zoom functionality
+        container.addEventListener('wheel', function(event) {
+          event.preventDefault();
+          const delta = event.deltaY || event.detail || event.wheelDelta;
+          
+          // Calculate where in the element the mouse is hovering
+          const rect = container.getBoundingClientRect();
+          const mouseX = event.clientX - rect.left;
+          const mouseY = event.clientY - rect.top;
+          
+          // Calculate where in the transformed element the mouse is hovering
+          const elementX = (mouseX - translateX) / scale;
+          const elementY = (mouseY - translateY) / scale;
+          
+          // Calculate new scale
+          const newScale = delta > 0 ? Math.max(0.1, scale - 0.1) : scale + 0.1;
+          
+          // Calculate new translate values
+          translateX = mouseX - elementX * newScale;
+          translateY = mouseY - elementY * newScale;
+          
+          scale = newScale;
+          updateTransform();
+        });
       }
+
+      // Add style to body to prevent overflow
+      document.body.style.overflow = 'hidden';
     });
   </script>
 </head>
