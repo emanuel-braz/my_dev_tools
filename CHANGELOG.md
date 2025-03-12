@@ -1,3 +1,7 @@
+## [0.0.29] 2025-03-12
+- Add "Explain code in diagram" feature
+- Improve Timer feature
+
 ## [0.0.27] 2024-09-27
 - Improve barrel file generator
 

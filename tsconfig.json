@@ -19,6 +19,16 @@
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"jsx": "react",
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noImplicitReturns": false,
+		"strictNullChecks": false,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"baseUrl": "src",
+		"paths": {
+			"*": ["*", "*.ts", "*.tsx"]
+		}
 	},
 	"exclude": [
 		"node_modules",
