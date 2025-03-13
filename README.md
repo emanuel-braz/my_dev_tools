@@ -1,4 +1,4 @@
-# My Dev Tools 🛠️
+# My Dev Tools Kit 🛠️
 
 ## Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Run Gists on Terminal, Kanban Board, Timer, Games, Sounds, etc.
 
@@ -10,6 +10,10 @@ Demo App: https://github.com/emanuel-braz/mobile_dev_tools_demo
 Tutorial: https://www.youtube.com/watch?v=HePUYSVf4e0
 
 ![mdtk](https://github.com/user-attachments/assets/d127cc0d-2385-4c88-9d41-71c511d16ccb)
+
+### New feature ✨
+#### Explain code and generate diagram in mermaid format (OpenAI key required)
+<img width="1725" alt="Screenshot 2025-03-12 at 20 01 01" src="https://github.com/user-attachments/assets/e3975a26-980d-418f-90d8-9c5bd77e2fc6" />
   
 ### Features  
 
