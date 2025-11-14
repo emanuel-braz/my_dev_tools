@@ -1,6 +1,15 @@
 # My Dev Tools Kit 🛠️
+#### Mobile & Web Development Tools Kit for VSCode and Cursor.
 
-## Open Deep link, Push Notification, Screen Mirroring, WIFI connection, Virtual Device Management, Run Gists on Terminal, Kanban Board, Timer, Games, Sounds, etc.
+<img width="60" alt="mdtk" src="images/cursor-ai.png" />  
+
+### In order to install the extension in Cursor, follow the steps below:
+- [Download the VSIX file from this link](vsix/mdtk-0.0.30.vsix) [vsix/mdtk-0.0.30.vsix](https://github.com/emanuel-braz/my_dev_tools/blob/master/vsix/mdtk-0.0.30.vsix)
+- Press Cmd/Ctrl + Shift + P and search for "Extensions: Install from VSIX": Type "Extensions: Install from VSIX"
+- Navigate to the location where you saved the downloaded .vsix file and select it.
+- or in terminal, navigate to the directory where the .vsix file is located and run the command `cursor --install-extension mdtk-0.0.30.vsix`
+
+---
 
 ### Install from VSCode Extension Marketplace
 Marketplace Web: [VSCode Extension Marketplace](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)  
